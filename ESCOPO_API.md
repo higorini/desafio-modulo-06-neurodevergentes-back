@@ -64,8 +64,6 @@ O endpoint permite o cadastro de um novo usuário no sistema.
 -  **Requisitos obrigatórios**
      - Criar nova conta onde email seja único
      - Senha deve ser salva utilizando criptografia confiavél
-     - Gerar token em caso de sucesso
-
 #### Corpo da Requisição
 
 - `name` (string, obrigatório): Nome do usuário.
@@ -79,7 +77,6 @@ O endpoint permite o cadastro de um novo usuário no sistema.
     ```json
     {
       "message": "Usuário cadastrado com sucesso.",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjIzMjQ5NjIxLCJleHAiOjE2MjMyNzg0MjF9.KLR9t7m_JQJfpuRv9_8H2-XJ92TSjKhGPxJXVfX6wBI"
     }
     ```
 - **Erro (400 Bad Request)**
