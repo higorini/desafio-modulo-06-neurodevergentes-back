@@ -1,4 +1,4 @@
-create database desfio_final;
+create database desafio_final;
 
 create table funcionarios(
 	id serial primary key,
