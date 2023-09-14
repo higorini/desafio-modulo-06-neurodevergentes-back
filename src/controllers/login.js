@@ -4,30 +4,29 @@ const knex = require("../database/connection");
 const senhaHash = require("../utils/senhaHash");
 
 const loginUser = async (req, res) => {
-	try {
-		const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-		const user = await knex("funcionarios").where({ email }).first();
+    const user = await knex("funcionarios").where({ email }).first();
 
-		if (!user) {
-			return res.status(401).json({ message: "Email ou senha incorretos." });
-		}
+    if (!user) {
+      return res.status(401).json({ message: "Email ou senha incorretos." });
+    }
 
-		const passwordMatch = await bcrypt.compare(password, user.senha);
+    const passwordMatch = await bcrypt.compare(password, user.senha);
 
-		if (!passwordMatch) {
-			return res.status(401).json({ message: "Email ou senha incorretos." });
-		}
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Email ou senha incorretos." });
+    }
 
-		const token = jwt.sign({ userId: user.id }, senhaHash, {
-			expiresIn: "8h",
-		});
+    const token = jwt.sign({ userId: user.id }, senhaHash, {
+      expiresIn: "8h",
+    });
 
-		res.status(200).json({ message: "Login bem-sucedido.", token });
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Ocorreu um erro interno." });
-	}
+    res.status(200).json({ message: "Login bem-sucedido.", token });
+  } catch (error) {
+    res.status(500).json({ message: "Ocorreu um erro interno." });
+  }
 };
 
 module.exports = loginUser;
