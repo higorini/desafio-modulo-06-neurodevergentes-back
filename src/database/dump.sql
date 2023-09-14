@@ -1,4 +1,4 @@
-create database desrio_final;
+create database desfio_final;
 
 create table funcionarios(
 	id serial primary key,
