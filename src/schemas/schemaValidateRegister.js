@@ -1,10 +1,6 @@
 const joi = require("joi");
 
-const schemaValidateRegister = joi.object({
-	name: joi.string().required().messages({
-		"any.required": "Nome é obrigatório",
-		"string.empty": "Nome é obrigatório",
-	}),
+const schemaValidateEmailPassword = joi.object({
 	email: joi.string().email().required().messages({
 		"any.required": "E-mail é obrigatório",
 		"string.empty": "E-mail é obrigatório",
@@ -15,5 +11,11 @@ const schemaValidateRegister = joi.object({
 		"string.empty": "Senha é obrigatório",
 	}),
 });
+const schemaValidateName = joi.object({
+	name: joi.string().required().messages({
+		"any.required": "Nome é obrigatório",
+		"string.empty": "Nome é obrigatório",
+	}),
+});
 
-module.exports = schemaValidateRegister;
+module.exports = { schemaValidateEmailPassword, schemaValidateName };
