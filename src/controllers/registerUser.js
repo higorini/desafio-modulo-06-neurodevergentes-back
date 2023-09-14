@@ -5,7 +5,7 @@ const registerUser = async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
 
-		const existingUser = await knex("usuarios").where({ email }).first();
+		const existingUser = await knex("funcionarios").where({ email }).first();
 
 		if (existingUser) {
 			return res.status(400).json({ message: "E-mail já cadastrado." });
@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		await knex("usuarios").insert({
+		await knex("funcionarios").insert({
 			nome: name,
 			email,
 			senha: hashedPassword,
