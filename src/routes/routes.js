@@ -1,7 +1,7 @@
 const express = require("express");
 const routes = express();
+const validate = require("../middlewares/validateRegister");
+const registerUser = require("../controllers/registerUser");
 
-routes.get("/teste", (req, res) => {
-	return res.json({ message: "Testando o servidor" });
-});
+routes.post("/signup", validate, registerUser);
 module.exports = routes;
