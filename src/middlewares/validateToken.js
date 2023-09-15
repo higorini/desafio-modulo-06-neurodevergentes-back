@@ -4,37 +4,36 @@ const schemaValidateToken = require("../schemas/schemaValidateToken");
 const knex = require("../database/connection");
 
 const verifyToken = async (req, res, next) => {
-	const { authorization } = req.headers;
-	if (!authorization) {
-		return res.status(401).json("Não autorizado");
-	}
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return res.status(401).json({ message: "Não autorizado" });
+  }
 
-	try {
-		let id;
-		const token = authorization.replace("Bearer ", "").trim();
+  try {
+    const token = authorization.split(" ")[1];
 
-		await schemaValidateToken.validateAsync({ token });
-		jwt.verify(token, senhaHash, (err, decoded) => {
-			if (err) {
-				return res.status(401).json({ message: "Token inválido" });
-			}
-			({ id } = decoded);
-		});
+    await schemaValidateToken.validateAsync({ token });
 
-		const userExists = await knex("users").where({ id }).first();
+    jwt.verify(token, senhaHash, async (erro, decoded) => {
+      if (erro) {
+        return res.status(401).json({ message: "Token inválido" });
+      }
 
-		if (!userExists) {
-			return res.status(404).json({ message: "Usuario não encontrado" });
-		}
+      const userExists = await knex("users").where({ id: decoded.id }).first();
 
-		const { senha, ...user } = userExists;
+      if (!userExists) {
+        return res.status(404).json({ message: "Usuario não encontrado" });
+      }
 
-		req.user = user;
+      const { senha, ...user } = userExists;
 
-		next();
-	} catch (erro) {
-		res.status(400).json({ message: erro.message });
-	}
+      req.user = user;
+
+      next();
+    });
+  } catch (erro) {
+    res.status(400).json({ message: erro.message });
+  }
 };
 
 module.exports = verifyToken;
