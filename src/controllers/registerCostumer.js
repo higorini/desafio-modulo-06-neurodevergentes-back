@@ -1,11 +1,11 @@
 const knex = require("../database/connection");
 
 const registerCostumer = async (req, res) => {
-    const { nome, cpf, email, telefone, status } = req.body;
+    const { name, cpf, email, phone, status } = req.body;
     const { id } = req.user;
     
     try {
-        if (!nome || !cpf || !email || !telefone || !status)
+        if (!name || !cpf || !email || !phone || !status)
             return res
             .status(400)
             .json({ message: "Todos os campos são obrigatórios" });
@@ -18,10 +18,10 @@ const registerCostumer = async (req, res) => {
 
         const newCostumer = await knex('clientes').insert({
             funcionario_id:id,
-            nome,
+            name,
             cpf,
             email,
-            telefone,
+            phone,
             status
         }).returning('*');
 
