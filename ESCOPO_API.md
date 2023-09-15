@@ -36,7 +36,7 @@ Ao longo das entregas das sprints, serão implementadas novas funcionalidades.
 
 ## URL da API
 ```javascript
-// https://calm-gold-lion-veil.cyclic.cloud/
+ https://calm-gold-lion-veil.cyclic.cloud/
 ```
 ### Status Codes
 
@@ -60,7 +60,7 @@ O endpoint permite o cadastro de um novo usuário no sistema.
 #### Requisição
 
 - **Método:** `POST`
-- **Rota:** `/user/signup`
+- **Rota:** `/signup`
 -  **Requisitos obrigatórios**
      - Criar nova conta onde email seja único
      - Senha deve ser salva utilizando criptografia confiavél
@@ -94,7 +94,7 @@ O endpoint permite a autenticação de um usuário no sistema.
 #### Requisição
 
 - **Método:** `POST`
-- **Rota:** `/user/login`
+- **Rota:** `/login`
 - **Requisitos obrigatórios**
   - Preencher todos os campos
   - Informar e-mail existente
