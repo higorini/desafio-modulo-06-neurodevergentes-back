@@ -7,6 +7,7 @@ const validate = require("../middlewares/validateRegister");
 const verifyToken = require("../middlewares/validateToken");
 const getUser = require("../controllers/getUsuer");
 const editUser = require("../controllers/updateUser");
+const validateEdit = require("../middlewares/validateUpdate");
 
 routes.post("/signup", validate, registerUser);
 routes.post("/login", validateLogin, loginUser);
@@ -14,5 +15,5 @@ routes.post("/login", validateLogin, loginUser);
 routes.use(verifyToken);
 
 routes.get("/user", getUser);
-routes.put("/user/edit", editUser);
+routes.put("/user/edit", validateEdit, editUser);
 module.exports = routes;

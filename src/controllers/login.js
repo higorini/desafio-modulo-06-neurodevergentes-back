@@ -18,7 +18,6 @@ const loginUser = async (req, res) => {
 		if (!passwordMatch) {
 			return res.status(401).json({ message: "Email ou senha incorretos." });
 		}
-		console.log(user.id);
 		const token = jwt.sign({ id: user.id }, senhaHash, {
 			expiresIn: "8h",
 		});
