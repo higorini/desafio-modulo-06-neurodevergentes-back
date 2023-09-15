@@ -2,7 +2,7 @@ const knex = require("../database/connection");
 
 const getUsers = async (req, res) => {
     try {
-        const users = await knex('funcionarios')
+        const users = await knex("users")
 
         return res.status(200).json(users)
     } catch (error) {

@@ -16,9 +16,9 @@ routes.get("/users", getUsers);
 routes.post("/signup", validate, registerUser);
 routes.post("/login", validateLogin, loginUser);
 routes.get("/user", verifyToken, getUser);
-routes.put("/user/edit",verifyToken, validateEdit, editUser);
+routes.put("/user/edit", verifyToken, validateEdit, editUser);
 
-routes.post("/costumer", registerCostumer);
+routes.post("/costumer", verifyToken, registerCostumer);
 
 routes.use(validateRouts);
 

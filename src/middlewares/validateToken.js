@@ -21,7 +21,7 @@ const verifyToken = async (req, res, next) => {
 			({ id } = decoded);
 		});
 
-		const userExists = await knex("funcionarios").where({ id }).first();
+		const userExists = await knex("users").where({ id }).first();
 
 		if (!userExists) {
 			return res.status(404).json({ message: "Usuario não encontrado" });

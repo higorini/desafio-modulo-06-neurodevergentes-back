@@ -2,10 +2,10 @@ const knex = require("../database/connection");
 
 const editUser = async (req, res) => {
 	try {
-		let { name, email, password, cpf, telephone } = req.body;
+		let { name, email, password, cpf, phone } = req.body;
 		const { id } = req.user;
 
-		const existingUser = await knex("funcionarios").where({ email }).first();
+		const existingUser = await knex("users").where({ email }).first();
 
 		if (existingUser && existingUser.id !== id) {
 			return res
@@ -16,15 +16,15 @@ const editUser = async (req, res) => {
 			password = await bcrypt.hash(password, 10);
 		}
 
-		await knex("funcionarios").where({ id }).update({
-			nome: name,
+		await knex("users").where({ id }).update({
+			name,
 			email,
-			senha: password,
+			password,
 			cpf,
-			telefone: telephone,
+			phone,
 		});
 
-		res
+		return res
 			.status(200)
 			.json({ message: "Dados do usuário atualizados com sucesso." });
 	} catch (erro) {

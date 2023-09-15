@@ -7,13 +7,13 @@ const loginUser = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 
-		const user = await knex("funcionarios").where({ email }).first();
+		const user = await knex("users").where({ email }).first();
 
 		if (!user) {
 			return res.status(401).json({ message: "Email ou senha incorretos." });
 		}
 
-		const passwordMatch = await bcrypt.compare(password, user.senha);
+		const passwordMatch = await bcrypt.compare(password, user.password);
 
 		if (!passwordMatch) {
 			return res.status(401).json({ message: "Email ou senha incorretos." });
@@ -22,8 +22,9 @@ const loginUser = async (req, res) => {
 			expiresIn: "8h",
 		});
 
-		res.status(200).json({ message: "Login bem-sucedido.", user, token });
+		res.status(200).json({ message: "Login bem-sucedido.", token });
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
