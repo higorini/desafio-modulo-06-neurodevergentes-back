@@ -21,7 +21,6 @@ const registerUser = async (req, res) => {
 
 		res.status(201).json({ message: "Usuário cadastrado com sucesso." });
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };

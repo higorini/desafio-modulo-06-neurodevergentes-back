@@ -36,7 +36,7 @@ Ao longo das entregas das sprints, serão implementadas novas funcionalidades.
 
 ## URL da API
 ```javascript
-// https://neurodevergentesapi.herokuapp.com/
+// https://calm-gold-lion-veil.cyclic.cloud/
 ```
 ### Status Codes
 
