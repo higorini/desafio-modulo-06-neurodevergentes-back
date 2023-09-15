@@ -1,20 +1,27 @@
 create database desafio_final;
 
-create table funcionarios(
-	id serial primary key,
-  nome text not null,
+create table Users (
+  id serial primary key,
+  name text not null,
   email text not null unique,
-  senha text not null,
+  password text not null,
   cpf char(14) unique,
-  telefone varchar(20) unique
+  phone varchar(20) unique
 );
 
-create table clientes(
+
+create table costumers(
 	id serial primary key,
-  funcionario_id integer not null references funcionarios(id),
-  nome text not null,
-  cpf char(14) not null unique,
+  user_id integer not null references users(id),
+  name text not null,
   email text not null unique,
-  telefone varchar(20) unique,
+  cpf char(14) not null unique,
+  phone varchar(20) not null unique,
+  cep varchar(20),
+  public_place text,
+  complement text,
+  neighborhood text,
+  city varchar(20),
+  state varchar(20),
   status text not null
 ); 
