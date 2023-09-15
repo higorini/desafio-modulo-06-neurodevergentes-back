@@ -18,13 +18,15 @@ const loginUser = async (req, res) => {
 		if (!passwordMatch) {
 			return res.status(401).json({ message: "Email ou senha incorretos." });
 		}
+
 		const token = jwt.sign({ id: user.id }, senhaHash, {
 			expiresIn: "8h",
 		});
 
-		res.status(200).json({ message: "Login bem-sucedido.", token });
+		const { password: _, ...userData } = user;
+
+		res.status(200).json({ userData, token });
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };

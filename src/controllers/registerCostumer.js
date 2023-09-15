@@ -26,7 +26,6 @@ const registerCostumer = async (req, res) => {
 
         return res.status(201).json(newCostumer);
     } catch (error) {
-        console.log(error);
         res.status(500).json({ message: "Ocorreu um erro interno." });
     }
 }
