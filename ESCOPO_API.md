@@ -309,7 +309,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 #### Requisição
 
 - **Método:** `POST`
-- **Rota:** `/client/signup`
+- **Rota:** `/costumer/signup`
 
 
 #### Header da Requisição
