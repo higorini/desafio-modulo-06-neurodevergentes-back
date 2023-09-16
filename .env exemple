@@ -1,6 +1,6 @@
-PORT = 3000
+PORT =
 
-BD_HOST=silly.db.elephantsql.com
+BD_HOST=
 BD_USER=
 BD_PASSWORD=
 BD_DATABASE=
