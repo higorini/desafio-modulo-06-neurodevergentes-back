@@ -53,6 +53,44 @@ Ao longo das entregas das sprints, serão implementadas novas funcionalidades.
 
 ## Usuário
 
+### Listar Usuários já cadastrados
+
+O endpoint permite listar os usuários ja cadastrdos no sistema. Ele retornará um array de objetos.
+
+#### Requisição
+
+- **Método:** `GET`
+- **Rota:** `/users`
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta:
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "johan",
+        "email": "johan@gmail.com",
+        "cpf": "432.654.388-78",
+        "phone": "(88) 9 9898-9898"
+      },
+      {
+        "id": 2,
+        "name": "thiago",
+        "email": "Thiago1@hotmail.com",
+        "cpf": null,
+        "phone": null
+	    }
+    ]
+    ```
+- **Erro (400 Bad Request)**
+  - Corpo da Resposta:
+    ```json
+    { "message": "Ocorreu um erro interno." }
+    ```
+<br/>
+
 ### Cadastro do Usuário
 
 O endpoint permite o cadastro de um novo usuário no sistema.
@@ -61,9 +99,7 @@ O endpoint permite o cadastro de um novo usuário no sistema.
 
 - **Método:** `POST`
 - **Rota:** `/signup`
--  **Requisitos obrigatórios**
-     - Criar nova conta onde email seja único
-     - Senha deve ser salva utilizando criptografia confiavél
+
 #### Corpo da Requisição
 
 - `name` (string, obrigatório): Nome do usuário.
@@ -86,6 +122,8 @@ O endpoint permite o cadastro de um novo usuário no sistema.
       "message": "E-mail informado já existe cadastrado."
     }
     ```
+<br/>
+
 
 ### Login do Usuário
 
@@ -95,11 +133,7 @@ O endpoint permite a autenticação de um usuário no sistema.
 
 - **Método:** `POST`
 - **Rota:** `/login`
-- **Requisitos obrigatórios**
-  - Preencher todos os campos
-  - Informar e-mail existente
-  - Senha correta para o e-mail
-  - Criar token após validação dos dados
+
 
 #### Corpo da Requisição
 
@@ -112,7 +146,14 @@ O endpoint permite a autenticação de um usuário no sistema.
   - Corpo da Resposta:
     ```json
     {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjIzMjQ5NjIxLCJleHAiOjE2MjMyNzg0MjF9.KLR9t7m_JQJfpuRv9_8H2-XJ92TSjKhGPxJXVfX6wBI"
+      "userData": {
+        "id": 4,
+        "name": "mario",
+        "email": "mario@gmail.com",
+        "cpf": null,
+        "phone": null
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjk0ODYwMDM4LCJleHAiOjE2OTQ4ODg4Mzh9.0TD0TbUVpmKF64QHlw2eHE7E06X55BFNCctqKetK1BQ"
     }
     ```
 - **Erro (401 Unauthorized)**
@@ -122,13 +163,27 @@ O endpoint permite a autenticação de um usuário no sistema.
       "message": "E-mail ou senha inválidos."
     }
     ```
-### Obter informações do usuário
-Essa rota será usada quando o usuario desejar obter informacoes do seu perfil
+<br/>
+
+### ATENÇÃO: 
+A partir de agora, para acessar todas as rotas a seguir será necessário passar o Token de autenticação do usuário que foi fornecido durante o **Login** no **Header** da requisição.
+
+#### Exemplo
+- Corpo da requisição:
+ ```json
+  {
+    "Authorization": "Bearer { token }"
+  }
+  ```
+<br/>
+
+### Obter informações do usuário logado
+Essa rota será usada para obter informacoes do seu perfil do usuario que está logado no sistema.
+
 #### Requisição
 
 - **Método:** `GET`
 - **Rota:** `/user`
-- **Atenção!: O usuário deverá ser identificado através do ID presente no token de autenticação.**
 
 #### Header da Requisição
 - `token` (string, obrigatório): Token gerado após login.
@@ -137,11 +192,11 @@ Essa rota será usada quando o usuario desejar obter informacoes do seu perfil
 - Corpo da Resposta:
   ```json
   {
-    "id": 1,
-    "name": "José",
-    "email": "jose@email.com",
-    "cpf": "000.000.000-00",
-    "telephone": "71 99999-9999"
+    "id": 4,
+    "name": "mario",
+    "email": "mario@gmail.com",
+    "cpf": null,
+    "phone": null
   }
   ```
 - **Erro (400 Bad Request)**
@@ -151,6 +206,7 @@ Essa rota será usada quando o usuario desejar obter informacoes do seu perfil
       "message": "Token inválido."
     }
     ```
+<br/>
 
 ### Edição do Usuário
 
@@ -188,8 +244,63 @@ O endpoint permite a edição dos dados de um usuário autenticado no sistema.
       "message": "E-mail informado já está sendo utilizado por outro usuário."
     }
     ```
+<br/>
 
 ## Cliente
+
+### Listar Clientes já cadastrados
+
+O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario logado**. Ele retornará um array de objetos.
+
+#### Requisição
+
+- **Método:** `GET`
+- **Rota:** `/costumers`
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta:
+    ```json
+    [
+      {
+        "id": 7,
+        "user_id": 4,
+        "name": "jojo todinho",
+        "email": "jojo@gmail.com",
+        "cpf": "123;456.456-87",
+        "phone": "(55) 9 6554-7878",
+        "cep": null,
+        "public_place": null,
+        "complement": null,
+        "neighborhood": null,
+        "city": null,
+        "state": null,
+        "status": "Inadimplente"
+	    },
+      {
+        "id": 8,
+        "user_id": 4,
+        "name": "Carlos eduardo",
+        "email": "eduardo@gmail.com",
+        "cpf": "234.456.456-87",
+        "phone": "(58) 9 6554-7878",
+        "cep": null,
+        "public_place": null,
+        "complement": null,
+        "neighborhood": null,
+        "city": null,
+        "state": null,
+        "status": "Em dia"
+      }
+    ]
+    ```
+- **Erro (400 Bad Request)**
+  - Corpo da Resposta:
+    ```json
+    { "message": "Ocorreu um erro interno." }
+    ```
+<br/>
 
 ### Cadastro de Cliente
 
@@ -199,9 +310,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 
 - **Método:** `POST`
 - **Rota:** `/client/signup`
-- Requisitos
-- Validar campos obrigatórios
-- Verificar se já existe email para outro cliente
+
 
 #### Header da Requisição
 - `token` (string, obrigatório): Token gerado após login.
@@ -218,6 +327,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - `neighborhood` (string, opcional): Bairro do cliente.
 - `city` (string, opcional): Cidade do cliente.
 - `state` (string, opcional): Estado do cliente.
+- `status` (string, obrigatório): Situação do cliente.
 
 #### Exemplos de Respostas
 
@@ -225,7 +335,19 @@ O endpoint permite o cadastro de um novo cliente no sistema.
   - Corpo da Resposta:
     ```json
     {
-      "message": "Cliente cadastrado com sucesso."
+      "id": 8,
+      "user_id": 4,
+      "name": "Carlos eduardo",
+      "email": "eduardo@gmail.com",
+      "cpf": "234.456.456-87",
+      "phone": "(58) 9 6554-7878",
+      "cep": null,
+      "public_place": null,
+      "complement": null,
+      "neighborhood": null,
+      "city": null,
+      "state": null,
+      "status": "Em dia"
     }
     ```
 - **Erro (400 Bad Request)**

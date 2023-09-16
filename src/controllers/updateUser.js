@@ -1,4 +1,5 @@
 const knex = require("../database/connection");
+const bcrypt = require("bcrypt");
 
 const editUser = async (req, res) => {
 	try {
@@ -28,6 +29,7 @@ const editUser = async (req, res) => {
 			.status(200)
 			.json({ message: "Dados do usuário atualizados com sucesso." });
 	} catch (erro) {
+		console.log(erro.message);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
