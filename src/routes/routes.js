@@ -19,7 +19,7 @@ routes.post("/login", validateLogin, loginUser);
 routes.get("/user", verifyToken, getUser);
 routes.put("/user/edit", verifyToken, validateEdit, editUser);
 
-routes.post("/costumer", verifyToken, registerCostumer);
+routes.post("/costumer/signup", verifyToken, registerCostumer);
 routes.get("/costumers", verifyToken, getCostumers);
 
 routes.use(validateRouts);
