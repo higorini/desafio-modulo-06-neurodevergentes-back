@@ -84,7 +84,7 @@ O endpoint permite listar os usuários ja cadastrdos no sistema. Ele retornará 
 	    }
     ]
     ```
-- **Erro (400 Bad Request)**
+- **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
     ```json
     { "message": "Ocorreu um erro interno." }
@@ -169,7 +169,7 @@ O endpoint permite a autenticação de um usuário no sistema.
 A partir de agora, para acessar todas as rotas a seguir será necessário passar o Token de autenticação do usuário que foi fornecido durante o **Login** no **Header** da requisição.
 
 #### Exemplo
-- Corpo da requisição:
+- Header da requisição:
  ```json
   {
     "Authorization": "Bearer { token }"
@@ -295,7 +295,7 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
       }
     ]
     ```
-- **Erro (400 Bad Request)**
+- **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
     ```json
     { "message": "Ocorreu um erro interno." }
