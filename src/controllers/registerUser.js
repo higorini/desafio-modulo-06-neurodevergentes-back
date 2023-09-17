@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const knex = require("../database/connection");
+const knex = require("../database/connection/connection");
 
 const registerUser = async (req, res) => {
 	try {

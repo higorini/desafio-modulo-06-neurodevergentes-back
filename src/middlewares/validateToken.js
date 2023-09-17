@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const senhaHash = require("../utils/senhaHash");
 const schemaValidateToken = require("../schemas/schemaValidateToken");
-const knex = require("../database/connection");
+const knex = require("../database/connection/connection");
 
 const verifyToken = async (req, res, next) => {
   const { authorization } = req.headers;

@@ -10,7 +10,7 @@ const editUser = require("../controllers/updateUser");
 const validateEdit = require("../middlewares/validateUpdate");
 const getUsers = require("../controllers/getUsers");
 const registerCostumer = require("../controllers/registerCostumer");
-const validateRouts = require("../middlewares/validateRouts");
+const validateRouts = require("../errors/validateRouts");
 const getCostumers = require("../controllers/getCostumers");
 
 routes.get("/users", getUsers);
