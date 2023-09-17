@@ -1,4 +1,4 @@
-const knex = require("../database/connection");
+const knex = require("../database/connection/connection");
 
 const registerCostumer = async (req, res) => {
     const { name, email, cpf, phone, 

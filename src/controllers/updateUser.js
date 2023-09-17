@@ -1,4 +1,4 @@
-const knex = require("../database/connection");
+const knex = require("../database/connection/connection");
 const bcrypt = require("bcrypt");
 
 const editUser = async (req, res) => {
