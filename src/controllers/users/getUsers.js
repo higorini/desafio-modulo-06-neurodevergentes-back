@@ -1,11 +1,11 @@
-const knex = require("../database/connection/connection");
+const knex = require("../../database/connection/connection");
 
 const getUsers = async (req, res) => {
   try {
-    const users = await knex("users");
+    const users = await knex("users").orderBy("id", "asc");
 
     const usersData = users.map(({ password, ...userData }) => {
-        return userData
+      return userData;
     });
 
     return res.status(200).json(usersData);
