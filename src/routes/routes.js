@@ -1,26 +1,34 @@
 const express = require("express");
 const routes = express();
-const registerUser = require("../controllers/registerUser");
-const loginUser = require("../controllers/login");
-const validateLogin = require("../middlewares/validateLogin");
-const validate = require("../middlewares/validateRegister");
-const verifyToken = require("../middlewares/validateToken");
-const getUser = require("../controllers/getUser");
-const editUser = require("../controllers/updateUser");
-const validateEdit = require("../middlewares/validateUpdate");
-const getUsers = require("../controllers/getUsers");
-const registerCostumer = require("../controllers/registerCostumer");
-const validateRouts = require("../errors/validateRouts");
-const getCostumers = require("../controllers/getCostumers");
 
-routes.get("/users", getUsers);
-routes.post("/signup", validate, registerUser);
-routes.post("/login", validateLogin, loginUser);
+const getUser = require("../controllers/users/getUser");
+const getUsers = require("../controllers/users/getUsers");
+const {
+  registerUser,
+  validateEmail,
+} = require("../controllers/users/registerUser");
+const loginUser = require("../controllers/users/login");
+const editUser = require("../controllers/users/updateUser");
+
+const validateLogin = require("../middlewares/validateLogin");
+const validateRegister = require("../middlewares/validateRegister");
+const verifyToken = require("../middlewares/validateToken");
+const validateEdit = require("../middlewares/validateUpdate");
+
+const registerCostumer = require("../controllers/costumers/registerCostumer");
+const getCostumers = require("../controllers/costumers/getCostumers");
+const validateRouts = require("../errors/validateRouts");
+
 routes.get("/user", verifyToken, getUser);
+routes.get("/users", getUsers);
+
+routes.post("/validateEmail", validateEmail);
+routes.post("/signup", validateRegister, registerUser);
+routes.post("/login", validateLogin, loginUser);
 routes.put("/user/edit", verifyToken, validateEdit, editUser);
 
-routes.post("/costumer/signup", verifyToken, registerCostumer);
 routes.get("/costumers", verifyToken, getCostumers);
+routes.post("/costumer/signup", verifyToken, registerCostumer);
 
 routes.use(validateRouts);
 
