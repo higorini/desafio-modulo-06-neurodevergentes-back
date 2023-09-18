@@ -17,6 +17,7 @@ const validateEmail = async (req, res) => {
     res.status(500).json({ message: "Ocorreu um erro interno." });
   }
 };
+
 const registerUser = async (req, res) => {
   try {
     const { email, name, password } = req.body;
