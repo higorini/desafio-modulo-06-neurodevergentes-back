@@ -1,4 +1,4 @@
-const knex = require("../database/connection");
+const knex = require("../database/connection/connection");
 
 const registerCostumer = async (req, res) => {
     const { name, email, cpf, phone, 
@@ -24,7 +24,7 @@ const registerCostumer = async (req, res) => {
             neighborhood, city, state, status
         }).returning('*');
 
-        return res.status(201).json(newCostumer);
+        return res.status(201).json(newCostumer[0]);
     } catch (error) {
         res.status(500).json({ message: "Ocorreu um erro interno." });
     }
