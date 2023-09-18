@@ -4,31 +4,25 @@ const knex = require("../../database/connection/connection");
 const senhaHash = require("../../utils/senhaHash");
 
 const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+	try {
+		const { email, password } = req.body;
 
-    const user = await knex("users").where({ email }).first();
+		const user = await knex("users").where({ email }).first();
 
-    if (!user) {
-      return res.status(401).json({ message: "Email ou senha incorretos." });
-    }
+		if (!user || !(await bcrypt.compare(password, user.password))) {
+			return res.status(401).json({ message: "Email ou senha incorretos." });
+		}
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+		const token = jwt.sign({ id: user.id }, senhaHash, {
+			expiresIn: "8h",
+		});
 
-    if (!passwordMatch) {
-      return res.status(401).json({ message: "Email ou senha incorretos." });
-    }
+		const { password: _, ...userData } = user;
 
-    const token = jwt.sign({ id: user.id }, senhaHash, {
-      expiresIn: "8h",
-    });
-
-    const { password: _, ...userData } = user;
-
-    res.status(200).json({ userData, token });
-  } catch (error) {
-    res.status(500).json({ message: "Ocorreu um erro interno." });
-  }
+		res.json({ userData, token });
+	} catch (error) {
+		res.status(500).json({ message: "Ocorreu um erro interno." });
+	}
 };
 
 module.exports = loginUser;
