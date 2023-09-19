@@ -2,7 +2,8 @@ const express = require("express");
 const routesUsers = express();
 
 const getUsers = require("../controllers/users/getUsers");
-const { validateEmail, registerUser } = require("../controllers/users/registerUser");
+const validateEmail = require("../controllers/users/validateEmail");
+const registerUser = require("../controllers/users/registerUser");
 const validateRegister = require("../middlewares/validateRegister");
 const validateLogin = require("../middlewares/validateLogin");
 const loginUser = require("../controllers/users/login");
@@ -17,9 +18,9 @@ routesUsers.post("/validateEmail", validateEmail);
 routesUsers.post("/signup", validateRegister, registerUser);
 routesUsers.post("/login", validateLogin, loginUser);
 
-routesUsers.use(verifyToken);
+routesUsers.get("/user", verifyToken, getUser);
+routesUsers.put("/user/edit", verifyToken, validateEdit, editUser);
 
-routesUsers.get("/user", getUser);
-routesUsers.put("/user/edit", validateEdit, editUser);
+
 
 module.exports = routesUsers;

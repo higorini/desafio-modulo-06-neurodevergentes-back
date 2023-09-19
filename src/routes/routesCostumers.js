@@ -9,13 +9,13 @@ const registerCostumer = require("../controllers/costumers/registerCostumer");
 
 routesCotumers.get("/getCostumerCep", getCostumerCep);
 
-routesCotumers.use(verifyToken);
-
-routesCotumers.get("/costumers", getCostumers);
+routesCotumers.get("/costumers", verifyToken, getCostumers);
 routesCotumers.post(
 	"/costumer/signup",
+	verifyToken,
 	validateRegisterCostumer,
 	registerCostumer
 );
+
 
 module.exports = routesCotumers;

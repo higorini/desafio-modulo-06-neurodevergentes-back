@@ -1,5 +1,10 @@
 const validateRouts = async (req, res) => {
-    res.status(404).json({ message: "Página não encontrada" });
+  try {
+    return res.status(404).json({ message: "Página não encontrada" });
+    
+  } catch (error) {
+    console.log(error.message);
+  }
   }
 
-  module.exports = validateRouts;
+module.exports = validateRouts;
