@@ -4,8 +4,8 @@ const routes = express();
 const getUser = require("../controllers/users/getUser");
 const getUsers = require("../controllers/users/getUsers");
 const {
-  registerUser,
-  validateEmail,
+	registerUser,
+	validateEmail,
 } = require("../controllers/users/registerUser");
 const loginUser = require("../controllers/users/login");
 const editUser = require("../controllers/users/updateUser");
