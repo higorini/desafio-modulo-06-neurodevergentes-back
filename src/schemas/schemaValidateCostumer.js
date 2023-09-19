@@ -1,7 +1,7 @@
 const joi = require("joi");
 
 const schemaValidateCostumer = joi.object({
-	phone: joi.string().length(15).required().messages({
+	phone: joi.string().required().messages({
 		"any.required": "Telefone é obrigatório",
 		"string.empty": "Telefone é obrigatório",
 		"string.length": "Telefone deve ter 15 caracteres",
