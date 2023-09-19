@@ -7,7 +7,7 @@ const getCostumers = require("../controllers/costumers/getCostumers");
 const validateRegisterCostumer = require("../middlewares/validateRegisterCostumer");
 const registerCostumer = require("../controllers/costumers/registerCostumer");
 
-routesCotumers.get("/getCostumerCep", getCostumerCep);
+routesCotumers.get("/getCostumerCep", verifyToken, getCostumerCep);
 
 routesCotumers.get("/costumers", verifyToken, getCostumers);
 routesCotumers.post(
