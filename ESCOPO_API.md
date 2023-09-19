@@ -407,7 +407,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 
 #### Corpo da Requisição
 
-- `cep` (string, obrigatório): Nome do cep do usuario.
+- `cep` (string, obrigatório): Numero do cep do usuario.
 
 - **Sucesso (200 OK)**
   - Corpo da Resposta:
