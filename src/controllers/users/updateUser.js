@@ -2,30 +2,29 @@ const knex = require("../../database/connection/connection");
 const bcrypt = require("bcrypt");
 
 const editUser = async (req, res) => {
-  try {
-    const { name, email, password, cpf, phone } = req.body;
-    const { id } = req.user;
+	try {
+		let { name, email, password, cpf, phone } = req.body;
+		const { id } = req.user;
 
-    const existingUser = await knex("users").where({ email }).first();
+		email = email.toLowerCase();
 
-    if (existingUser && existingUser.id !== id) {
-      return res
-        .status(400)
-        .json({ message: "E-mail já cadastrado para outro usuário." });
-    }
+		const existingUser = await knex("users").where({ email }).first();
 
-    const updateData = { name, email, cpf, phone };
+		if (existingUser && existingUser.id !== id) {
+			return res
+				.status(400)
+				.json({ message: "E-mail já cadastrado para outro usuário." });
+		}
+		const updateData = { name, email, cpf, phone };
 
-    password && (updateData.password = await bcrypt.hash(password, 10));
+		password && (updateData.password = await bcrypt.hash(password, 10));
 
-    await knex("users").where({ id }).update(updateData);
+		await knex("users").where({ id }).update(updateData);
 
-    return res
-      .status(200)
-      .json({ message: "Dados do usuário atualizados com sucesso." });
-  } catch (erro) {
-    res.status(500).json({ message: "Ocorreu um erro interno." });
-  }
+		return res.json({ message: "Dados do usuário atualizados com sucesso." });
+	} catch (erro) {
+		res.status(500).json({ message: "Ocorreu um erro interno." });
+	}
 };
 
 module.exports = editUser;

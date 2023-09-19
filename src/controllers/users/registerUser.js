@@ -1,46 +1,53 @@
 const bcrypt = require("bcrypt");
 const knex = require("../../database/connection/connection");
+const {
+	schemaValidateEmail,
+	schemaValidateName,
+} = require("../../schemas/schemaValidateUser");
 
 const validateEmail = async (req, res) => {
-  try {
-    const { email } = req.body;
+	try {
+		let { email, name } = req.body;
 
-    const existingUser = await knex("users").where({ email }).first();
+		email = email.toLowerCase();
 
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "E-mail já cadastrado para outro usuário." });
-    }
-    res.status(200).json({ message: "E-mail disponível para cadastro." });
-  } catch (error) {
-    res.status(500).json({ message: "Ocorreu um erro interno." });
-  }
+		await schemaValidateEmail.validateAsync({ email });
+		await schemaValidateName.validateAsync({ name });
+
+		const existingUser = await knex("users").where({ email }).first();
+
+		if (existingUser) {
+			return res
+				.status(400)
+				.json({ message: "E-mail já cadastrado para outro usuário." });
+		}
+
+		res.json({ message: "E-mail disponível para cadastro." });
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
 };
 
 const registerUser = async (req, res) => {
-  try {
-    const { email, name, password } = req.body;
+	try {
+		let { email, name, password } = req.body;
+		if (!email || !name || !password)
+			return res
+				.status(400)
+				.json({ message: "Todos os campos são obrigatórios" });
 
-    const existingUser = await knex("users").where({ email }).first();
+		email = email.toLowerCase();
 
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "E-mail já cadastrado para outro usuário." });
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
+		const hashedPassword = await bcrypt.hash(password, 10);
 
-    await knex("users").insert({
-      name,
-      email,
-      password: hashedPassword,
-    });
+		await knex("users").insert({ name, email, password: hashedPassword });
 
-    res.status(201).json({ message: "Usuário cadastrado com sucesso." });
-  } catch (error) {
-    res.status(500).json({ message: "Ocorreu um erro interno." });
-  }
+		res.status(201).json({ message: "Usuário cadastrado com sucesso." });
+	} catch (error) {
+		res
+			.status(500)
+			.json({ message: "Ocorreu um erro interno ao cadastrar usuário." });
+	}
 };
 
 module.exports = { registerUser, validateEmail };
