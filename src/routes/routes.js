@@ -18,6 +18,7 @@ const validateEdit = require("../middlewares/validateUpdate");
 const registerCostumer = require("../controllers/costumers/registerCostumer");
 const getCostumers = require("../controllers/costumers/getCostumers");
 const validateRouts = require("../errors/validateRouts");
+const validateRegisterCostumer = require("../middlewares/validateRegisterCostumer");
 
 routes.get("/user", verifyToken, getUser);
 routes.get("/users", getUsers);
@@ -28,7 +29,12 @@ routes.post("/login", validateLogin, loginUser);
 routes.put("/user/edit", verifyToken, validateEdit, editUser);
 
 routes.get("/costumers", verifyToken, getCostumers);
-routes.post("/costumer/signup", verifyToken, registerCostumer);
+routes.post(
+	"/costumer/signup",
+	verifyToken,
+	validateRegisterCostumer,
+	registerCostumer
+);
 
 routes.use(validateRouts);
 
