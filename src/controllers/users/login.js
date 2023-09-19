@@ -1,21 +1,16 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const knex = require("../database/connection/connection");
-const senhaHash = require("../utils/senhaHash");
+const knex = require("../../database/connection/connection");
+const senhaHash = require("../../utils/senhaHash");
 
 const loginUser = async (req, res) => {
 	try {
-		const { email, password } = req.body;
+		let { email, password } = req.body;
+		email = email.toLowerCase();
 
 		const user = await knex("users").where({ email }).first();
 
-		if (!user) {
-			return res.status(401).json({ message: "Email ou senha incorretos." });
-		}
-
-		const passwordMatch = await bcrypt.compare(password, user.password);
-
-		if (!passwordMatch) {
+		if (!user || !(await bcrypt.compare(password, user.password))) {
 			return res.status(401).json({ message: "Email ou senha incorretos." });
 		}
 
@@ -25,7 +20,7 @@ const loginUser = async (req, res) => {
 
 		const { password: _, ...userData } = user;
 
-		res.status(200).json({ userData, token });
+		res.json({ userData, token });
 	} catch (error) {
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}

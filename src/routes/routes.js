@@ -1,27 +1,44 @@
-const express = require("express");
-const routes = express();
-const registerUser = require("../controllers/registerUser");
-const loginUser = require("../controllers/login");
-const validateLogin = require("../middlewares/validateLogin");
-const validate = require("../middlewares/validateRegister");
-const verifyToken = require("../middlewares/validateToken");
-const getUser = require("../controllers/getUser");
-const editUser = require("../controllers/updateUser");
-const validateEdit = require("../middlewares/validateUpdate");
-const getUsers = require("../controllers/getUsers");
-const registerCostumer = require("../controllers/registerCostumer");
-const validateRouts = require("../errors/validateRouts");
-const getCostumers = require("../controllers/getCostumers");
+// const express = require("express");
+// const routes = express();
 
-routes.get("/users", getUsers);
-routes.post("/signup", validate, registerUser);
-routes.post("/login", validateLogin, loginUser);
-routes.get("/user", verifyToken, getUser);
-routes.put("/user/edit", verifyToken, validateEdit, editUser);
+// const getUser = require("../controllers/users/getUser");
+// const getUsers = require("../controllers/users/getUsers");
+// const {
+// 	registerUser,
+// 	validateEmail,
+// } = require("../controllers/users/registerUser");
+// const loginUser = require("../controllers/users/login");
+// const editUser = require("../controllers/users/updateUser");
 
-routes.post("/costumer/signup", verifyToken, registerCostumer);
-routes.get("/costumers", verifyToken, getCostumers);
+// const validateLogin = require("../middlewares/validateLogin");
+// const validateRegister = require("../middlewares/validateRegister");
+// const verifyToken = require("../middlewares/validateToken");
+// const validateEdit = require("../middlewares/validateUpdate");
 
-routes.use(validateRouts);
+// const registerCostumer = require("../controllers/costumers/registerCostumer");
+// const getCostumers = require("../controllers/costumers/getCostumers");
+// const validateRouts = require("../errors/validateRouts");
+// const validateRegisterCostumer = require("../middlewares/validateRegisterCostumer");
+// const getCostumerCep = require("../controllers/costumers/getCostumerCep");
 
-module.exports = routes;
+// routes.get("/user", verifyToken, getUser);
+// routes.get("/users", getUsers);
+
+// routes.post("/validateEmail", validateEmail);
+// routes.post("/signup", validateRegister, registerUser);
+// routes.post("/login", validateLogin, loginUser);
+// routes.put("/user/edit", verifyToken, validateEdit, editUser);
+
+// routes.get("/costumers", verifyToken, getCostumers);
+// routes.post(
+// 	"/costumer/signup",
+// 	verifyToken,
+// 	validateRegisterCostumer,
+// 	registerCostumer
+// );
+
+// routes.get("/getCostumerCep", getCostumerCep);
+
+// routes.use(validateRouts);
+
+// module.exports = routes;

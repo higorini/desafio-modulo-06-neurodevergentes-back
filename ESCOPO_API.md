@@ -91,6 +91,48 @@ O endpoint permite listar os usuários ja cadastrdos no sistema. Ele retornará 
     ```
 <br/>
 
+### Verificar E-mail ja existente
+
+O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no banco de dados.
+
+#### Requisição
+
+- **Método:** `POST`
+- **Rota:** `/validateEmail`
+
+#### Corpo da Requisição
+
+- `email` (string, obrigatório): Endereço de e-mail do usuário.
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta caso E-mail **disponível**:
+
+    ```json
+    {
+      "message": "E-mail disponível para cadastro.",
+    }
+    ```
+
+  -  Corpo da Resposta caso E-mail **indisponível**:
+  
+      ```json
+      {
+        "message": "E-mail disponível para cadastro.",
+      }
+      ```
+
+- **Erro (500 Internal Server Error)**
+  - Corpo da Resposta:
+
+    ```json
+    {
+      "message": "Ocorreu um erro interno."
+    }
+    ```
+<br/>
+
 ### Cadastro do Usuário
 
 O endpoint permite o cadastro de um novo usuário no sistema.

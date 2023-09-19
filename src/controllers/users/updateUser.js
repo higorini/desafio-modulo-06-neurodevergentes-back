@@ -1,10 +1,12 @@
-const knex = require("../database/connection/connection");
+const knex = require("../../database/connection/connection");
 const bcrypt = require("bcrypt");
 
 const editUser = async (req, res) => {
 	try {
 		let { name, email, password, cpf, phone } = req.body;
 		const { id } = req.user;
+
+		email = email.toLowerCase();
 
 		const existingUser = await knex("users").where({ email }).first();
 
@@ -13,21 +15,13 @@ const editUser = async (req, res) => {
 				.status(400)
 				.json({ message: "E-mail já cadastrado para outro usuário." });
 		}
-		if (password) {
-			password = await bcrypt.hash(password, 10);
-		}
+		const updateData = { name, email, cpf, phone };
 
-		await knex("users").where({ id }).update({
-			name,
-			email,
-			password,
-			cpf,
-			phone,
-		});
+		password && (updateData.password = await bcrypt.hash(password, 10));
 
-		return res
-			.status(200)
-			.json({ message: "Dados do usuário atualizados com sucesso." });
+		await knex("users").where({ id }).update(updateData);
+
+		return res.json({ message: "Dados do usuário atualizados com sucesso." });
 	} catch (erro) {
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}

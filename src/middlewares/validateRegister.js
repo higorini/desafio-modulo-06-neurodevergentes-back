@@ -1,18 +1,13 @@
-const { schemaValidateRegister } = require("../schemas/schemaValidateUser");
+const { schemaValidatePassword } = require("../schemas/schemaValidateUser");
 
-const validate = async (req, res, next) => {
-	const { name, email, password } = req.body;
+const validateRegister = async (req, res, next) => {
+	const { password } = req.body;
 	try {
-		if (!name & !email & !password) {
-			return res
-				.status(400)
-				.json({ message: "Todos os campos são obrigatórios" });
-		}
-		await schemaValidateRegister.validateAsync({ name, email, password });
+		await schemaValidatePassword.validateAsync({ password });
 		next();
 	} catch (erro) {
 		res.status(400).json({ message: erro.message });
 	}
 };
 
-module.exports = validate;
+module.exports = validateRegister;
