@@ -405,14 +405,11 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - **Método:** `GET`
 - **Rota:** `/getCostumerCep`
 
-#### Header da Requisição
-- `token` (string, obrigatório): Token gerado após login.
-
 #### Corpo da Requisição
 
 - `cep` (string, obrigatório): Nome do cep do usuario.
 
-- **Sucesso (201 Created)**
+- **Sucesso (200 OK)**
   - Corpo da Resposta:
     ```json
     {
@@ -424,16 +421,10 @@ O endpoint permite o cadastro de um novo cliente no sistema.
       "state": "CE"
     }
     ```
-- **Erro (400 Bad Request)**
-  - Corpo da Resposta:
-    ```json
-    {
-      "message": "Passe uma string na requisição."
-    }
-    ```
+- **Erro (500 Internal Server Error)**
     - Corpo da Resposta:
     ```json
     {
-      "message": "Cep Inválido."
+      "message": "Erro interno do Servidor!"
     }
     ```
