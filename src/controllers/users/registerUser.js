@@ -12,7 +12,6 @@ const validateEmail = async (req, res) => {
 		email = email.toLowerCase();
 
 		await schemaValidateEmail.validateAsync({ email });
-		await schemaValidateName.validateAsync({ name });
 
 		const existingUser = await knex("users").where({ email }).first();
 

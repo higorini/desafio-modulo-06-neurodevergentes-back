@@ -1,6 +1,6 @@
 const api = require("../../services/apiCorreios");
 
-const getCep = async (req, res) => {
+const getCostumerCep = async (req, res) => {
 	const { cep } = req.body;
 
 	const cepClean = cep.split('').map((number) =>  {
@@ -24,4 +24,4 @@ const getCep = async (req, res) => {
 	}
 };
 
-module.exports = getCep;
+module.exports = getCostumerCep;
