@@ -4,8 +4,8 @@ const routes = express();
 const getUser = require("../controllers/users/getUser");
 const getUsers = require("../controllers/users/getUsers");
 const {
-  registerUser,
-  validateEmail,
+	registerUser,
+	validateEmail,
 } = require("../controllers/users/registerUser");
 const loginUser = require("../controllers/users/login");
 const editUser = require("../controllers/users/updateUser");
@@ -18,6 +18,8 @@ const validateEdit = require("../middlewares/validateUpdate");
 const registerCostumer = require("../controllers/costumers/registerCostumer");
 const getCostumers = require("../controllers/costumers/getCostumers");
 const validateRouts = require("../errors/validateRouts");
+const validateRegisterCostumer = require("../middlewares/validateRegisterCostumer");
+const getCep = require("../controllers/costumers/getCep");
 
 routes.get("/user", verifyToken, getUser);
 routes.get("/users", getUsers);
@@ -28,7 +30,14 @@ routes.post("/login", validateLogin, loginUser);
 routes.put("/user/edit", verifyToken, validateEdit, editUser);
 
 routes.get("/costumers", verifyToken, getCostumers);
-routes.post("/costumer/signup", verifyToken, registerCostumer);
+routes.post(
+	"/costumer/signup",
+	verifyToken,
+	validateRegisterCostumer,
+	registerCostumer
+);
+
+routes.get("/getCep", getCep);
 
 routes.use(validateRouts);
 
