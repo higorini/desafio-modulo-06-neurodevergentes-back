@@ -399,3 +399,32 @@ O endpoint permite o cadastro de um novo cliente no sistema.
       "message": "E-mail informado já existe cadastrado para outro cliente."
     }
     ```
+
+### Preenhcimento automatico do CEP
+
+- **Método:** `GET`
+- **Rota:** `/getCostumerCep`
+
+#### Corpo da Requisição
+
+- `cep` (string, obrigatório): Numero do cep do usuario.
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta:
+    ```json
+    {
+      "cep": "62031-175",
+      "public_place": "Rua Luís Santos Aquino",
+      "complement": "",
+      "neighborhood": "Cidade Dr. José Euclides Ferreira Gomes Júnior",
+      "city": "Sobral",
+      "state": "CE"
+    }
+    ```
+- **Erro (500 Internal Server Error)**
+    - Corpo da Resposta:
+    ```json
+    {
+      "message": "Erro interno do Servidor!"
+    }
+    ```
