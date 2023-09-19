@@ -19,6 +19,7 @@ const registerCostumer = require("../controllers/costumers/registerCostumer");
 const getCostumers = require("../controllers/costumers/getCostumers");
 const validateRouts = require("../errors/validateRouts");
 const validateRegisterCostumer = require("../middlewares/validateRegisterCostumer");
+const getCep = require("../controllers/costumers/getCep");
 
 routes.get("/user", verifyToken, getUser);
 routes.get("/users", getUsers);
@@ -35,6 +36,8 @@ routes.post(
 	validateRegisterCostumer,
 	registerCostumer
 );
+
+routes.get("/getCep", getCep);
 
 routes.use(validateRouts);
 
