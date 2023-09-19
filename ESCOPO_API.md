@@ -399,3 +399,41 @@ O endpoint permite o cadastro de um novo cliente no sistema.
       "message": "E-mail informado já existe cadastrado para outro cliente."
     }
     ```
+
+### Preenhcimento automatico do CEP
+
+- **Método:** `GET`
+- **Rota:** `/getCostumerCep`
+
+#### Header da Requisição
+- `token` (string, obrigatório): Token gerado após login.
+
+#### Corpo da Requisição
+
+- `cep` (string, obrigatório): Nome do cep do usuario.
+
+- **Sucesso (201 Created)**
+  - Corpo da Resposta:
+    ```json
+    {
+      "cep": "62031-175",
+      "public_place": "Rua Luís Santos Aquino",
+      "complement": "",
+      "neighborhood": "Cidade Dr. José Euclides Ferreira Gomes Júnior",
+      "city": "Sobral",
+      "state": "CE"
+    }
+    ```
+- **Erro (400 Bad Request)**
+  - Corpo da Resposta:
+    ```json
+    {
+      "message": "Passe uma string na requisição."
+    }
+    ```
+    - Corpo da Resposta:
+    ```json
+    {
+      "message": "Cep Inválido."
+    }
+    ```
