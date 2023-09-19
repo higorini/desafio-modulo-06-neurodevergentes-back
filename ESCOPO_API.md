@@ -103,6 +103,7 @@ O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no
 #### Corpo da Requisição
 
 - `email` (string, obrigatório): Endereço de e-mail do usuário.
+- `name` (string, obrigatório): Nome do usuário.
 
 #### Exemplos de Respostas
 
@@ -114,14 +115,6 @@ O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no
       "message": "E-mail disponível para cadastro.",
     }
     ```
-
-  -  Corpo da Resposta caso E-mail **indisponível**:
-  
-      ```json
-      {
-        "message": "E-mail disponível para cadastro.",
-      }
-      ```
 
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
