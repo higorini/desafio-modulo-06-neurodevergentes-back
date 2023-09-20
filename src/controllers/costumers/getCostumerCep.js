@@ -8,6 +8,9 @@ const getCostumerCep = async (req, res) => {
 
 		const { data } = await apiViaCep.get(`${cepClean}/json/`);
 
+		if (data.erro)
+			return res.json({ message: "Cep não encontrado na base de dados" });
+
 		const newData = {
 			cep: data.cep,
 			public_place: data.logradouro,

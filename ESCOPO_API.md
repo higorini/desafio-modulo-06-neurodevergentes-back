@@ -396,9 +396,9 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 ### Preenhcimento automatico do CEP
 
 - **Método:** `GET`
-- **Rota:** `/getCostumerCep`
+- **Rota:** `/getCostumerCep/:cep`
 
-#### Corpo da Requisição
+#### Parâmetro da Requisição
 
 - `cep` (string, obrigatório): Numero do cep do usuario.
 
@@ -414,10 +414,10 @@ O endpoint permite o cadastro de um novo cliente no sistema.
       "state": "CE"
     }
     ```
-- **Erro (500 Internal Server Error)**
+- **Erro (400 Bad Request)**
     - Corpo da Resposta:
     ```json
     {
-      "message": "Erro interno do Servidor!"
+      "message": "Falha na requisição da api" 
     }
     ```
