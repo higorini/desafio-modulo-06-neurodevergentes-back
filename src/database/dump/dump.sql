@@ -23,5 +23,15 @@ create table costumers(
   neighborhood text,
   city varchar(20),
   state varchar(20),
-  status text not null
+  status boolean not null
 ); 
+
+create table charges(
+  id serial primary key,
+  costumer_id integer not null references costumers(id),
+  costumer_name text not null,
+  description text not null,
+  status integer not null,
+  value decimal not null,
+  maturity date not null
+);
