@@ -1,7 +1,7 @@
 const schemaValidateCep = require("../schemas/schemaValidateCep");
 
 const validateCep = async (req, res, next) => {
-	const { cep } = req.body;
+	const { cep } = req.params;
 
 	try {
 		await schemaValidateCep.validateAsync({ cep });

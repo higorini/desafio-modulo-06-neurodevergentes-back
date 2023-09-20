@@ -1,7 +1,7 @@
 const apiViaCep = require("../../services/apiViaCep");
 
 const getCostumerCep = async (req, res) => {
-	const { cep } = req.body;
+	const { cep } = req.params;
 
 	try {
 		const cepClean = cep.replace("-", "");

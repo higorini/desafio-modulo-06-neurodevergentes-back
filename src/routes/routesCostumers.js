@@ -8,7 +8,7 @@ const validateRegisterCostumer = require("../middlewares/validateRegisterCostume
 const registerCostumer = require("../controllers/costumers/registerCostumer");
 const validateCep = require("../middlewares/validateCep");
 
-routesCotumers.get("/getCostumerCep", validateCep, getCostumerCep);
+routesCotumers.get("/getCostumerCep/:cep", validateCep, getCostumerCep);
 
 routesCotumers.get("/costumers", verifyToken, getCostumers);
 routesCotumers.post(
