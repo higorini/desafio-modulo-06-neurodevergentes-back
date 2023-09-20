@@ -103,6 +103,7 @@ O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no
 #### Corpo da Requisição
 
 - `email` (string, obrigatório): Endereço de e-mail do usuário.
+- `name` (string, obrigatório): Nome do usuário.
 
 #### Exemplos de Respostas
 
@@ -114,14 +115,6 @@ O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no
       "message": "E-mail disponível para cadastro.",
     }
     ```
-
-  -  Corpo da Resposta caso E-mail **indisponível**:
-  
-      ```json
-      {
-        "message": "E-mail disponível para cadastro.",
-      }
-      ```
 
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
@@ -403,9 +396,9 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 ### Preenhcimento automatico do CEP
 
 - **Método:** `GET`
-- **Rota:** `/getCostumerCep`
+- **Rota:** `/getCostumerCep/:cep`
 
-#### Corpo da Requisição
+#### Parâmetro da Requisição
 
 - `cep` (string, obrigatório): Numero do cep do usuario.
 
@@ -421,10 +414,10 @@ O endpoint permite o cadastro de um novo cliente no sistema.
       "state": "CE"
     }
     ```
-- **Erro (500 Internal Server Error)**
+- **Erro (400 Bad Request)**
     - Corpo da Resposta:
     ```json
     {
-      "message": "Erro interno do Servidor!"
+      "message": "Falha na requisição da api" 
     }
     ```
