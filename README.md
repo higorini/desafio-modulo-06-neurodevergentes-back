@@ -217,8 +217,6 @@ E portanto o Pull Request de **FRONTEND** deverá ser criado a partir do fork de
 
 ---
 
----
-
 <br>
 
 <b>[Figma Desafio M05 - Sprint 2](https://www.figma.com/file/QC6OOO8qc7ZP2kLuybs4Wh/M05-SPRINT-02)</b>
