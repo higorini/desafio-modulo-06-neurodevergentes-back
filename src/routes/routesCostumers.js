@@ -6,8 +6,9 @@ const verifyToken = require("../middlewares/validateToken");
 const getCostumers = require("../controllers/costumers/getCostumers");
 const validateRegisterCostumer = require("../middlewares/validateRegisterCostumer");
 const registerCostumer = require("../controllers/costumers/registerCostumer");
+const validateCep = require("../middlewares/validateCep");
 
-routesCotumers.get("/getCostumerCep", getCostumerCep);
+routesCotumers.get("/getCostumerCep", validateCep, getCostumerCep);
 
 routesCotumers.get("/costumers", verifyToken, getCostumers);
 routesCotumers.post(
@@ -16,6 +17,5 @@ routesCotumers.post(
 	validateRegisterCostumer,
 	registerCostumer
 );
-
 
 module.exports = routesCotumers;
