@@ -217,6 +217,147 @@ E portanto o Pull Request de **FRONTEND** deverá ser criado a partir do fork de
 
 ---
 
+<br>
+
+<b>[Figma Desafio M05 - Sprint 2](https://www.figma.com/file/QC6OOO8qc7ZP2kLuybs4Wh/M05-SPRINT-02)</b>
+
+<br>
+
+<details>
+<summary>2ª Sprint</summary>
+<br>
+
+<details>
+<summary><b>[Cliente] Listagem do cliente</b></summary>
+<br>
+
+### `Na posição de usuário do sistema, desejo visualizar uma listagem com todos os clientes cadastrados.`
+
+- <b>Critérios de aceite</b>
+- A página deverá funcionar em um navegador web padrão.
+- Apenas <b>usuários autenticados</b> deverão conseguir acessar esta página
+  - Ao clicar no item <b>"clientes"</b> do menu lateral deverá ser redirecionado para uma página com a listagem de todos os clientes cadastrados no sistema.
+  - Deverá existir um botão</b> "Adicionar Cliente"</b>, que ao clicado, será aberto um modal para cadastro de cliente.
+  - Na listagem de clientes, cada item deverá mostrar:
+  - O nome do cliente
+  - O e-mail do cliente
+  - O telefone do cliente
+  - CPF
+  - Status
+    - Se houver alguma cobrança vencida (com status <b>pendente</b> e com data de vencimento anterior a data atual), deverá exibir <b>"Inadimplente"</b>, caso contrário, deverá exibir "Em dia".
+  - Botão de atalho, dentro da listagem, para <b>"adicionar cobranças"</b>
+- Cada nome do cliente na listagem deverá poder ser clicado de forma que ao fazê-lo, abra uma página com todos os detalhes do cliente
+
+</details>
+
+<details>
+<summary><b>[Cliente] Detalhamento do cliente</b></summary>
+
+#### `Na posição de usuário do sistema, desejo visualizar todos os detalhes de um cliente cadastrado, a fim de consultar seus dados e suas respectivas cobranças.`
+
+- <b>Critérios de aceite</b>:
+  - A página deverá funcionar em um navegador web padrão.
+  - Apenas usuários autenticados deverão conseguir acessar esta página
+  - Ao clicar no nome do cliente na listagem deverá abrir uma nova página com todos os detalhes do cliente clicado
+  - A página deverá mostrar <b/>2 cards:</b>
+    - O <b>primeiro</b> com um botão para editar cliente (ao clicar no botão, deverá abrir um modal de edição do cliente e os campos do formulário preenchidos com seus respectivos dados) e os dados do cliente:
+    - Um título com o nome do cliente
+    - CPF
+    - E-mail
+    - Telefone
+    - Endereço completo
+    - O <b>segundo</b> com um botão para adicionar nova cobrança e a listagem de cobranças para o cliente em questão. Cada listagem deverá mostrar:
+      - Identificador da Cobrança
+      - Descrição
+      - Data
+      - Valor
+      - Status
+      - Descrição
+
+</details>
+
+<details>
+<summary><b>[Cliente] Atualização do cliente</b></summary>
+
+#### `Na posição de usuário do sistema, desejo atualizar os dados de um cliente cadastrado.`
+
+- <b>Critérios de aceite:</b>
+  - O formulário deverá ser aberto através de um clique no <b>ícone de editar</b> no detalhe de clientes.
+  - A atualização deverá funcionar em formulário web que funcione em um navegador padrão.
+  - Ao abrir o formulário, <b>os dados do cliente deverão ser carregados nos respectivos campos</b>
+  - Para acessar este formulário de cadastro será exigido <b>autenticação</b>
+  - Os dados da atualização deverão ser persistidos de maneira que possam ser consultados em qualquer momento no futuro até que sejam excluídos.
+  - Na atualização do cliente, poderá atualizar os respectivos dados a seguir (campos com <b>\*</b> são obrigatórios):
+    - Nome (<b>\*</b>)
+    - E-mail (<b>\*</b>)
+    - CPF (<b>\*</b>)
+    - Telefone (<b>\*</b>)
+    - CEP
+    - Endereço
+    - Complemento
+    - Bairro
+    - Cidade
+    - Estado
+  - Deverão ser informadas <b>mensagens de erro</b> em casos de:
+    - Campos obrigatórios passados em branco
+    - E-mail informado for diferente do cliente em questão e já existir cadastrado para outro cliente
+    - CPF informado for diferente do cliente em questão e já existir cadastrado para outro cliente
+  - Após realizado a atualização com sucesso o usuário deverá receber uma mensagem de confirmação
+
+</details>
+
+<details>
+<summary><b>[Cobranças] Cadastro de cobranças</b></summary>
+
+#### `Na posição de usuário do sistema, desejo cadastrar cobranças para um cliente, afim de acessar suas informações no futuro.`
+
+- <b>Critérios de aceite</b>
+  - O cadastro deverá funcionar em formulário web que funcione em um navegador padrão
+  - Para acessar este formulário de cadastro deverá ser exigida autenticação
+  - Os dados do cadastro deverão ser persistidos de maneira que possam ser consultados em qualquer momento no futuro até que sejam excluídos.
+  - O cadastro de cobrança deverá ser exibido em modal.
+  - Para abrir este modal do cadastro de cobrança, o usuário deverá poder proceder de uma das duas formas:
+    - Clique no ícone de cadastrar cobrança, da coluna <b>"Criar Cobrança"</b> da listagem de clientes.
+    - Clique no botão <b>"+ Nova Cobrança"</b> da listagem de cobranças da tela de detalhamento do cliente.
+  - Campos necessários para o cadastro (<b>\*</b> obrigatórios):
+    - Cliente (<b>\*</b>)
+      - Deverá ser um campo de texto somente leitura exibindo o nome do cliente para o qual se está cadastrando a cobrança.
+    - Descrição (<b>\*</b>)
+    - Status (<b>\*</b>)
+    - Deverá existir duas opções: <b>"pago" e "pendente"</b>
+    - Valor (<b>\*</b>)
+    - Vencimento (<b>\*</b>)
+  - Deverão ser informadas <b>mensagens de erro</b> em casos de:
+    - Campos obrigatórios em branco
+  - Após realizado o <b>cadastro com sucesso</b> o usuário deverá receber uma mensagem de confirmação.
+
+</details>
+
+<details>
+<summary><b>[Cobranças] Listagem de cobranças</b></summary>
+
+#### `Na posição de usuário do sistema, desejo visualizar uma listagem com todos as cobranças cadastradas.`
+
+- <b>Critérios de aceite</b>:
+  - A página deverá funcionar em um navegador web padrão.
+  - Apenas usuários autenticados deverão conseguir acessar esta página
+  - Ao clicar no item <b>"cobranças"</b> do menu lateral, deverá ser redirecionado para uma página com a listagem de todas as cobranças cadastradas no sistema.
+  - Na listagem de cobranças, cada item deverá mostrar:
+    - O identificador da cobrança
+    - O nome do cliente
+    - Descrição
+    - Valor
+    - Vencimento
+    - Status
+    - Pendente
+    - Pago
+    - Vencido (Caso o status seja pendente e a data de vencimento for anterior a data atual)
+
+</details>
+
+</details>
+
+
 ## <b>ATENÇÃO</b> É indispensável fazer deploy do projeto e disponibilizar a URL para o cliente realizar os testes. O não cumprimento desta etapa será considerada uma falha grave.
 
 </details>
