@@ -31,6 +31,6 @@ create table charges(
   costumer_id integer not null references costumers(id),
   description text not null,
   status integer not null,
-  value decimal not null,
+  value integer not null,
   maturity date not null
 );
