@@ -3,7 +3,7 @@ const {
 	schemaValidateName,
 } = require("../schemas/schemaValidateUser");
 
-const schemaValidateCostumer = require("../schemas/schemaValidateCostumer");
+const schemaValidateCostumer = require("../schemas/schemaRegisterCostumer");
 
 const validateRegisterCostumer = async (req, res, next) => {
 	let { name, email, cpf, phone, status } = req.body;
