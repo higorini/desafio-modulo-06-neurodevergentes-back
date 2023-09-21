@@ -572,9 +572,9 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
 #### Corpo da Requisição
 
 - `description` (string, obrigatório): Descrição da cobrança.
-- `value` (integer, obrigatório): Valor da cobrança.
+- `value` (boolean, obrigatório): Valor da cobrança.
 - `status` (integer, obrigatório): Status da cobrança.
-- `maturity` (date, obrigatório): Data de vencimento da cobrança.
+- `charge_date` (date, obrigatório): Data de vencimento da cobrança.
 
 #### Exemplos de Respostas
 
@@ -582,12 +582,13 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
   - Corpo da Resposta:
     ```json
     {  
-	    "id":3,
-	    "customer_id":2,
-	    "description":"conta de água",
-	    "value":198764,
-	    "status":1,
-	    "maturity":"10/02/2022"
+        "id":3,
+        "customer_id":2,
+        "costumer_name": "Mariana",
+        "description":"conta de água",
+        "value":198764,
+        "status": true,
+        "charge_date":"2023-09-22"
     }
     ```
 - **Erro (500 Internal Server Error)**

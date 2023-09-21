@@ -29,8 +29,9 @@ create table costumers(
 create table charges(
   id serial primary key,
   costumer_id integer not null references costumers(id),
+  costumer_name text not null,
   description text not null,
-  status integer not null,
+  status boolean not null,
   value integer not null,
-  maturity date not null
+  charge_date date not null
 );
