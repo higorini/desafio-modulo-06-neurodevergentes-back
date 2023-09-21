@@ -1,6 +1,6 @@
 const apiViaCep = require("../../services/apiViaCep");
 
-const getCostumerCep = async (req, res) => {
+const getCostumerCep = async (req, res) => { 
 	const { cep } = req.params;
 
 	try {
