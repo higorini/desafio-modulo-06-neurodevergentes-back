@@ -2,6 +2,7 @@ const express = require("express");
 const routesUsers = express();
 
 const getUsers = require("../controllers/users/getUsers");
+const validateRequest = require("../middlewares/validateRequest");
 const validateEmail = require("../controllers/users/validateEmail");
 const registerUser = require("../controllers/users/registerUser");
 const loginUser = require("../controllers/users/login");
@@ -9,7 +10,7 @@ const verifyToken = require("../middlewares/validateToken");
 const getUser = require("../controllers/users/getUser");
 const validateEdit = require("../middlewares/validateUpdate");
 const editUser = require("../controllers/users/updateUser");
-const validateRequest = require("../middlewares/validateRequest");
+
 const schemaRegisterUser = require("../schemas/schemaRegisterUser");
 const schemaVerifyEmail = require("../schemas/schemaVerifyEmail");
 const schemaLoginUser = require("../schemas/schemaLoginUser");
