@@ -10,7 +10,7 @@ const getUsers = async (req, res) => {
 
     return res.status(200).json(usersData);
   } catch (error) {
-    res.status(500).json({ message: "Ocorreu um erro interno." });
+    return res.status(500).json({ message: "Ocorreu um erro interno." });
   }
 };
 

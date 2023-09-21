@@ -1,29 +1,28 @@
 const knex = require("../../database/connection/connection");
-const validateCharge = require("../../schemas/schemaValidateCharge");
 
 const postCharges = async (req, res) => {
     const { idCostumer } = req.params;
 
     const {
+        costumer_name,
         description,
-        value,
         status,
-        maturity } = req.body;
+        value,
+        charge_date } = req.body;
 
     try {
 
-        await validateCharge.validateAsync(req.body);
-
-        const costumer = await knex('costumers').where('id', idCostumer).first();
+        const costumer = await knex("costumers").where("id", idCostumer).first();
 
         if (!costumer) return res.status(404).json({ message: "Cliente não econtrado!" });
 
-        const newCharge = await knex('charges').insert({
+        const newCharge = await knex("charges").insert({
             costumer_id: idCostumer,
+            costumer_name,
             description,
             status,
             value,
-            maturity
+            charge_date
         }).returning("*");
 
         return res.status(200).json(newCharge);
