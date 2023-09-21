@@ -583,7 +583,7 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
     ```json
     {  
         "id":3,
-        "customer_id":2,
+        "costumer_id":2,
         "costumer_name": "Mariana",
         "description":"conta de água",
         "value":198764,
