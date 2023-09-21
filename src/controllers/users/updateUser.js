@@ -6,8 +6,6 @@ const editUser = async (req, res) => {
 		let { name, email, password, cpf, phone } = req.body;
 		const { id } = req.user;
 
-		email = email.toLowerCase();
-
 		const existingUser = await knex("users").where({ email }).first();
 
 		if (existingUser && existingUser.id !== id) {
@@ -15,6 +13,7 @@ const editUser = async (req, res) => {
 				.status(400)
 				.json({ message: "E-mail já cadastrado para outro usuário." });
 		}
+		
 		const updateData = { name, email, cpf, phone };
 
 		password && (updateData.password = await bcrypt.hash(password, 10));

@@ -5,7 +5,6 @@ const validateRequest = require("../middlewares/validateRequest");
 const getCostumerCep = require("../controllers/costumers/getCostumerCep");
 const verifyToken = require("../middlewares/validateToken");
 const getCostumers = require("../controllers/costumers/getCostumers");
-
 const registerCostumer = require("../controllers/costumers/registerCostumer");
 
 const schemaValidateCep = require("../schemas/schemaValidateCep");
