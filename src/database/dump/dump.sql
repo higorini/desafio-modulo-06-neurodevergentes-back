@@ -29,6 +29,7 @@ create table costumers(
 create table charges(
   id serial primary key,
   costumer_id integer not null references costumers(id),
+  user_id integer not null references users(id),
   description text not null,
   status integer not null,
   value integer not null,
