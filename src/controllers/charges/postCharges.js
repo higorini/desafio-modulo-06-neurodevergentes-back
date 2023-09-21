@@ -1,4 +1,5 @@
 const knex = require("../../database/connection/connection");
+const validateCharge = require("../../schemas/schemaValidateCharge");
 
 const postCharges = async (req, res) => {
     const { idCostumer } = req.params;
@@ -9,14 +10,11 @@ const postCharges = async (req, res) => {
         status,
         maturity } = req.body;
 
-    if (!description || !value || !status || !maturity)
-        return res.status(400).json({ message: "Preencha todos os campos!" });
-
     try {
 
-        const costumer = await knex('costumers').where('id', idCostumer);
+        await validateCharge.validateAsync(req.body);
 
-        console.log(costumer);
+        const costumer = await knex('costumers').where('id', idCostumer).first();
 
         if (!costumer) return res.status(404).json({ message: "Cliente não econtrado!" });
 
