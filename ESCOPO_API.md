@@ -289,7 +289,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - `neighborhood` (string, opcional): Bairro do cliente.
 - `city` (string, opcional): Cidade do cliente.
 - `state` (string, opcional): Estado do cliente.
-- `status` (boolean, obrigatório): Situação do cliente.
+- `status` (string, obrigatório): Situação do cliente.
 
 #### Exemplos de Respostas
 
@@ -311,7 +311,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
                     "city": null,
                     "state": null
         },
-      "status": true
+      "status": "Em dia"
     }
     ```
 - **Erro (400 Bad Request)**
@@ -571,9 +571,10 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
 
 #### Corpo da Requisição
 
+- `costumer_name` (string, obrigatorio): Nome do Cliente.
 - `description` (string, obrigatório): Descrição da cobrança.
-- `value` (boolean, obrigatório): Valor da cobrança.
-- `status` (integer, obrigatório): Status da cobrança.
+- `value` (integer, obrigatório): Valor da cobrança.
+- `status` (string, obrigatório): Status da cobrança.
 - `charge_date` (date, obrigatório): Data de vencimento da cobrança.
 
 #### Exemplos de Respostas
@@ -587,7 +588,7 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
         "costumer_name": "Mariana",
         "description":"conta de água",
         "value":198764,
-        "status": true,
+        "status": "Pendente",
         "charge_date":"2023-09-22"
     }
     ```
