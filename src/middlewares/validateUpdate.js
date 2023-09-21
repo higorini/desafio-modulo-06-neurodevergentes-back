@@ -1,7 +1,7 @@
 const {
 	schemaValidateEmail,
 	schemaValidateName,
-} = require("../schemas/schemaValidateUser");
+} = require("../schemas/schemaRegisterUser");
 const validateEdit = async (req, res, next) => {
 	try {
 		let { name, email } = req.body;

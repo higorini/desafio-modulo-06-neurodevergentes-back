@@ -1,7 +1,7 @@
 const {
 	schemaValidateEmail,
 	schemaValidatePassword,
-} = require("../schemas/schemaValidateUser");
+} = require("../schemas/schemaRegisterUser");
 
 const validateLogin = async (req, res, next) => {
 	try {

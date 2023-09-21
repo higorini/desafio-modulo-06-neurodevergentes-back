@@ -5,8 +5,7 @@ const senhaHash = require("../../utils/senhaHash");
 
 const loginUser = async (req, res) => {
 	try {
-		let { email, password } = req.body;
-		email = email.toLowerCase();
+		const { email, password } = req.body;
 
 		const user = await knex("users").where({ email }).first();
 
