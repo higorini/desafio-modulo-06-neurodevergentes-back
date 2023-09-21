@@ -7,8 +7,8 @@ const schemaValidateCostumer = joi.object({
 		"string.empty": "Telefone é obrigatório",
 		"string.length": "Telefone deve ter 15 caracteres",
 	}),
-	status: joi.string().required().messages({
-		"string.base": "Status do cliente deve ser uma string",
+	status: joi.boolean().required().messages({
+		"boolean.base": "Status do cliente deve ser um boolean",
 		"any.required": "Status é obrigatório",
 		"string.empty": "Status é obrigatório",
 	}),
