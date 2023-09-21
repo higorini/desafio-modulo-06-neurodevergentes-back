@@ -463,7 +463,7 @@ O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim 
                       },
         "charges":[{    
                   "id":3,
-                  "customer":"josé",
+                  "customer":"jojo todinho",
                   "description":"conta de água",
                   "value":198764,
                   "status":1,
@@ -471,7 +471,7 @@ O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim 
                  },
                  {    
                   "id":4,
-                  "customer":"maria",
+                  "customer":"jojo todinho",
                   "description":"conta de luz",
                   "value":198764,
                   "status":3,
