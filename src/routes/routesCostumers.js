@@ -11,6 +11,8 @@ const getCustomerAndCharges = require("../controllers/costumers/getCostumer");
 
 const schemaValidateCep = require("../schemas/schemaValidateCep");
 const schemaRegisterCostumer = require("../schemas/schemaRegisterCostumer");
+const schemaUpdateCustomer = require("../schemas/schemaUpdateCostumer");
+const updateCustomer = require("../controllers/costumers/updateCostumer");
 
 routesCotumers.get(
 	"/getCostumerCep/:cep",
@@ -30,5 +32,10 @@ routesCotumers.post(
 	validateRequest(schemaRegisterCostumer),
 	registerCostumer
 );
-
+routesCotumers.put(
+	"/costumer/:costumerId/edit",
+	verifyToken,
+	validateRequest(schemaUpdateCustomer),
+	updateCustomer
+);
 module.exports = routesCotumers;
