@@ -12,18 +12,18 @@ const schemaUpdateUser = joi.object({
 		"string.email": "Por favor, forneça um endereço de e-mail válido.",
 	}),
 
-	password: joi.string().min(6).messages({
+	password: joi.string().trim().empty("").allow(null).optional().min(6).messages({
 		"any.required": "Senha é obrigatório",
 		"string.empty": "Senha é obrigatório",
 		"string.min": "A senha deve possuir pelo menos 6 caracteres"
 	}),
 
-	cpf: joi.string().min(11).messages({
+	cpf: joi.string().trim().empty("").allow(null).optional().min(11).messages({
 		"string.base": "O Telefone deve ser uma string",
 		"string.min": "O CPF deve conter no mínimo 11 dígitos"
 	}),
 
-	phone: joi.string().min(11).messages({
+	phone: joi.string().trim().empty("").allow(null).optional().min(11).messages({
 		"string.base": "O Telefone deve ser uma string",
 		"string.min": "Telefone deve no mínimo ter 11 caracteres"
 	}),

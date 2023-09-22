@@ -9,7 +9,6 @@ const updateCostumer = async (req, res) => {
 		let costumerData = req.body;
 
 		costumerData.name = capitalizeFullName(costumerData.name);
-		costumerData.status = capitalizeFullName(costumerData.status);
 
 		costumerData.email = costumerData.email.toLowerCase();
 

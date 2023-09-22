@@ -43,7 +43,7 @@ const schemaUpdateCustomer = joi.object({
 	complement: joi.string().trim().empty("").allow(null).optional(),
 	neighborhood: joi.string().trim().empty("").allow(null).optional(),
 	city: joi.string().trim().empty("").allow(null).optional(),
-	state: joi.string().trim().empty("").allow(null).optional(),
+	state: joi.string().trim().empty("").allow(null).optional(), 
 });
 
 module.exports = schemaUpdateCustomer;
