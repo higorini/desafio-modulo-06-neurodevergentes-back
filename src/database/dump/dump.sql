@@ -23,7 +23,7 @@ create table costumers(
   neighborhood text,
   city varchar(20),
   state varchar(20),
-  status boolean not null
+  status text not null
 ); 
 
 create table charges(
@@ -31,7 +31,7 @@ create table charges(
   costumer_id integer not null references costumers(id),
   costumer_name text not null,
   description text not null,
-  status boolean not null,
+  status text not null,
   value integer not null,
   charge_date date not null
 );
