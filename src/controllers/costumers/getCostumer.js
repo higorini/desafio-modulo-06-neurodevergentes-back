@@ -4,14 +4,18 @@ const getCostumersAndCharges = async (req, res) => {
 	try {
 		const { costumerId } = req.params;
 		const { id: userId } = req.user;
-		const costumer = await getCostumersById(costumerId, userId);
-		if (!costumer) {
+
+		const data = await knex("costumers")
+			.join("charges", "costumers.id", "=", "charges.costumer_id")
+			.select("*")
+			.where("costumers.id", costumerId)
+			.andWhere("costumers.user_id", userId);
+
+		if (data.length === 0) {
 			return res.status(404).json({ message: "Cliente não encontrado." });
 		}
 
-		const charges = await getChargesByCostumersId(costumerId);
-
-		const formattedData = formatData(costumer, charges);
+		const formattedData = formatData(data);
 
 		return res.json(formattedData);
 	} catch (error) {
@@ -19,43 +23,35 @@ const getCostumersAndCharges = async (req, res) => {
 	}
 };
 
-const getCostumersById = async (costumerId, userId) => {
-	return await knex("costumers")
-		.where({ id: costumerId, user_id: userId })
-		.first();
-};
-
-const getChargesByCostumersId = async (costumerId) => {
-	return await knex("charges").where({ costumer_id: costumerId });
-};
-
-const formatData = (costumer, charges) => {
-	return {
+const formatData = (data) => {
+	const formattedData = {
 		personalData: {
-			id: costumer.id,
-			name: costumer.name,
-			email: costumer.email,
-			cpf: costumer.cpf,
-			phone: costumer.phone,
+			id: data[0].costumer_id,
+			name: data[0].name,
+			email: data[0].email,
+			cpf: data[0].cpf,
+			phone: data[0].phone,
+			status: data[0].status,
 			address: {
-				cep: costumer.cep,
-				public_place: costumer.public_place,
-				complement: costumer.complement,
-				neighborhood: costumer.neighborhood,
-				city: costumer.city,
-				state: costumer.state,
+				cep: data[0].cep,
+				public_place: data[0].public_place,
+				complement: data[0].complement,
+				neighborhood: data[0].neighborhood,
+				city: data[0].city,
+				state: data[0].state,
 			},
-			status: costumer.status,
 		},
-		charges: charges.map((charge) => ({
-			id: charge.id,
-			costumer_name: costumer.name,
-			description: charge.description,
-			value: charge.value,
-			status: charge.status,
-			maturity: charge.maturity,
+		charges: data.map((row) => ({
+			id: row.charge_id,
+			customer_name: row.name,
+			description: row.description,
+			value: row.value,
+			status: row.charge_status,
+			maturity: row.maturity,
 		})),
 	};
+
+	return formattedData;
 };
 
 module.exports = getCostumersAndCharges;
