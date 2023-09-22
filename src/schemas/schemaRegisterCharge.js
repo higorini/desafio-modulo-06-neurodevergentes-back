@@ -13,8 +13,8 @@ const schemaRegisterCharge = joi.object({
 		"string.empty": "A descrição é obrigatória"
     }),
 
-    status: joi.boolean().required().messages({
-		"boolean.base": "Status do cliente deve ser um boolean",
+    status: joi.string().required().messages({
+		"string.base": "Status deve ser uma string",
 		"any.required": "Status é obrigatório",
 		"string.empty": "Status é obrigatório",
 	}),

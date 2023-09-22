@@ -28,8 +28,8 @@ const schemaRegisterCostumer = joi.object({
 		"string.length": "Telefone deve no mínimo ter 11 caracteres",
 	}),
 
-	status: joi.boolean().required().messages({
-		"boolean.base": "Status do cliente deve ser um boolean",
+	status: joi.string().required().messages({
+		"string.base": "Status do cliente deve ser string",
 		"any.required": "Status é obrigatório",
 		"string.empty": "Status é obrigatório",
 	})
