@@ -26,12 +26,6 @@ const schemaRegisterCostumer = joi.object({
 		"any.required": "Telefone é obrigatório",
 		"string.empty": "Telefone é obrigatório",
 		"string.length": "Telefone deve no mínimo ter 11 caracteres",
-	}),
-
-	status: joi.string().required().messages({
-		"string.base": "Status do cliente deve ser string",
-		"any.required": "Status é obrigatório",
-		"string.empty": "Status é obrigatório",
 	})
 });
 
