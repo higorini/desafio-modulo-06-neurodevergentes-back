@@ -1,4 +1,5 @@
 const knex = require("../../database/connection/connection");
+const capitalizeFullName = require("../../utils/capitalizeName");
 
 const registerCostumer = async (req, res) => {
 	const {
@@ -22,10 +23,12 @@ const registerCostumer = async (req, res) => {
 		if (costumer)
 			return res.status(400).json({ message: "Cliente já cadastrado." });
 
+		const newName = capitalizeFullName(name);
+
 		const newCostumer = await knex("costumers")
 			.insert({
 				user_id: id,
-				name,
+				name: newName,
 				email,
 				cpf,
 				phone,

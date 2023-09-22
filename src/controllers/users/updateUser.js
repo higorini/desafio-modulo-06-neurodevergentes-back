@@ -1,5 +1,6 @@
 const knex = require("../../database/connection/connection");
 const bcrypt = require("bcrypt");
+const capitalizeFullName = require("../../utils/capitalizeName");
 
 const editUser = async (req, res) => {
 	try {
@@ -13,8 +14,9 @@ const editUser = async (req, res) => {
 				.status(400)
 				.json({ message: "E-mail já cadastrado para outro usuário." });
 		}
-		
-		const updateData = { name, email, cpf, phone };
+		const newName = capitalizeFullName(name);
+
+		const updateData = { name: newName, email, cpf, phone };
 
 		password && (updateData.password = await bcrypt.hash(password, 10));
 
