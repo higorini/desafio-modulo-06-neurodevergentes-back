@@ -289,11 +289,10 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - `neighborhood` (string, opcional): Bairro do cliente.
 - `city` (string, opcional): Cidade do cliente.
 - `state` (string, opcional): Estado do cliente.
-- `status` (boolean, obrigatório): Situação do cliente.
+- `status` (string, obrigatório): Situação do cliente.
 
 #### Exemplos de Respostas
 
-Se boolean = true retornará "Em dia" se false retornará "Inadimplente".
 - **Sucesso (201 Created)**
   - Corpo da Resposta:
     ```json
@@ -302,9 +301,10 @@ Se boolean = true retornará "Em dia" se false retornará "Inadimplente".
       "user_id": 4,
       "name": "Carlos eduardo",
       "email": "eduardo@gmail.com",
-      "cpf": "234.456.456-87",
-      "phone": "(58) 9 6554-7878",
+      "cpf": "23445645687",
+      "phone": "58965547878",
       "address":{
+                    "cep": "62031175"
                     "public_place": null,
                     "complement": null,
                     "neighborhood": null,
@@ -342,7 +342,7 @@ Esse endpoint permite o preenchimento automático dos campos do endereço atrav�
   - Corpo da Resposta:
     ```json
     {
-      "cep": "62031-175",
+      "cep": "62031175",
       "public_place": "Rua Luís Santos Aquino",
       "complement": "",
       "neighborhood": "Cidade Dr. José Euclides Ferreira Gomes Júnior",
@@ -392,17 +392,17 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
         "user_id": 4,
         "name": "jojo todinho",
         "email": "jojo@gmail.com",
-        "cpf": "123;456.456-87",
-        "phone": "(55) 9 6554-7878",
-        "cep": null,
+        "cpf": "12345645687",
+        "phone": "55965547878",
         "address":{
+    		    "cep":"62031175",
                     "public_place": null,
                     "complement": null,
                     "neighborhood": null,
                     "city": null,
                     "state": null
                   },
-        "status": "Inadimplente"
+        "status": false
 	    },
       {
         "id": 8,
@@ -412,13 +412,14 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
         "cpf": "234.456.456-87",
         "phone": "(58) 9 6554-7878",
         "address":{
+    		    "cep":"62031175",
                     "public_place": null,
                     "complement": null,
                     "neighborhood": null,
                     "city": null,
                     "state": null
                   },
-        "status": "Em dia"
+        "status": true
       }
     ]
     ```
@@ -437,8 +438,10 @@ O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim 
 
 - **Método:** `GET`
 - **Rota:** `/costumers/:id`
+  
 #### Header da Requisição
 - `token` (string, obrigatório): Token gerado após login.
+  
 #### Exemplos de Respostas
 - **Sucesso (200 OK)**
   - Corpo da Resposta:
@@ -451,19 +454,19 @@ O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim 
                         "email": "jojo@gmail.com",
                         "cpf": "123.456.456-87",
                         "phone": "(55) 9 6554-7878",
-                        "cep": null,
                         "address":{
+    				    "cep": null,
                                     "public_place": null,
                                     "complement": null,
                                     "neighborhood": null,
                                     "city": null,
                                     "state": null
                                   },
-                        "status": "Inadimplente"
+                        "status": false
                       },
         "charges":[{    
                   "id":3,
-                  "customer":"jojo todinho",
+                  "customer_name":"jojo todinho",
                   "description":"conta de água",
                   "value":198764,
                   "status":1,
@@ -471,7 +474,7 @@ O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim 
                  },
                  {    
                   "id":4,
-                  "customer":"jojo todinho",
+                  "customer_name":"jojo todinho",
                   "description":"conta de luz",
                   "value":198764,
                   "status":3,
@@ -525,16 +528,17 @@ O endpoint permite atualizar os dados de um cliente cadastrado.
       "user_id": 4,
       "name": "Carlos eduardo",
       "email": "eduardo@gmail.com",
-      "cpf": "234.456.456-87",
-      "phone": "(58) 9 6554-7878",
+      "cpf": "23445645687",
+      "phone": "58965547878",
       "address":{
+    		    "cep":"62031175",
                     "public_place": null,
                     "complement": null,
                     "neighborhood": null,
                     "city": null,
                     "state": null
         },
-      "status": "Em dia"
+      "status": true
     }
     ```
 - **Erro (400 Bad Request)**
@@ -567,18 +571,25 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
 
 #### Corpo da Requisição
 
+- `costumer_name` (string, obrigatorio): Nome do Cliente.
 - `description` (string, obrigatório): Descrição da cobrança.
 - `value` (integer, obrigatório): Valor da cobrança.
-- `status` (integer, obrigatório): Status da cobrança.
-- `maturity` (date, obrigatório): Data de vencimento da cobrança.
+- `status` (string, obrigatório): Status da cobrança.
+- `charge_date` (date, obrigatório): Data de vencimento da cobrança.
 
 #### Exemplos de Respostas
 
 - **Sucesso (200 Ok)**
   - Corpo da Resposta:
     ```json
-    { 
-      "message":"Cobrança cadastrada com sucesso!" 
+    {  
+        "id":3,
+        "costumer_id":2,
+        "costumer_name": "Mariana",
+        "description":"conta de água",
+        "value":198764,
+        "status": "Pendente",
+        "charge_date":"2023-09-22"
     }
     ```
 - **Erro (500 Internal Server Error)**
@@ -609,22 +620,24 @@ O endpoint permite visualizar uma listagem com todas as cobranças cadastradas d
 - **Sucesso (200 Ok)**
   - Corpo da Resposta:
     ```json
-    [{    
-      "id":3,
-      "customer":"josé",
-      "description":"conta de água",
-      "value":198764,
-      "status":1,
-      "maturity":"10/02/2022"
-     },
-     {    
-      "id":4,
-      "customer":"maria",
-      "description":"conta de luz",
-      "value":198764,
-      "status":3,
-      "maturity":"03/01/2021"
-     }]
+    [
+	    {    
+		      "id":3,
+		      "customer":"josé",
+		      "description":"conta de água",
+		      "value":198764,
+		      "status":1,
+		      "maturity":"10/02/2022"
+	     },
+	     {    
+		      "id":4,
+		      "customer":"maria",
+		      "description":"conta de luz",
+		      "value":198764,
+		      "status":3,
+		      "maturity":"03/01/2021"
+	     }
+    ]
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
