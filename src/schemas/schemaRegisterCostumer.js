@@ -34,7 +34,6 @@ const schemaRegisterCostumer = joi.object({
 	neighborhood: joi.string().trim().allow("", null).optional(),
 	city: joi.string().trim().allow("", null).optional(),
 	state: joi.string().trim().allow("", null).optional(),
-	status: joi.string().trim().allow("", null).optional(),
 });
 
 module.exports = schemaRegisterCostumer;
