@@ -298,7 +298,6 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - `neighborhood` (string, opcional): Bairro do cliente.
 - `city` (string, opcional): Cidade do cliente.
 - `state` (string, opcional): Estado do cliente.
-- `status` (string, opcional): Situação do cliente.
 
 #### Exemplos de Respostas
 
@@ -306,21 +305,19 @@ O endpoint permite o cadastro de um novo cliente no sistema.
   - Corpo da Resposta:
     ```json
     {
-      "id": 8,
-      "user_id": 4,
-      "name": "Carlos eduardo",
-      "email": "eduardo@gmail.com",
-      "cpf": "23445645687",
-      "phone": "58965547878",
-      "address":{
-                    "cep": "62031175"
-                    "public_place": null,
-                    "complement": null,
-                    "neighborhood": null,
-                    "city": null,
-                    "state": null
-        },
-      "status": "Em dia"
+        "id": 34,
+        "user_id": 43,
+        "name": "Luciana",
+        "email": "luciana@gmail.com",
+        "cpf": "45638586294   ",
+        "phone": "88192657212",
+        "cep": null,
+        "public_place": null,
+        "complement": null,
+        "neighborhood": null,
+        "city": null,
+        "state": null,
+        "status": "Em dia"
     }
     ```
 - **Erro (400 Bad Request)**
@@ -451,6 +448,7 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
         "email": "jojo@gmail.com",
         "cpf": "123.456.456-87",
         "phone": "(55) 9 6554-7878",
+        "status": "Em dia",
         "address": {
           "cep": null,
           "public_place": null,
@@ -458,8 +456,7 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
           "neighborhood": null,
           "city": null,
           "state": null
-        },
-        "status": false
+        }
       },
       "charges": [
         {
@@ -468,7 +465,7 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
           "description": "conta de água",
           "value": 198764,
           "status": 1,
-          "maturity": "10/02/2022"
+          "charge_date": "10/02/2022"
         },
         {
           "id": 4,
@@ -476,7 +473,7 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
           "description": "conta de luz",
           "value": 198764,
           "status": 3,
-          "maturity": "03/01/2021"
+          "charge_date": "03/01/2021"
         }
       ]
     }
@@ -528,6 +525,7 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
       "email": "eduardo@gmail.com",
       "cpf": "23445645687",
       "phone": "58965547878",
+      "status": "Em dia",
       "address": {
         "cep": "62031175",
         "public_place": null,
@@ -536,7 +534,6 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
         "city": null,
         "state": null
       },
-      "status": true
     }
     ```
 - **Erro (400 Bad Request)**
