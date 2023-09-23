@@ -7,14 +7,6 @@ const getCostumers = async (req, res) => {
 		const defaultingCustomers = await knex('costumers')
 			.select(
 				'costumers.id as costumer_id',
-				'costumers.name as costumer_name',
-				'costumers.cpf as costumer_cpf',
-				'costumers.email as costumer_email',
-				'costumers.phone as costumer_phone',
-				'costumers.status as costumer_status',
-				'charges.id as charge_id',
-				'charges.status as charge_status',
-				'charges.charge_date as charge_date'
 			)
 			.join('charges', 'costumers.id', '=', 'charges.costumer_id')
 			.where('charges.charge_date', '<', knex.raw('NOW()'))
