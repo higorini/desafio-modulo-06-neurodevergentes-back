@@ -585,7 +585,7 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
       "description": "conta de água",
       "value": 198764,
       "status": "Pendente",
-      "charge_date": "2023-09-22"
+      "charge_date": "2023-09-24T03:00:00.000Z"
     }
     ```
 - **Erro (500 Internal Server Error)**
