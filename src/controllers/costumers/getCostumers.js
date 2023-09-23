@@ -4,26 +4,23 @@ const getCostumers = async (req, res) => {
 	try {
 		const { id } = req.user;
 
-		const defaultingCustomers = await knex('costumers')
-			.select(
-				'costumers.id as costumer_id',
-			)
-			.join('charges', 'costumers.id', '=', 'charges.costumer_id')
-			.where('charges.charge_date', '<', knex.raw('NOW()'))
-			.andWhere('charges.status', '=', 'Pendente')
-			.andWhere('costumers.user_id', '=', id);
+		const defaultingCustomers = await knex("costumers")
+			.select("costumers.id as costumer_id",)
+			.join("charges", "costumers.id", "=", "charges.costumer_id")
+			.where("charges.status", "=", "vencida")
+			.andWhere("costumers.user_id", "=", id);
 
 		for (const costumer of defaultingCustomers) {
 			const costumer_id = costumer.costumer_id;
-			await knex('costumers').where('id', costumer_id).update('status', 'Inadimplente');
+			await knex("costumers").where("id", costumer_id).update("status", "Inadimplente");
 		}
 
-		const costumersOK = await knex('costumers')
-			.whereNotIn('id', defaultingCustomers.map(costumer => costumer.costumer_id));
+		const costumersOK = await knex("costumers")
+			.whereNotIn("id", defaultingCustomers.map(costumer => costumer.costumer_id));
 
 		for (const costumer of costumersOK) {
 			const costumer_id = costumer.id;
-			await knex('costumers').where('id', costumer_id).update('status', 'Em dia');
+			await knex("costumers").where("id", costumer_id).update("status", "Em dia").orderBy("status", "asc");
 		}
 
 		const allCostumers = await knex("costumers").where("user_id", id);
