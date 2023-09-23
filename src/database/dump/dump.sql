@@ -25,3 +25,13 @@ create table costumers(
   state varchar(20),
   status text not null
 ); 
+
+create table charges(
+  id serial primary key,
+  costumer_id integer not null references costumers(id),
+  costumer_name text not null,
+  description text not null,
+  status text not null,
+  value integer not null,
+  charge_date date not null
+);
