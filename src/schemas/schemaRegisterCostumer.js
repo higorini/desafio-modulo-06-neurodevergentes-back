@@ -28,13 +28,13 @@ const schemaRegisterCostumer = joi.object({
 		"string.length": "Telefone deve ter no mínimo 11 caracteres",
 	}),
 
-	cep: joi.string().trim().allow("").optional(),
-	public_place: joi.string().trim().allow("").optional(),
-	complement: joi.string().trim().allow("").optional(),
-	neighborhood: joi.string().trim().allow("").optional(),
-	city: joi.string().trim().allow("").optional(),
-	state: joi.string().trim().allow("").optional(),
-	status: joi.string().trim().allow("").optional(),
+	cep: joi.string().trim().allow("", null).optional(),
+	public_place: joi.string().trim().allow("", null).optional(),
+	complement: joi.string().trim().allow("", null).optional(),
+	neighborhood: joi.string().trim().allow("", null).optional(),
+	city: joi.string().trim().allow("", null).optional(),
+	state: joi.string().trim().allow("", null).optional(),
+	status: joi.string().trim().allow("", null).optional(),
 });
 
 module.exports = schemaRegisterCostumer;

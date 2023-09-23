@@ -4,7 +4,7 @@ const trimFields = require("../../utils/trimSpaces");
 
 const registerCostumer = async (req, res) => {
 	try {
-		const { email, cpf, phone, ...otherData } = trimFields(req.body);
+		const { email, cpf, phone, ...otherData } = req.body;
 		const newEmail = email.toLowerCase();
 
 		otherData.name = capitalizeFullName(otherData.name);
@@ -35,6 +35,7 @@ const registerCostumer = async (req, res) => {
 
 		return res.status(201).json(newCustomer[0]);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
