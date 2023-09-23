@@ -62,6 +62,7 @@ const formatCostumerData = (costumerData) => {
 		email: costumerData.email,
 		cpf: costumerData.cpf,
 		phone: costumerData.phone,
+		status: costumerData.status,
 		address: {
 			cep: costumerData.cep,
 			public_place: costumerData.public_place,
@@ -70,7 +71,6 @@ const formatCostumerData = (costumerData) => {
 			city: costumerData.city,
 			state: costumerData.state,
 		},
-		status: costumerData.status,
 	};
 };
 

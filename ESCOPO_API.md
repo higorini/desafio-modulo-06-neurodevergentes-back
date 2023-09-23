@@ -33,9 +33,11 @@ Ao longo das entregas das sprints, serão implementadas novas funcionalidades.
 - Evitar duplicidade de Código
 
 ## URL da API
+
 ```javascript
  https://calm-gold-lion-veil.cyclic.cloud/
 ```
+
 ### Status Codes
 
 ```javascript
@@ -81,17 +83,17 @@ O endpoint permite o cadastro de um novo usuário no sistema.
   - Corpo da Resposta:
     ```json
     {
-      "message": "Usuário cadastrado com sucesso.",
+      "message": "Usuário cadastrado com sucesso."
     }
     ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-    ```json
-    {
-      "message": "E-mail informado já existe cadastrado."
-    }
-    ```
-</details>
+  `json
+{
+  "message": "E-mail informado já existe cadastrado."
+}
+`
+  </details>
 
 <details>
 
@@ -103,7 +105,6 @@ O endpoint permite a autenticação de um usuário no sistema.
 
 - **Método:** `POST`
 - **Rota:** `/login`
-
 
 #### Corpo da Requisição
 
@@ -128,12 +129,12 @@ O endpoint permite a autenticação de um usuário no sistema.
     ```
 - **Erro (401 Unauthorized)**
   - Corpo da Resposta:
-    ```json
-    {
-      "message": "E-mail ou senha inválidos."
-    }
-    ```
-</details>
+  `json
+{
+  "message": "E-mail ou senha inválidos."
+}
+`
+  </details>
 
 <details>
 
@@ -154,35 +155,39 @@ O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no
 #### Exemplos de Respostas
 
 - **Sucesso (200 OK)**
+
   - Corpo da Resposta caso E-mail **disponível**:
     ```json
     {
-      "message": "E-mail disponível para cadastro.",
+      "message": "E-mail disponível para cadastro."
     }
     ```
 
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-    ```json
-    {
-      "message": "Ocorreu um erro interno."
-    }
-    ```
-</details>
+  `json
+{
+  "message": "Ocorreu um erro interno."
+}
+`
+  </details>
 
 </br>
 
-### ATENÇÃO: 
+### ATENÇÃO:
 
 A partir de agora, para acessar todas as rotas a seguir será necessário passar o Token de autenticação do usuário que foi fornecido durante o **Login** no **Header** da requisição.
 
 #### Exemplo
+
 - Header da requisição:
- ```json
-  {
-    "Authorization": "Bearer { token }"
-  }
+
+```json
+{
+  "Authorization": "Bearer { token }"
+}
 ```
+
 <br/>
 <details>
 <summary><b>Obter informações do usuário logado</b></summary>
@@ -195,8 +200,11 @@ Essa rota será usada para obter informacoes do seu perfil do usuario que está 
 - **Rota:** `/user`
 
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
+
 #### Exemplos de Respostas
+
 - **Sucesso (200 OK)**
 - Corpo da Resposta:
   ```json
@@ -210,13 +218,13 @@ Essa rota será usada para obter informacoes do seu perfil do usuario que está 
   ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-    ```json
-    {
-      "message": "Token inválido."
-    }
-    ```
-<br/>
-</details>
+  `json
+{
+  "message": "Token inválido."
+}
+`
+  <br/>
+  </details>
 
 <details>
 <summary><b> Edição do Usuário</b></summary>
@@ -228,8 +236,9 @@ O endpoint permite a edição dos dados de um usuário autenticado no sistema.
 
 - **Método:** `PUT`
 - **Rota:** `/user/edit`
-  
+
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
 
 #### Corpo da Requisição
@@ -273,8 +282,8 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - **Método:** `POST`
 - **Rota:** `/costumer/signup`
 
-
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
 
 #### Corpo da Requisição
@@ -289,7 +298,6 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - `neighborhood` (string, opcional): Bairro do cliente.
 - `city` (string, opcional): Cidade do cliente.
 - `state` (string, opcional): Estado do cliente.
-- `status` (string, opcional): Situação do cliente.
 
 #### Exemplos de Respostas
 
@@ -297,33 +305,30 @@ O endpoint permite o cadastro de um novo cliente no sistema.
   - Corpo da Resposta:
     ```json
     {
-      "id": 8,
-      "user_id": 4,
-      "name": "Carlos eduardo",
-      "email": "eduardo@gmail.com",
-      "cpf": "23445645687",
-      "phone": "58965547878",
-      "address":{
-                    "cep": "62031175"
-                    "public_place": null,
-                    "complement": null,
-                    "neighborhood": null,
-                    "city": null,
-                    "state": null
-        },
-      "status": "Em dia"
+        "id": 34,
+        "user_id": 43,
+        "name": "Luciana",
+        "email": "luciana@gmail.com",
+        "cpf": "45638586294   ",
+        "phone": "88192657212",
+        "cep": null,
+        "public_place": null,
+        "complement": null,
+        "neighborhood": null,
+        "city": null,
+        "state": null,
+        "status": "Em dia"
     }
     ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-    ```json
-    {
-      "message": "E-mail informado já existe cadastrado para outro cliente."
-    }
-    ```
-<br/>
-</details>
-
+  `json
+{
+  "message": "E-mail informado já existe cadastrado para outro cliente."
+}
+`
+  <br/>
+  </details>
 
 <details>
 <summary><b> Preenchimento automático do endereço com CEP </b></summary>
@@ -350,13 +355,12 @@ Esse endpoint permite o preenchimento automático dos campos do endereço atrav�
       "state": "CE"
     }
     ```
-- **Erro (400 Bad Request)**
-    - Corpo da Resposta:
-    ```json
+- **Erro (400 Bad Request)** - Corpo da Resposta:
+`json
     {
       "message": "Falha na requisição da api" 
     }
-    ```
+    `
 </details>
 </details>
 </details>
@@ -379,8 +383,11 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
 
 - **Método:** `GET`
 - **Rota:** `/costumers`
+
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
+
 #### Exemplos de Respostas
 
 - **Sucesso (200 OK)**
@@ -388,120 +395,108 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
     ```json
     [
       {
-        "id": 7,
-        "user_id": 4,
-        "name": "jojo todinho",
-        "email": "jojo@gmail.com",
-        "cpf": "12345645687",
-        "phone": "55965547878",
-        "address":{
-    		    "cep":"62031175",
-                    "public_place": null,
-                    "complement": null,
-                    "neighborhood": null,
-                    "city": null,
-                    "state": null
-                  },
-        "status": false
-	    },
+        "id": 14,
+        "user_id": 34,
+        "name": "Paulo Silva",
+        "cpf": "45648545214   ",
+        "email": "paulo@gmail.com",
+        "phone": "88112154212",
+        "status": "Inadimplente"
+      },
       {
-        "id": 8,
-        "user_id": 4,
-        "name": "Carlos eduardo",
-        "email": "eduardo@gmail.com",
-        "cpf": "234.456.456-87",
-        "phone": "(58) 9 6554-7878",
-        "address":{
-    		    "cep":"62031175",
-                    "public_place": null,
-                    "complement": null,
-                    "neighborhood": null,
-                    "city": null,
-                    "state": null
-                  },
-        "status": true
+        "id": 7,
+        "user_id": 34,
+        "name": "Grauna",
+        "cpf": "45645645678   ",
+        "email": "grauna@gmail.com",
+        "phone": "12345645645",
+        "status": "Em dia"
       }
     ]
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-    ```json
-    { "message": "Ocorreu um erro interno." }
-    ```
-</details>
-<details>
-<summary><b> Detalhar cliente </b></summary>
-</br>
-O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim de consultar seus dados e suas respectivas cobranças.
+  `json
+{ "message": "Ocorreu um erro interno." }
+`
+  </details>
+  <details>
+  <summary><b> Detalhar cliente </b></summary>
+  </br>
+  O endpoint permite visualizar todos os detalhes de um cliente cadastrado, a fim de consultar seus dados e suas respectivas cobranças.
 
 #### Requisição
 
 - **Método:** `GET`
 - **Rota:** `/costumers/:id`
-  
+
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
-  
+
 #### Exemplos de Respostas
+
 - **Sucesso (200 OK)**
+
   - Corpo da Resposta:
+
     ```json
-    
-      {
-        "personalData":{
-                        "id": 7,
-                        "name": "jojo todinho",
-                        "email": "jojo@gmail.com",
-                        "cpf": "123.456.456-87",
-                        "phone": "(55) 9 6554-7878",
-                        "address":{
-    				    "cep": null,
-                                    "public_place": null,
-                                    "complement": null,
-                                    "neighborhood": null,
-                                    "city": null,
-                                    "state": null
-                                  },
-                        "status": false
-                      },
-        "charges":[{    
-                  "id":3,
-                  "customer_name":"jojo todinho",
-                  "description":"conta de água",
-                  "value":198764,
-                  "status":1,
-                  "maturity":"10/02/2022"
-                 },
-                 {    
-                  "id":4,
-                  "customer_name":"jojo todinho",
-                  "description":"conta de luz",
-                  "value":198764,
-                  "status":3,
-                  "maturity":"03/01/2021"
-                 }
-                 ]
-	    }
-    
+    {
+      "personalData": {
+        "id": 7,
+        "name": "jojo todinho",
+        "email": "jojo@gmail.com",
+        "cpf": "123.456.456-87",
+        "phone": "(55) 9 6554-7878",
+        "status": "Em dia",
+        "address": {
+          "cep": null,
+          "public_place": null,
+          "complement": null,
+          "neighborhood": null,
+          "city": null,
+          "state": null
+        }
+      },
+      "charges": [
+        {
+          "id": 3,
+          "customer_name": "jojo todinho",
+          "description": "conta de água",
+          "value": 198764,
+          "status": 1,
+          "charge_date": "10/02/2022"
+        },
+        {
+          "id": 4,
+          "customer_name": "jojo todinho",
+          "description": "conta de luz",
+          "value": 198764,
+          "status": 3,
+          "charge_date": "03/01/2021"
+        }
+      ]
+    }
     ```
+
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-    ```json
-    { "message": "Ocorreu um erro interno." }
-    ```
-</details>
-<details>
-<summary><b> Atualizar cliente </b></summary>
-</br>
-O endpoint permite atualizar os dados de um cliente cadastrado.
+  `json
+{ "message": "Ocorreu um erro interno." }
+`
+  </details>
+  <details>
+  <summary><b> Atualizar cliente </b></summary>
+  </br>
+  O endpoint permite atualizar os dados de um cliente cadastrado.
 
 #### Requisição
 
 - **Método:** `PUT`
 - **Rota:** `/costumer/:id/edit`
 
-
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
 
 #### Corpo da Requisição
@@ -530,30 +525,30 @@ O endpoint permite atualizar os dados de um cliente cadastrado.
       "email": "eduardo@gmail.com",
       "cpf": "23445645687",
       "phone": "58965547878",
-      "address":{
-    		    "cep":"62031175",
-                    "public_place": null,
-                    "complement": null,
-                    "neighborhood": null,
-                    "city": null,
-                    "state": null
-        },
-      "status": true
+      "status": "Em dia",
+      "address": {
+        "cep": "62031175",
+        "public_place": null,
+        "complement": null,
+        "neighborhood": null,
+        "city": null,
+        "state": null
+      },
     }
     ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-    ```json
-    {
-      "message": "E-mail informado já existe cadastrado para outro cliente."
-    }
-    ```
-<br/>
-</details>
-</details>
-<details>
-<summary>Cobranças</summary>
-<br/>
+  `json
+{
+  "message": "E-mail informado já existe cadastrado para outro cliente."
+}
+`
+  <br/>
+  </details>
+  </details>
+  <details>
+  <summary>Cobranças</summary>
+  <br/>
 
 <details>
 
@@ -567,6 +562,7 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
 - **Rota:** `/charges/:idCustomer`
 
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
 
 #### Corpo da Requisição
@@ -582,30 +578,30 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
 - **Sucesso (200 Ok)**
   - Corpo da Resposta:
     ```json
-    {  
-        "id":3,
-        "costumer_id":2,
-        "costumer_name": "Mariana",
-        "description":"conta de água",
-        "value":198764,
-        "status": "Pendente",
-        "charge_date":"2023-09-22"
+    {
+      "id": 3,
+      "costumer_id": 2,
+      "costumer_name": "Mariana",
+      "description": "conta de água",
+      "value": 198764,
+      "status": "Pendente",
+      "charge_date": "2023-09-24T03:00:00.000Z"
     }
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-    ```json
-    { 
-      "message": "Ocorreu um erro interno." 
-    }
-    ```
-</details>
+  `json
+{ 
+  "message": "Ocorreu um erro interno." 
+}
+`
+  </details>
 
 <details>
 
 <summary><b> Listar Todas as Cobranças </b></summary>
 
-O endpoint permite visualizar uma listagem com todas as cobranças cadastradas do usuário.
+O endpoint permite visualizar uma listagem com todas as cobranças cadastradas para os clientes **do usuario logado**.
 
 #### Requisição
 
@@ -613,6 +609,7 @@ O endpoint permite visualizar uma listagem com todas as cobranças cadastradas d
 - **Rota:** `/charges`
 
 #### Header da Requisição
+
 - `token` (string, obrigatório): Token gerado após login.
 
 #### Exemplos de Respostas
@@ -621,31 +618,38 @@ O endpoint permite visualizar uma listagem com todas as cobranças cadastradas d
   - Corpo da Resposta:
     ```json
     [
-	    {    
-		      "id":3,
-		      "customer":"josé",
-		      "description":"conta de água",
-		      "value":198764,
-		      "status":1,
-		      "maturity":"10/02/2022"
-	     },
-	     {    
-		      "id":4,
-		      "customer":"maria",
-		      "description":"conta de luz",
-		      "value":198764,
-		      "status":3,
-		      "maturity":"03/01/2021"
-	     }
+        {
+            "id": 12,
+            "costumer_name": "Maria Joaquina",
+            "description": "Uniforme escolar",
+            "value": 35000,
+            "charge_date": "2023-09-22T03:00:00.000Z",
+            "status": "vencida"
+        },
+        {
+            "id": 15,
+            "costumer_name": "thiago",
+            "description": "thiago@gmail.com",
+            "value": 988545259,
+            "charge_date": "2023-10-20T03:00:00.000Z",
+            "status": "pendente"
+        },
+        {
+            "id": 13,
+            "costumer_name": "Maria Joaquina",
+            "description": "Uniforme escolar de lider",
+            "value": 35000,
+            "charge_date": "2023-09-20T03:00:00.000Z",
+            "status": "paga"
+        }
     ]
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-    ```json
-    { 
-      "message": "Ocorreu um erro interno." 
-    }
-    ```
-</details>
-</details>
-
+  `json`
+{ 
+  "message": "Ocorreu um erro interno." 
+}
+`
+  </details>
+  </details>
