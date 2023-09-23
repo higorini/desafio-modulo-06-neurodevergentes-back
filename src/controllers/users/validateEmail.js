@@ -1,17 +1,8 @@
 const knex = require("../../database/connection/connection");
-const {
-    schemaValidateEmail,
-    schemaValidateName,
-} = require("../../schemas/schemaValidateUser");
 
 const validateEmail = async (req, res) => {
     try {
-        let { email, name } = req.body;
-
-        email = email.toLowerCase();
-
-        await schemaValidateEmail.validateAsync({ email });
-        await schemaValidateName.validateAsync({ name });
+        const { email } = req.body;
 
         const existingUser = await knex("users").where({ email }).first();
 

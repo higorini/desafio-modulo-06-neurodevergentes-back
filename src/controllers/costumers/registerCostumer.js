@@ -1,45 +1,48 @@
 const knex = require("../../database/connection/connection");
+const capitalizeFullName = require("../../utils/capitalizeName");
 
 const registerCostumer = async (req, res) => {
-	const {
-		name,
-		email,
-		cpf,
-		phone,
-		cep,
-		public_place,
-		complement,
-		neighborhood,
-		city,
-		state,
-		status,
-	} = req.body;
+	const costumerData = req.body;
 
 	const { id } = req.user;
 	try {
-		const costumer = await knex("costumers").where({ email }).first();
+		const newEmail = costumerData.email.toLowerCase();
 
-		if (costumer)
+		const existingCustomer = await knex("costumers")
+			.where({ email: newEmail })
+			.first();
+		const existingCpf = await knex("costumers")
+			.where({ cpf: costumerData.cpf })
+			.first();
+
+		if (existingCustomer) {
 			return res.status(400).json({ message: "Cliente já cadastrado." });
+		}
 
-		const newCostumer = await knex("costumers")
+		if (existingCpf) {
+			return res.status(400).json({ message: "Cpf já cadastrado" });
+		}
+
+		const newName = capitalizeFullName(costumerData.name);
+
+		const newCustomer = await knex("costumers")
 			.insert({
 				user_id: id,
-				name,
-				email,
-				cpf,
-				phone,
-				cep,
-				public_place,
-				complement,
-				neighborhood,
-				city,
-				state,
-				status,
+				name: newName,
+				email: newEmail,
+				cpf: costumerData.cpf,
+				phone: costumerData.phone,
+				cep: costumerData.cep,
+				public_place: costumerData.public_place,
+				complement: costumerData.complement,
+				neighborhood: costumerData.neighborhood,
+				city: costumerData.city,
+				state: costumerData.state,
+				status: costumerData.status,
 			})
 			.returning("*");
 
-		return res.status(201).json(newCostumer[0]);
+		return res.status(201).json(newCustomer[0]);
 	} catch (error) {
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}

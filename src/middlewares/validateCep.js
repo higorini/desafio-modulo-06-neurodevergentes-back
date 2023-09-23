@@ -1,13 +1,11 @@
-const schemaValidateCep = require("../schemas/schemaValidateCep");
+const validateCep = (schema) => async (req, res, next) => {
+    try {
+        await schema.validateAsync(req.params);
 
-const validateCep = async (req, res, next) => {
-	const { cep } = req.params;
+        next();
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+}
 
-	try {
-		await schemaValidateCep.validateAsync({ cep });
-		next();
-	} catch (error) {
-		return res.status(400).json({ message: error.message });
-	}
-};
 module.exports = validateCep;

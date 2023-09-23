@@ -1,19 +1,20 @@
 const bcrypt = require("bcrypt");
 const knex = require("../../database/connection/connection");
+const capitalizeFullName = require("../../utils/capitalizeName");
 
 const registerUser = async (req, res) => {
 	try {
-		let { email, name, password } = req.body;
-		if (!email || !name || !password)
-			return res
-				.status(400)
-				.json({ message: "Todos os campos são obrigatórios" });
-
-		email = email.toLowerCase();
+		const { email, name, password } = req.body;
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		await knex("users").insert({ name, email, password: hashedPassword });
+		const newName = capitalizeFullName(name);
+
+		await knex("users").insert({
+			name: newName,
+			email,
+			password: hashedPassword,
+		});
 
 		res.status(201).json({ message: "Usuário cadastrado com sucesso." });
 	} catch (error) {
@@ -23,4 +24,4 @@ const registerUser = async (req, res) => {
 	}
 };
 
-module.exports = registerUser ;
+module.exports = registerUser;
