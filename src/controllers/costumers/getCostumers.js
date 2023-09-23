@@ -7,23 +7,32 @@ const getCostumers = async (req, res) => {
 		const costumersInadimplentes = await knex('costumers')
 			.select(
 				'costumers.id as costumer_id',
-				'costumers.user_id as costumer_user_id',
-				'costumers.email as costumer_user_email',
+				'costumers.name as costumer_name',
+				'costumers.cpf as costumer_cpf',
+				'costumers.email as costumer_email',
+				'costumers.phone as costumer_phone',
 				'costumers.status as costumer_status',
 				'charges.id as charge_id',
-				'charges.costumer_id as charge_costumer_id',
-				'charges.costumer_name as charge_costumer_name',
 				'charges.status as charge_status',
 				'charges.charge_date as charge_date'
 			)
 			.join('charges', 'costumers.id', '=', 'charges.costumer_id')
 			.where('charges.charge_date', '<', knex.raw('NOW()'))
 			.andWhere('charges.status', '=', 'Pendente')
-			.andWhere('costumers.user_id', '=', 34);
+			.andWhere('costumers.user_id', '=', id);
 
 		for (const costumer of costumersInadimplentes) {
 			const costumer_id = costumer.costumer_id;
 			await knex('costumers').where('id', costumer_id).update('status', 'Inadimplente');
+		}
+
+		const costumersEmDia = await knex('costumers')
+			.select("*")
+			.whereNotIn('id', costumersInadimplentes.map(costumer => costumer.costumer_id));
+
+		for (const costumer of costumersEmDia) {
+			const costumer_id = costumer.id;
+			await knex('costumers').where('id', costumer_id).update('status', 'Em dia');
 		}
 
 		const allCostumers = await knex("costumers").where("user_id", id);
@@ -75,8 +84,3 @@ const getCostumers = async (req, res) => {
 };
 
 module.exports = getCostumers;
-
-// SELECT *
-// FROM customers
-// INNER JOIN charges ON customers.id = charges.customer_id
-// WHERE charges.data_vencimento < CURRENT_DATE;
