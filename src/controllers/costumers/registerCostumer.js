@@ -29,6 +29,7 @@ const registerCostumer = async (req, res) => {
 				email: newEmail,
 				cpf,
 				phone,
+				status: "Em dia",
 				...otherData,
 			})
 			.returning("*");
