@@ -33,10 +33,11 @@ const editUser = async (req, res) => {
 		const cpfValue = cpf !== "" ? cpf : null;
 		const phoneValue = phone !== "" ? phone : null;
 		const newName = capitalizeFullName(name);
+		const newEmail = email.toLowerCase();
 
 		const updateData = {
 			name: newName,
-			email,
+			email: newEmail,
 			cpf: cpfValue,
 			phone: phoneValue,
 		};

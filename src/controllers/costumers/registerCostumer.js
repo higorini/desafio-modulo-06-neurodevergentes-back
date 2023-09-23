@@ -7,6 +7,7 @@ const registerCostumer = async (req, res) => {
 		const { email, cpf, phone, ...otherData } = trimFields(req.body);
 		const newEmail = email.toLowerCase();
 
+		otherData.name = capitalizeFullName(otherData.name);
 		const existingCustomer = await knex("costumers")
 			.where({ email: newEmail })
 			.orWhere({ cpf })
@@ -15,19 +16,16 @@ const registerCostumer = async (req, res) => {
 		const existingPhone = await knex("costumers").where({ phone }).first();
 
 		if (existingCustomer) {
-			return res.status(400).json({ message: "Cliente já cadastrado." });
+			return res.status(400).json({ message: "Email ou cpf ja cadastrados." });
 		}
 
 		if (existingPhone) {
 			return res.status(400).json({ message: "Telefone já cadastrado." });
 		}
 
-		const newName = capitalizeFullName(otherData.name);
-
 		const newCustomer = await knex("costumers")
 			.insert({
 				user_id: req.user.id,
-				name: newName,
 				email: newEmail,
 				cpf,
 				phone,
@@ -37,6 +35,7 @@ const registerCostumer = async (req, res) => {
 
 		return res.status(201).json(newCustomer[0]);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
