@@ -1,22 +1,19 @@
 const knex = require("../../database/connection/connection");
+const { getPendingCharges, getDefaultingCharges } = require("../../utils/chargesConsults");
 
 const getCharges = async (req, res) => {
   try {
-    const defaltingCharges = await knex("charges")
-      .where("charge_date", "<", knex.raw("DATE(NOW())"))
-      .where("status", "<>", "paga");
+    const defaultingCharges = await getDefaultingCharges();
 
-    for (const charge of defaltingCharges) {
+    for (const charge of defaultingCharges) {
       await knex("charges").update("status", "vencida").where("id", charge.id);
     };
 
-    const pendingCharges = await knex("charges")
-      .where("charge_date", ">", knex.raw("DATE(NOW())"))
-      .where("status", "<>", "paga");
+    const pendingCharges = await getPendingCharges();
 
-      for (const charge of pendingCharges) {
-        await knex("charges").update("status", "pendente").where("id", charge.id);
-      };
+    for (const charge of pendingCharges) {
+      await knex("charges").update("status", "pendente").where("id", charge.id);
+    };
 
     const allCharges = await knex("charges").orderBy("status", "desc");
 
