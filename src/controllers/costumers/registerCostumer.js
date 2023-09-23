@@ -1,22 +1,26 @@
-const knex = require("../../database/connection/connection");
-const capitalizeFullName = require("../../utils/capitalizeName");
-const trimFields = require("../../utils/trimSpaces");
-
 const registerCostumer = async (req, res) => {
 	try {
 		const { email, cpf, phone, ...otherData } = req.body;
 		const newEmail = email.toLowerCase();
 
 		otherData.name = capitalizeFullName(otherData.name);
-		const existingCustomer = await knex("costumers")
+
+		const existingCustomerByEmail = await knex("costumers")
 			.where({ email: newEmail })
-			.orWhere({ cpf })
+			.first();
+
+		const existingCustomerByCPF = await knex("costumers")
+			.where({ cpf })
 			.first();
 
 		const existingPhone = await knex("costumers").where({ phone }).first();
 
-		if (existingCustomer) {
-			return res.status(400).json({ message: "Email ou cpf ja cadastrados." });
+		if (existingCustomerByEmail) {
+			return res.status(400).json({ message: "E-mail já cadastrado." });
+		}
+
+		if (existingCustomerByCPF) {
+			return res.status(400).json({ message: "CPF já cadastrado." });
 		}
 
 		if (existingPhone) {
