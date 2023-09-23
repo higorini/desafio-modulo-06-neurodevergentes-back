@@ -1,5 +1,5 @@
 const knex = require("../../database/connection/connection");
-const { getCustomersDefaulting, getCustomersUpToDate } = require("../../utils/customersConsuts");
+const { getCustomersDefaulting, getCustomersUpToDate } = require("../../utils/customersConsults");
 
 const getCustomers = async (req, res) => {
 	try {
