@@ -1,24 +1,30 @@
 const knex = require("../../database/connection/connection");
+const trimFields = require("../../utils/trimSpaces");
+const capitalizeFullName = require("../../utils/capitalizeName");
 
 const postCharges = async (req, res) => { 
 	const { idCostumer } = req.params;
-
-	const { costumer_name, description, status, value, charge_date } = req.body;
+	let { costumer_name, description, status, charge_date, value } = req.body;
+	const { id: userId } = req.user;
 
 	try {
-		const costumer = await knex("costumers").where("id", idCostumer).first();
+		const costumer = await knex("costumers")
+			.where({ id: idCostumer, user_id: userId })
+			.first();
 
-		if (!costumer)
-			return res.status(404).json({ message: "Cliente não econtrado!" });
+		if (!costumer) {
+			return res.status(404).json({
+				message: "Cliente não encontrado ou não pertence ao usuário logado!",
+			});
+		}
+
+		costumer_name = capitalizeFullName(costumer_name);
 
 		const newCharge = await knex("charges")
 			.insert({
 				costumer_id: idCostumer,
-				costumer_name,
-				description,
-				status,
+				...trimFields({ costumer_name, description, status, charge_date }),
 				value,
-				charge_date,
 			})
 			.returning("*");
 

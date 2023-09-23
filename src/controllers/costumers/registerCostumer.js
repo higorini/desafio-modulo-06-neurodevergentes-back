@@ -1,44 +1,46 @@
 const knex = require("../../database/connection/connection");
 const capitalizeFullName = require("../../utils/capitalizeName");
+const trimFields = require("../../utils/trimSpaces");
 
 const registerCostumer = async (req, res) => {
-	const costumerData = req.body;
-
-	const { id } = req.user;
 	try {
-		const newEmail = costumerData.email.toLowerCase();
+		const { email, cpf, phone, ...otherData } = req.body;
+		const newEmail = email.toLowerCase();
 
+		otherData.name = capitalizeFullName(otherData.name);
 		const existingCustomer = await knex("costumers")
 			.where({ email: newEmail })
+			.orWhere({ cpf })
+			.orWhere({ phone })
 			.first();
-		const existingCpf = await knex("costumers")
-			.where({ cpf: costumerData.cpf })
-			.first();
+
+		const response = {};
 
 		if (existingCustomer) {
-			return res.status(400).json({ message: "Cliente já cadastrado." });
-		}
+			if (existingCustomer.email === newEmail) {
+				response.email = "E-mail já está cadastrado.";
+			}
 
-		if (existingCpf) {
-			return res.status(400).json({ message: "Cpf já cadastrado" });
-		}
+			if (existingCustomer.cpf === cpf) {
+				response.cpf = "CPF já está cadastrado.";
+			}
 
-		const newName = capitalizeFullName(costumerData.name);
+			if (existingCustomer.phone === phone) {
+				response.phone = "Telefone já está cadastrado.";
+			}
+
+			return res
+				.status(400)
+				.json({ message: "Campos já estão cadastrados.", fields: response });
+		}
 
 		const newCustomer = await knex("costumers")
 			.insert({
-				user_id: id,
-				name: newName,
+				user_id: req.user.id,
 				email: newEmail,
-				cpf: costumerData.cpf,
-				phone: costumerData.phone,
-				cep: costumerData.cep,
-				public_place: costumerData.public_place,
-				complement: costumerData.complement,
-				neighborhood: costumerData.neighborhood,
-				city: costumerData.city,
-				state: costumerData.state,
-				status: costumerData.status,
+				phone,
+				status: "Em dia",
+				...otherData,
 			})
 			.returning("*");
 

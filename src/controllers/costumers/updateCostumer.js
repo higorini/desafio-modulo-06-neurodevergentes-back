@@ -1,17 +1,26 @@
 const knex = require("../../database/connection/connection");
 const validateAndUpdateCostumer = require("../../utils/checkForExistingCustomer");
 const capitalizeFullName = require("../../utils/capitalizeName");
+const trimFields = require("../../utils/trimSpaces");
 
 const updateCostumer = async (req, res) => {
 	try {
 		const { costumerId } = req.params;
 		const { id: userId } = req.user;
-		let costumerData = req.body;
+		let costumerData = trimFields(req.body);
 
 		costumerData.name = capitalizeFullName(costumerData.name);
-		costumerData.status = capitalizeFullName(costumerData.status);
 
 		costumerData.email = costumerData.email.toLowerCase();
+
+		const existingPhone = await knex("costumers")
+			.where({ phone: costumerData.phone })
+			.whereNot({ id: costumerId })
+			.first();
+
+		if (existingPhone) {
+			return res.status(400).json({ message: "Telefone já cadastrado." });
+		}
 
 		const validationMessages = await validateAndUpdateCostumer(
 			costumerId,
