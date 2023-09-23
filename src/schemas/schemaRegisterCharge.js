@@ -1,22 +1,22 @@
 const joi = require("joi");
 
-const schemaRegisterCharge = joi.object({
+const schemaRegisterCharge = joi.object({ 
     costumer_name: joi.string().required().messages({
-		"any.required": "Nome é obrigatório",
-		"string.empty": "Nome é obrigatório",
+		"any.required": "Nome do cliente é obrigatório",
+		"string.empty": "Nome do cliente não pode ser vazio",
         "string.base": "O Nome deve ser uma string"
 	}),
 
     description: joi.string().required().messages({
         "string.base": "A descrição deve ser uma string",
 		"any.required": "A descrição é obrigatória",
-		"string.empty": "A descrição é obrigatória"
+		"string.empty": "A descrição nao pode ser vazia"
     }),
 
     status: joi.string().required().messages({
 		"string.base": "Status deve ser uma string",
 		"any.required": "Status é obrigatório",
-		"string.empty": "Status é obrigatório",
+		"string.empty": "Status não pode ser vazio",
 	}),
 
     value: joi.number().integer().required().messages({

@@ -1,6 +1,6 @@
 const knex = require("../../database/connection/connection");
 
-const postCharges = async (req, res) => {
+const postCharges = async (req, res) => { 
 	const { idCostumer } = req.params;
 
 	const { costumer_name, description, status, value, charge_date } = req.body;
