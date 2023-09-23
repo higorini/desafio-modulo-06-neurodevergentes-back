@@ -23,7 +23,7 @@ create table costumers(
   neighborhood text,
   city varchar(20),
   state varchar(20),
-  status text default "Em dia"
+  status text default 'Em dia'
 ); 
 
 create table charges(
