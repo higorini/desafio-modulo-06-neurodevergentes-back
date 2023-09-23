@@ -1,24 +1,49 @@
 const knex = require("../../database/connection/connection");
 const bcrypt = require("bcrypt");
+const trimFields = require("../../utils/trimSpaces");
 const capitalizeFullName = require("../../utils/capitalizeName");
 
 const editUser = async (req, res) => {
 	try {
-		let { name, email, password, cpf, phone } = req.body;
+		const { name, email, password, cpf, phone } = trimFields(req.body);
 		const { id } = req.user;
 
-		const existingUser = await knex("users").where({ email }).first();
+		const existingUserWithEmail = await knex("users")
+			.where({ email })
+			.whereNot({ id })
+			.first();
 
-		if (existingUser && existingUser.id !== id) {
+		if (existingUserWithEmail) {
 			return res
 				.status(400)
 				.json({ message: "E-mail já cadastrado para outro usuário." });
 		}
+
+		const existingUserWithCpf = await knex("users")
+			.where({ cpf })
+			.whereNot({ id })
+			.first();
+
+		if (existingUserWithCpf) {
+			return res
+				.status(400)
+				.json({ message: "CPF já cadastrado para outro usuário." });
+		}
+
+		const cpfValue = cpf !== "" ? cpf : null;
+		const phoneValue = phone !== "" ? phone : null;
 		const newName = capitalizeFullName(name);
 
-		const updateData = { name: newName, email, cpf, phone };
+		const updateData = {
+			name: newName,
+			email,
+			cpf: cpfValue,
+			phone: phoneValue,
+		};
 
-		password && (updateData.password = await bcrypt.hash(password, 10));
+		if (password) {
+			updateData.password = await bcrypt.hash(password, 10);
+		}
 
 		await knex("users").where({ id }).update(updateData);
 

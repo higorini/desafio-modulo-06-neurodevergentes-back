@@ -2,10 +2,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const knex = require("../../database/connection/connection");
 const senhaHash = require("../../utils/senhaHash");
+const trimFields = require("../../utils/trimSpaces");
 
 const loginUser = async (req, res) => {
 	try {
-		const { email, password } = req.body;
+		const { email, password } = trimFields(req.body);
 
 		const user = await knex("users").where({ email }).first();
 

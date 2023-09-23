@@ -1,10 +1,11 @@
 const bcrypt = require("bcrypt");
 const knex = require("../../database/connection/connection");
+const trimFields = require("../../utils/trimSpaces");
 const capitalizeFullName = require("../../utils/capitalizeName");
 
 const registerUser = async (req, res) => {
 	try {
-		const { email, name, password } = req.body;
+		const { email, name, password } = trimFields(req.body);
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
