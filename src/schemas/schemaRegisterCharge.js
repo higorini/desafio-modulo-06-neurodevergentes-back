@@ -1,10 +1,10 @@
 const joi = require("joi");
 
-const schemaRegisterCharge = joi.object({
-	costumer_name: joi.string().trim().required().messages({
-		"any.required": "Nome é obrigatório",
-		"string.empty": "Nome não pode ser vazio",
-		"string.base": "O Nome deve ser uma string",
+const schemaRegisterCharge = joi.object({ 
+    costumer_name: joi.string().required().messages({
+		"any.required": "Nome do cliente é obrigatório",
+		"string.empty": "Nome do cliente não pode ser vazio",
+    "string.base": "O Nome deve ser uma string"
 	}),
 
 	description: joi.string().trim().required().messages({

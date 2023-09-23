@@ -4,36 +4,42 @@ const getCostumers = async (req, res) => {
 	try {
 		const { id } = req.user;
 
-		const customers = await knex("costumers").where({ user_id: id });
+		const defaultingCustomers = await knex("costumers")
+			.select("costumers.id as costumer_id",)
+			.join("charges", "costumers.id", "=", "charges.costumer_id")
+			.where("charges.status", "=", "vencida")
+			.andWhere("costumers.user_id", "=", id);
 
-		const usersData = customers.map(
-			({
-				password,
-				cep,
-				public_place,
-				complement,
-				neighborhood,
-				city,
-				state,
-				...userData
-			}) => {
-				const address = {
-					cep,
-					public_place,
-					complement,
-					neighborhood,
-					city,
-					state,
-				};
-				return {
-					...userData,
-					address,
-				};
+		for (const costumer of defaultingCustomers) {
+			const costumer_id = costumer.costumer_id;
+			await knex("costumers").where("id", costumer_id).update("status", "Inadimplente");
+		}
+
+		const costumersOK = await knex("costumers")
+			.whereNotIn("id", defaultingCustomers.map(costumer => costumer.costumer_id));
+
+		for (const costumer of costumersOK) {
+			const costumer_id = costumer.id;
+			await knex("costumers").where("id", costumer_id).update("status", "Em dia").orderBy("status", "asc");
+		}
+
+		const allCostumers = await knex("costumers").where("user_id", id);
+
+		const costumersData = allCostumers.map(({ id, user_id, name, cpf, email, phone, status }) => {
+			return {
+				id,
+				user_id,
+				name,
+				cpf,
+				email,
+				phone,
+				status
 			}
-		);
+		});
 
-		return res.status(200).json(usersData);
+		return res.status(200).json(costumersData);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
