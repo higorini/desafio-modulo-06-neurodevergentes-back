@@ -4,9 +4,13 @@ const capitalizeFullName = require("../../utils/capitalizeName");
 
 const postCharges = async (req, res) => {
 	const { idCostumer } = req.params;
-	const { costumer_name, description, status, value, charge_date } = trimFields(
-		req.body
-	);
+	const { costumer_name, description, status, charge_date, value } = req.body;
+	const newObject = trimFields({
+		costumer_name,
+		description,
+		status,
+		charge_date,
+	});
 	const { id: userId } = req.user;
 
 	try {
@@ -25,10 +29,8 @@ const postCharges = async (req, res) => {
 			.insert({
 				costumer_id: idCostumer,
 				costumer_name: newName,
-				description,
-				status,
+				...newObject,
 				value,
-				charge_date,
 			})
 			.returning("*");
 
