@@ -289,7 +289,7 @@ O endpoint permite o cadastro de um novo cliente no sistema.
 - `neighborhood` (string, opcional): Bairro do cliente.
 - `city` (string, opcional): Cidade do cliente.
 - `state` (string, opcional): Estado do cliente.
-- `status` (string, obrigatório): Situação do cliente.
+- `status` (string, opcional): Situação do cliente.
 
 #### Exemplos de Respostas
 
@@ -516,7 +516,7 @@ O endpoint permite atualizar os dados de um cliente cadastrado.
 - `neighborhood` (string, opcional): Novo Bairro do cliente.
 - `city` (string, opcional): Novo Cidade do cliente.
 - `state` (string, opcional): Novo Estado do cliente.
-- `status` (string, obrigatório): Novo Situação do cliente.
+- `status` (string, opcional): Novo Situação do cliente.
 
 #### Exemplos de Respostas
 
