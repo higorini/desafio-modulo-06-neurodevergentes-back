@@ -1,31 +1,27 @@
 const knex = require("../../database/connection/connection");
+const { getCustomersDefaulting, getCustomersUpToDate } = require("../../utils/customersConsuts");
 
-const getCostumers = async (req, res) => {
+const getCustomers = async (req, res) => {
 	try {
 		const { id } = req.user;
 
-		const defaultingCustomers = await knex("costumers")
-			.select("costumers.id as costumer_id",)
-			.join("charges", "costumers.id", "=", "charges.costumer_id")
-			.where("charges.status", "=", "vencida")
-			.andWhere("costumers.user_id", "=", id);
+		const customersDefaulting = await getCustomersDefaulting(id);
 
-		for (const costumer of defaultingCustomers) {
-			const costumer_id = costumer.costumer_id;
-			await knex("costumers").where("id", costumer_id).update("status", "Inadimplente");
+		for (const customer of customersDefaulting) {
+			const { customer_id } = customer;
+			await knex("costumers").where("id", customer_id).update("status", "Inadimplente");
 		}
 
-		const costumersOK = await knex("costumers")
-			.whereNotIn("id", defaultingCustomers.map(costumer => costumer.costumer_id));
+		const customersUpToDate = await getCustomersUpToDate(customersDefaulting);
 
-		for (const costumer of costumersOK) {
-			const costumer_id = costumer.id;
-			await knex("costumers").where("id", costumer_id).update("status", "Em dia").orderBy("status", "asc");
+		for (const customer of customersUpToDate) {
+			const { customer_id } = customer;
+			await knex("costumers").where("id", customer_id).update("status", "Em dia");
 		}
 
-		const allCostumers = await knex("costumers").where("user_id", id);
+		const allCustomers = await knex("costumers").where("user_id", id).orderBy("status", "desc");
 
-		const costumersData = allCostumers.map(({ id, user_id, name, cpf, email, phone, status }) => {
+		const customersData = allCustomers.map(({ id, user_id, name, cpf, email, phone, status }) => {
 			return {
 				id,
 				user_id,
@@ -37,11 +33,11 @@ const getCostumers = async (req, res) => {
 			}
 		});
 
-		return res.status(200).json(costumersData);
+		return res.status(200).json(customersData);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
 
-module.exports = getCostumers;
+module.exports = getCustomers;
