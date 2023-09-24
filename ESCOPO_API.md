@@ -88,11 +88,11 @@ O endpoint permite o cadastro de um novo usuário no sistema.
     ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-  `json
-{
-  "message": "E-mail informado já existe cadastrado."
-}
-`
+  ```json
+  {
+    "message": "E-mail informado já existe cadastrado."
+  }
+  ```
   </details>
 
 <details>
@@ -129,11 +129,11 @@ O endpoint permite a autenticação de um usuário no sistema.
     ```
 - **Erro (401 Unauthorized)**
   - Corpo da Resposta:
-  `json
-{
-  "message": "E-mail ou senha inválidos."
-}
-`
+  ```json
+  {
+    "message": "E-mail ou senha inválidos."
+  }
+  ```
   </details>
 
 <details>
@@ -165,11 +165,11 @@ O endpoint permite verificar se o E-mail que deseja ser cadastrado já existe no
 
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-  `json
-{
-  "message": "Ocorreu um erro interno."
-}
-`
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
   </details>
 
 </br>
@@ -182,11 +182,11 @@ A partir de agora, para acessar todas as rotas a seguir será necessário passar
 
 - Header da requisição:
 
-```json
-{
-  "Authorization": "Bearer { token }"
-}
-```
+  ```json
+  {
+    "Authorization": "Bearer { token }"
+  }
+  ```
 
 <br/>
 <details>
@@ -218,11 +218,11 @@ Essa rota será usada para obter informacoes do seu perfil do usuario que está 
   ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-  `json
-{
-  "message": "Token inválido."
-}
-`
+  ```json
+  {
+    "message": "Token inválido."
+  }
+  ```
   <br/>
   </details>
 
@@ -305,28 +305,28 @@ O endpoint permite o cadastro de um novo cliente no sistema.
   - Corpo da Resposta:
     ```json
     {
-        "id": 34,
-        "user_id": 43,
-        "name": "Luciana",
-        "email": "luciana@gmail.com",
-        "cpf": "45638586294   ",
-        "phone": "88192657212",
-        "cep": null,
-        "public_place": null,
-        "complement": null,
-        "neighborhood": null,
-        "city": null,
-        "state": null,
-        "status": "Em dia"
+      "id": 34,
+      "user_id": 43,
+      "name": "Luciana",
+      "email": "luciana@gmail.com",
+      "cpf": "45638586294   ",
+      "phone": "88192657212",
+      "cep": null,
+      "public_place": null,
+      "complement": null,
+      "neighborhood": null,
+      "city": null,
+      "state": null,
+      "status": "Em dia"
     }
     ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-  `json
-{
-  "message": "E-mail informado já existe cadastrado para outro cliente."
-}
-`
+  ```json
+  {
+    "message": "E-mail informado já existe cadastrado para outro cliente."
+  }
+  ```
   <br/>
   </details>
 
@@ -356,11 +356,13 @@ Esse endpoint permite o preenchimento automático dos campos do endereço atrav�
     }
     ```
 - **Erro (400 Bad Request)** - Corpo da Resposta:
-`json
-    {
-      "message": "Falha na requisição da api" 
-    }
-    `
+
+```json
+{
+  "message": "Falha na requisição da api"
+}
+```
+
 </details>
 </details>
 </details>
@@ -416,9 +418,11 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-  `json
-{ "message": "Ocorreu um erro interno." }
-`
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
   </details>
   <details>
   <summary><b> Detalhar cliente </b></summary>
@@ -481,9 +485,11 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
 
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-  `json
-{ "message": "Ocorreu um erro interno." }
-`
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
   </details>
   <details>
   <summary><b> Atualizar cliente </b></summary>
@@ -533,16 +539,16 @@ O endpoint permite listar os clientes ja cadastrdos no sistema **daquele usuario
         "neighborhood": null,
         "city": null,
         "state": null
-      },
+      }
     }
     ```
 - **Erro (400 Bad Request)**
   - Corpo da Resposta:
-  `json
-{
-  "message": "E-mail informado já existe cadastrado para outro cliente."
-}
-`
+  ```json
+  {
+    "message": "E-mail informado já existe cadastrado para outro cliente."
+  }
+  ```
   <br/>
   </details>
   </details>
@@ -590,11 +596,11 @@ O endpoint permite cadastrar cobranças para um cliente, afim de acessar suas in
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-  `json
-{ 
-  "message": "Ocorreu um erro interno." 
-}
-`
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
   </details>
 
 <details>
@@ -618,38 +624,134 @@ O endpoint permite visualizar uma listagem com todas as cobranças cadastradas p
   - Corpo da Resposta:
     ```json
     [
-        {
-            "id": 12,
-            "costumer_name": "Maria Joaquina",
-            "description": "Uniforme escolar",
-            "value": 35000,
-            "charge_date": "2023-09-22T03:00:00.000Z",
-            "status": "vencida"
-        },
-        {
-            "id": 15,
-            "costumer_name": "thiago",
-            "description": "thiago@gmail.com",
-            "value": 988545259,
-            "charge_date": "2023-10-20T03:00:00.000Z",
-            "status": "pendente"
-        },
-        {
-            "id": 13,
-            "costumer_name": "Maria Joaquina",
-            "description": "Uniforme escolar de lider",
-            "value": 35000,
-            "charge_date": "2023-09-20T03:00:00.000Z",
-            "status": "paga"
-        }
+      {
+        "id": 12,
+        "costumer_name": "Maria Joaquina",
+        "description": "Uniforme escolar",
+        "value": 35000,
+        "charge_date": "2023-09-22T03:00:00.000Z",
+        "status": "vencida"
+      },
+      {
+        "id": 15,
+        "costumer_name": "thiago",
+        "description": "thiago@gmail.com",
+        "value": 988545259,
+        "charge_date": "2023-10-20T03:00:00.000Z",
+        "status": "pendente"
+      },
+      {
+        "id": 13,
+        "costumer_name": "Maria Joaquina",
+        "description": "Uniforme escolar de lider",
+        "value": 35000,
+        "charge_date": "2023-09-20T03:00:00.000Z",
+        "status": "paga"
+      }
     ]
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
-  `json`
-{ 
-  "message": "Ocorreu um erro interno." 
-}
-`
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
+  </details>
+
+<details>
+<summary><b> Listar Todos os Dados do Usuario Logado </b></summary>
+<br>
+
+O endpoint permite visualizar uma listagem com todas os Clientes e Cobranças cadastrados **do usuario logado**.
+
+#### Requisição
+
+- **Método:** `GET`
+- **Rota:** `/getAllDataUser`
+
+#### Header da Requisição
+
+- `token` (string, obrigatório): Token gerado após login.
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 Ok)**
+  - Corpo da Resposta:
+    ```json
+    {
+        "Customers_Data": [
+          {
+            "id": 36,
+            "name": "Hobber",
+            "cpf": "15635586294   ",
+            "email": "hobber@gmail.com",
+            "phone": "88692656212",
+            "status": "Inadimplente"
+          },
+          {
+            "id": 50,
+            "name": "Kildare",
+            "cpf": "45678998778   ",
+            "email": "kildare@gmail.com",
+            "phone": "88892656882",
+            "status": "Em dia"
+          },
+          {
+            "id": 34,
+            "name": "Luciana",
+            "cpf": "45638586294   ",
+            "email": "luciana@gmail.com",
+            "phone": "88192657212",
+            "status": "Em dia"
+          }
+        ],
+        "Charges_Data": [
+          {
+            "id": 35,
+            "costumer_id": 36,
+            "costumer_name": "Hobber",
+            "value": 6000,
+            "charge_date": "2023-09-20T03:00:00.000Z",
+            "status": "vencida",
+            "description": "Skoll beats"
+          },
+          {
+            "id": 23,
+            "costumer_id": 34,
+            "costumer_name": "Luciana",
+            "value": 35000,
+            "charge_date": "2023-09-24T03:00:00.000Z",
+            "status": "pendente",
+            "description": "fraudas de bebe"
+          },
+          {
+            "id": 34,
+            "costumer_id": 36,
+            "costumer_name": "Hobber",
+            "value": 6000,
+            "charge_date": "2023-09-20T03:00:00.000Z",
+            "status": "paga",
+            "description": "Remedios"
+          },
+          {
+            "id": 40,
+            "costumer_id": 50,
+            "costumer_name": "Kildare",
+            "value": 6000,
+            "charge_date": "2023-09-24T03:00:00.000Z",
+            "status": "pendente",
+            "description": "Peça do carro"
+          },
+        ]
+    }
+    ```
+- **Erro (500 Internal Server Error)**
+  - Corpo da Resposta:
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
   </details>
   </details>

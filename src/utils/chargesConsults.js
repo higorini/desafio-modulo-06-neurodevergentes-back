@@ -21,9 +21,9 @@ const getPendingCharges = async (id) => {
 const getAllCharges = async (id) => {
     return knex("charges")
         .select(
-            "costumers.id",
-            "charges.costumer_name",
             "charges.id",
+            "costumers.id as costumer_id",
+            "charges.costumer_name",
             "charges.value",
             "charges.charge_date",
             "charges.status",
