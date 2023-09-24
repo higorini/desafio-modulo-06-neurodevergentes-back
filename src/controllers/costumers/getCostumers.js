@@ -1,21 +1,11 @@
-const knex = require("../../database/connection/connection");
-const { getCustomersDefaulting, getCustomersUpToDate, getAllCustomers } = require("../../utils/customersConsults");
+const updateStatusCostumer = require("../../utils/updateStatusCostumer");
+const { getAllCustomers } = require("../../utils/customersConsults");
 
 const getCustomers = async (req, res) => {
 	try {
 		const { id } = req.user;
 
-		const customersDefaulting = await getCustomersDefaulting(id);
-
-		for (const customer of customersDefaulting) {
-			await knex("costumers").where("id", customer.id).update("status", "Inadimplente");
-		}
-
-		const customersUpToDate = await getCustomersUpToDate(id, customersDefaulting);
-
-		for (const customer of customersUpToDate) {
-			await knex("costumers").where("id", customer.id).update("status", "Em dia");
-		}
+		await updateStatusCostumer(id);
 
 		const allCustomers = await getAllCustomers(id);
 
@@ -26,4 +16,4 @@ const getCustomers = async (req, res) => {
 	}
 };
 
-module.exports = getCustomers;
+module.exports = getCustomers; 

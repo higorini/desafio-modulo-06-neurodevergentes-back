@@ -1,21 +1,12 @@
-const knex = require("../../database/connection/connection");
-const { getPendingCharges, getDefaultingCharges, getAllCharges } = require("../../utils/chargesConsults");
+const updateStatusCharge = require("../../utils/updateStatusCharge");
+const { getAllCharges } = require("../../utils/chargesConsults");
 
 const getCharges = async (req, res) => {
   try {
 
     const { id } = req.user;
 
-    const defaultingCharges = await getDefaultingCharges(id);
-
-    for (const charge of defaultingCharges) {
-      await knex("charges").update("status", "vencida").where("id", charge.id);
-    };
-
-    const pendingCharges = await getPendingCharges(id);
-    for (const charge of pendingCharges) {
-      await knex("charges").update("status", "pendente").where("id", charge.id);
-    };
+    await updateStatusCharge(id);
 
     const allCharges = await getAllCharges(id);
 
@@ -26,4 +17,4 @@ const getCharges = async (req, res) => {
   }
 };
 
-module.exports = getCharges; 
+module.exports = getCharges;
