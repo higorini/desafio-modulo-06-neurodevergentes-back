@@ -1,5 +1,5 @@
 const knex = require("../../database/connection/connection");
-const { getCustomersDefaulting, getCustomersUpToDate } = require("../../utils/customersConsults");
+const { getCustomersDefaulting, getCustomersUpToDate, getAllCustomers } = require("../../utils/customersConsults");
 
 const getCustomers = async (req, res) => {
 	try {
@@ -8,32 +8,18 @@ const getCustomers = async (req, res) => {
 		const customersDefaulting = await getCustomersDefaulting(id);
 
 		for (const customer of customersDefaulting) {
-			const { customer_id } = customer;
-			await knex("costumers").where("id", customer_id).update("status", "Inadimplente");
+			await knex("costumers").where("id", customer.id).update("status", "Inadimplente");
 		}
 
-		const customersUpToDate = await getCustomersUpToDate(customersDefaulting);
+		const customersUpToDate = await getCustomersUpToDate(id, customersDefaulting);
 
 		for (const customer of customersUpToDate) {
-			const { customer_id } = customer;
-			await knex("costumers").where("id", customer_id).update("status", "Em dia");
+			await knex("costumers").where("id", customer.id).update("status", "Em dia");
 		}
 
-		const allCustomers = await knex("costumers").where("user_id", id).orderBy("status", "desc");
+		const allCustomers = await getAllCustomers(id);
 
-		const customersData = allCustomers.map(({ id, user_id, name, cpf, email, phone, status }) => {
-			return {
-				id,
-				user_id,
-				name,
-				cpf,
-				email,
-				phone,
-				status
-			}
-		});
-
-		return res.status(200).json(customersData);
+		return res.status(200).json(allCustomers);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
