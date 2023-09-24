@@ -21,15 +21,17 @@ const getPendingCharges = async (id) => {
 const getAllCharges = async (id) => {
     return knex("charges")
         .select(
-            "charges.id",
+            "costumers.id",
             "charges.costumer_name",
-            "charges.description",
+            "charges.id",
             "charges.value",
             "charges.charge_date",
-            "charges.status"
+            "charges.status",
+            "charges.description"
         )
         .join("costumers", "costumers.id", "=", "charges.costumer_id")
-        .andWhere("costumers.user_id", "=", id);
+        .andWhere("costumers.user_id", "=", id)
+        .orderBy("status", "desc");
 }
 
 module.exports = {

@@ -15,7 +15,22 @@ const getCustomersUpToDate = async (id, customersDefalting) => {
         .where("costumers.user_id", "=", id)
 }
 
+const getAllCustomers = async (id) => {
+    return await knex("costumers")
+        .select(
+            "costumers.id",
+            "costumers.name",
+            "costumers.cpf",
+            "costumers.email",
+            "costumers.phone",
+            "costumers.status"
+            )
+        .where("costumers.user_id", "=", id)
+        .orderBy("status", "desc");
+}
+
 module.exports = {
     getCustomersDefaulting,
-    getCustomersUpToDate
-}
+    getCustomersUpToDate,
+    getAllCustomers
+} 
