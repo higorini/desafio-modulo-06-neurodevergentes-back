@@ -9,6 +9,7 @@ const loginUser = require("../controllers/users/login");
 const verifyToken = require("../middlewares/validateToken");
 const getUser = require("../controllers/users/getUser");
 const editUser = require("../controllers/users/updateUser");
+const getAllDataUser = require("../controllers/users/getAllDataUser");
 
 const schemaRegisterUser = require("../schemas/schemaRegisterUser");
 const schemaVerifyEmail = require("../schemas/schemaVerifyEmail");
@@ -24,6 +25,6 @@ routesUsers.post("/login", validateRequest(schemaLoginUser), loginUser);
 routesUsers.get("/user", verifyToken, getUser);
 routesUsers.put("/user/edit", verifyToken, validateRequest(schemaUpdateUser), editUser);
 
-
+routesUsers.get("/getAllDataUser", verifyToken, getAllDataUser);
 
 module.exports = routesUsers;
