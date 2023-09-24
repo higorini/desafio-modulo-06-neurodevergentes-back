@@ -1,41 +1,19 @@
-const knex = require("../../database/connection/connection");
+const updateStatusCostumer = require("../../utils/updateStatusCostumer");
+const { getAllCustomers } = require("../../utils/customersConsults");
 
-const getCostumers = async (req, res) => {
+const getCustomers = async (req, res) => {
 	try {
 		const { id } = req.user;
 
-		const customers = await knex("costumers").where({ user_id: id });
+		await updateStatusCostumer(id);
 
-		const usersData = customers.map(
-			({
-				password,
-				cep,
-				public_place,
-				complement,
-				neighborhood,
-				city,
-				state,
-				...userData
-			}) => {
-				const address = {
-					cep,
-					public_place,
-					complement,
-					neighborhood,
-					city,
-					state,
-				};
-				return {
-					...userData,
-					address,
-				};
-			}
-		);
+		const allCustomers = await getAllCustomers(id);
 
-		return res.status(200).json(usersData);
+		return res.status(200).json(allCustomers);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
 
-module.exports = getCostumers;
+module.exports = getCustomers; 

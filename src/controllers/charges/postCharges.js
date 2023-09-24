@@ -2,7 +2,7 @@ const knex = require("../../database/connection/connection");
 const trimFields = require("../../utils/trimSpaces");
 const capitalizeFullName = require("../../utils/capitalizeName");
 
-const postCharges = async (req, res) => {
+const postCharges = async (req, res) => { 
 	const { idCostumer } = req.params;
 	let { costumer_name, description, status, charge_date, value } = req.body;
 	const { id: userId } = req.user;

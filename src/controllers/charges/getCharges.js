@@ -1,11 +1,18 @@
-const knex = require("../../database/connection/connection");
+const updateStatusCharge = require("../../utils/updateStatusCharge");
+const { getAllCharges } = require("../../utils/chargesConsults");
 
 const getCharges = async (req, res) => {
   try {
-    const charges = await knex("charges").orderBy("id", "asc");
 
-    return res.status(200).json(charges);
+    const { id } = req.user;
+
+    await updateStatusCharge(id);
+
+    const allCharges = await getAllCharges(id);
+
+    return res.status(200).json(allCharges);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Ocorreu um erro interno." });
   }
 };
