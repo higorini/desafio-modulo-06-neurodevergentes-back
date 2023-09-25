@@ -1,6 +1,5 @@
 const knex = require("../../database/connection/connection");
 const capitalizeFullName = require("../../utils/capitalizeName");
-const trimFields = require("../../utils/trimSpaces");
 
 const registerCostumer = async (req, res) => {
 	try {
@@ -38,6 +37,7 @@ const registerCostumer = async (req, res) => {
 			.insert({
 				user_id: req.user.id,
 				email: newEmail,
+				cpf,
 				phone,
 				status: "Em dia",
 				...otherData,

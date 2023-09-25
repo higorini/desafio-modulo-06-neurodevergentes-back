@@ -5,7 +5,7 @@ create table Users (
   name text not null,
   email text not null unique,
   password text not null,
-  cpf char(14) unique,
+  cpf varchar(14) unique,
   phone varchar(20) unique
 );
 
@@ -15,7 +15,7 @@ create table costumers(
   user_id integer not null references users(id),
   name text not null,
   email text not null unique,
-  cpf char(14) not null unique,
+  cpf varchar(14) not null unique,
   phone varchar(20) not null unique,
   cep varchar(20),
   public_place text,
@@ -23,7 +23,7 @@ create table costumers(
   neighborhood text,
   city varchar(20),
   state varchar(20),
-  status text not null
+  status text default 'Em dia'
 ); 
 
 create table charges(
