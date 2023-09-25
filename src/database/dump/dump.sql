@@ -5,7 +5,7 @@ create table Users (
   name text not null,
   email text not null unique,
   password text not null,
-  cpf char(14) unique,
+  cpf varchar(14) unique,
   phone varchar(20) unique
 );
 
