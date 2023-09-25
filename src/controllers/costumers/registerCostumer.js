@@ -1,53 +1,33 @@
 const knex = require("../../database/connection/connection");
 const capitalizeFullName = require("../../utils/capitalizeName");
+const validateNewCustomer = require("../../utils/checkExistingData");
 
-const registerCostumer = async (req, res) => {
-	try {
-		const { email, cpf, phone, ...otherData } = req.body;
-		const newEmail = email.toLowerCase();
+const registerCustomer = async (req, res) => {
+  try {
+    const { email, cpf, phone, ...otherData } = req.body;
+    const newEmail = email.toLowerCase();
 
-		otherData.name = capitalizeFullName(otherData.name);
-		const existingCustomer = await knex("costumers")
-			.where({ email: newEmail })
-			.orWhere({ cpf })
-			.orWhere({ phone })
-			.first();
+    otherData.name = capitalizeFullName(otherData.name);
 
-		const response = {};
+    const validationErrors = await validateNewCustomer(newEmail, cpf, phone);
 
-		if (existingCustomer) {
-			if (existingCustomer.email === newEmail) {
-				response.email = "E-mail já está cadastrado.";
-			}
+    if (validationErrors) return res.status(400).json(validationErrors);
 
-			if (existingCustomer.cpf === cpf) {
-				response.cpf = "CPF já está cadastrado.";
-			}
+    const newCustomer = await knex("costumers")
+      .insert({
+        user_id: req.user.id,
+        email: newEmail,
+        cpf,
+        phone,
+        status: "Em dia",
+        ...otherData,
+      })
+      .returning("*");
 
-			if (existingCustomer.phone === phone) {
-				response.phone = "Telefone já está cadastrado.";
-			}
-
-			return res
-				.status(400)
-				.json({ message: "Campos já estão cadastrados.", fields: response });
-		}
-
-		const newCustomer = await knex("costumers")
-			.insert({
-				user_id: req.user.id,
-				email: newEmail,
-				cpf,
-				phone,
-				status: "Em dia",
-				...otherData,
-			})
-			.returning("*");
-
-		return res.status(201).json(newCustomer[0]);
-	} catch (error) {
-		res.status(500).json({ message: "Ocorreu um erro interno." });
-	}
+    return res.status(201).json(newCustomer[0]);
+  } catch (error) {
+    res.status(500).json({ message: "Ocorreu um erro interno." });
+  }
 };
 
-module.exports = registerCostumer;
+module.exports = registerCustomer;
