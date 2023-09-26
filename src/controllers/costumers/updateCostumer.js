@@ -3,6 +3,47 @@ const capitalizeFullName = require("../../utils/capitalizeName");
 const trimFields = require("../../utils/trimSpaces");
 const validateCustomer = require("../../utils/checkExistingData");
 
+const getUpdatedCustomer = async (customerId) => {
+	return await knex("costumers").where({ id: customerId }).first();
+};
+
+const updateCustomerData = async (customerId, updateFields, userId) => {
+	return await knex("costumers")
+		.where({ id: customerId, user_id: userId })
+		.update(updateFields);
+};
+
+const getAddressData = (data) => {
+	const fields = [
+		"cep",
+		"public_place",
+		"complement",
+		"neighborhood",
+		"city",
+		"state",
+	];
+	const address = {};
+
+	fields.forEach((field) => {
+		address[field] = data[field] ? data[field].trim() : null;
+	});
+
+	return address;
+};
+
+const buildResponse = (customer) => {
+	return {
+		id: customer.id,
+		user_id: customer.user_id,
+		name: customer.name,
+		email: customer.email,
+		cpf: customer.cpf,
+		phone: customer.phone,
+		status: customer.status,
+		address: getAddressData(customer),
+	};
+};
+
 const updateCustomer = async (req, res) => {
 	try {
 		const { customerId } = req.params;
@@ -11,9 +52,7 @@ const updateCustomer = async (req, res) => {
 		const newName = capitalizeFullName(name);
 		const newEmail = email.toLowerCase();
 
-		const updatedData = await knex("costumers")
-			.where({ id: customerId })
-			.first();
+		const updatedData = await getUpdatedCustomer(customerId);
 
 		if (!updatedData) {
 			return res.status(404).json({ message: "Cliente não encontrado." });
@@ -35,37 +74,16 @@ const updateCustomer = async (req, res) => {
 			phone,
 			cpf,
 			...customerData,
+			...getAddressData(req.body),
 		};
 
-		await knex("costumers")
-			.where({ id: customerId, user_id: req.user.id })
-			.update(updateFields);
+		await updateCustomerData(customerId, updateFields, req.user.id);
 
-		const updatedCustomer = await knex("costumers")
-			.where({ id: customerId })
-			.first();
-
-		const response = {
-			id: updatedCustomer.id,
-			user_id: updatedCustomer.user_id,
-			name: updatedCustomer.name,
-			email: updatedCustomer.email,
-			cpf: updatedCustomer.cpf,
-			phone: updatedCustomer.phone,
-			status: updatedCustomer.status,
-			address: {
-				cep: updatedCustomer.cep,
-				public_place: updatedCustomer.public_place,
-				complement: updatedCustomer.complement,
-				neighborhood: updatedCustomer.neighborhood,
-				city: updatedCustomer.city,
-				state: updatedCustomer.state,
-			},
-		};
+		const updatedCustomer = await getUpdatedCustomer(customerId);
+		const response = buildResponse(updatedCustomer);
 
 		return res.json(response);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
