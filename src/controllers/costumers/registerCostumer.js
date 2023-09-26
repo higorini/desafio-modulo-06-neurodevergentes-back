@@ -1,37 +1,18 @@
 const knex = require("../../database/connection/connection");
 const capitalizeFullName = require("../../utils/capitalizeName");
+const validateNewCustomer = require("../../utils/checkExistingData");
+const trimFields = require("../../utils/trimSpaces");
 
-const registerCostumer = async (req, res) => {
+const registerCustomer = async (req, res) => {
 	try {
-		const { email, cpf, phone, ...otherData } = req.body;
+		const { email, cpf, phone, ...otherData } = trimFields(req.body);
 		const newEmail = email.toLowerCase();
 
 		otherData.name = capitalizeFullName(otherData.name);
-		const existingCustomer = await knex("costumers")
-			.where({ email: newEmail })
-			.orWhere({ cpf })
-			.orWhere({ phone })
-			.first();
 
-		const response = {};
+		const validationErrors = await validateNewCustomer(newEmail, cpf, phone);
 
-		if (existingCustomer) {
-			if (existingCustomer.email === newEmail) {
-				response.email = "E-mail já está cadastrado.";
-			}
-
-			if (existingCustomer.cpf === cpf) {
-				response.cpf = "CPF já está cadastrado.";
-			}
-
-			if (existingCustomer.phone === phone) {
-				response.phone = "Telefone já está cadastrado.";
-			}
-
-			return res
-				.status(400)
-				.json({ message: "Campos já estão cadastrados.", fields: response });
-		}
+		if (validationErrors) return res.status(400).json(validationErrors);
 
 		const newCustomer = await knex("costumers")
 			.insert({
@@ -50,4 +31,4 @@ const registerCostumer = async (req, res) => {
 	}
 };
 
-module.exports = registerCostumer;
+module.exports = registerCustomer;

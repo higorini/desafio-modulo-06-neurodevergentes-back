@@ -33,7 +33,7 @@ routesCotumers.post(
 	registerCostumer
 );
 routesCotumers.put(
-	"/costumer/:costumerId/edit",
+	"/costumer/:customerId/edit",
 	verifyToken,
 	validateRequest(schemaUpdateCustomer),
 	updateCustomer
