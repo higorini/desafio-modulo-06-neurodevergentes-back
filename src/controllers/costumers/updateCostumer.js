@@ -46,7 +46,7 @@ const updateCostumer = async (req, res) => {
 
 		return res.json(formattedData);
 	} catch (error) {
-		res.status(500).json({ message: "Ocorreu um erro interno." });
+		res.status(500).json({ message: error.message});
 	}
 };
 
