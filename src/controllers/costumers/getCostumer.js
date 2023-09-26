@@ -54,7 +54,7 @@ const formatData = (customerData, charges) => {
 			customer_name: customerData.name,
 			description: charge.description,
 			value: charge.value,
-			status: charge.charge_status,
+			status: charge.status,
 			charge_date: charge.charge_date,
 		})),
 	};
