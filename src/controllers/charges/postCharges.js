@@ -2,10 +2,10 @@ const knex = require("../../database/connection/connection");
 const trimFields = require("../../utils/trimSpaces");
 const capitalizeFullName = require("../../utils/capitalizeName");
 
-const postCharges = async (req, res) => { 
+const postCharges = async (req, res) => {
 	const { idCostumer } = req.params;
-	let { costumer_name, description, status, charge_date, value } = req.body;
 	const { id: userId } = req.user;
+	const formattedFiels = trimFields(req.body);
 
 	try {
 		const costumer = await knex("costumers")
@@ -18,13 +18,14 @@ const postCharges = async (req, res) => {
 			});
 		}
 
-		costumer_name = capitalizeFullName(costumer_name);
+		formattedFiels.costumer_name = capitalizeFullName(
+			formattedFiels.costumer_name
+		);
 
 		const newCharge = await knex("charges")
 			.insert({
 				costumer_id: idCostumer,
-				...trimFields({ costumer_name, description, status, charge_date }),
-				value,
+				...formattedFiels,
 			})
 			.returning("*");
 
