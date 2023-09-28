@@ -8,8 +8,15 @@ const getAllDataUser = async (req, res) => {
         const allDatas = await Promise.all([getAllCustomers(id), getAllCharges(id)]);
 
         const allDataUser = {
-            Customers_Data: allDatas[0],
-            Charges_Data: allDatas[1]
+            customers:{
+                defaulting: allDatas[0].filter(customer => customer.status === "Inadimplente"),
+                upToDate: allDatas[0].filter(customer => customer.status === "Em dia")
+            },
+            charges: {
+                defaulting: allDatas[1].filter(charge => charge.status === "vencida"),
+                payed: allDatas[1].filter(charge => charge.status === "paga"),
+                pending: allDatas[1].filter(charge => charge.status === "pendente")
+            }
         }
 
         return res.status(200).json(allDataUser)
