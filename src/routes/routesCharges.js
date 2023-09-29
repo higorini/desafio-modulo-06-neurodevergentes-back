@@ -12,6 +12,7 @@ const {
 	schemaUpdateCharge,
 } = require("../schemas/schemaRegisterCharge");
 const updateCharge = require("../controllers/charges/putCharge");
+const deleteCharge = require("../controllers/charges/deleteCharge");
 
 routesCharges.get("/charges", verifyToken, getCharges);
 routesCharges.post(
@@ -27,4 +28,5 @@ routesCharges.put(
 	validateRequest(schemaUpdateCharge),
 	updateCharge
 );
+routesCharges.delete("/charge/:chargeId", verifyToken, deleteCharge);
 module.exports = routesCharges;
