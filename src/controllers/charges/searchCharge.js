@@ -8,7 +8,7 @@ const searchCharge = async (req, res) => {
 
         return res.status(200).json(charge)
     } catch (error) {
-        console.log(error.message);
+        return res.status(500).json({ mensage: "Erro interno do servidor" })
     }
 }
 
