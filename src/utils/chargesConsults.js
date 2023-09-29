@@ -34,8 +34,22 @@ const getAllCharges = async (id) => {
         .orderBy("status", "desc");
 }
 
+const getOnlyCharge = async (idCharge) => {
+    return knex("charges")
+    .select(
+        "id as charge_id",
+        "costumer_name",
+        "description",
+        "status",
+        "value",
+        "charge_date"
+        )
+    .where({id: idCharge})
+}
+
 module.exports = {
     getDefaultingCharges,
     getPendingCharges,
-    getAllCharges
+    getAllCharges,
+    getOnlyCharge
 }
