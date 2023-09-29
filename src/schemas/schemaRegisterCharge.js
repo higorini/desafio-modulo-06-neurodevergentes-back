@@ -1,12 +1,6 @@
 const joi = require("joi");
 
-const schemaRegisterCharge = joi.object({ 
-    costumer_name: joi.string().required().messages({
-		"any.required": "Nome do cliente é obrigatório",
-		"string.empty": "Nome do cliente não pode ser vazio",
-    "string.base": "O Nome deve ser uma string"
-	}),
-
+const commonFields = {
 	description: joi.string().trim().required().messages({
 		"string.base": "A descrição deve ser uma string",
 		"any.required": "A descrição é obrigatória",
@@ -30,6 +24,17 @@ const schemaRegisterCharge = joi.object({
 		"date.format": "Formato de data inválido",
 		"any.required": "A data é obrigatória",
 	}),
+};
+
+const schemaRegisterCharge = joi.object({
+	...commonFields,
+	costumer_name: joi.string().required().messages({
+		"any.required": "Nome do cliente é obrigatório",
+		"string.empty": "Nome do cliente não pode ser vazio",
+		"string.base": "O Nome deve ser uma string",
+	}),
 });
 
-module.exports = schemaRegisterCharge;
+const schemaUpdateCharge = joi.object(commonFields);
+
+module.exports = { schemaRegisterCharge, schemaUpdateCharge };
