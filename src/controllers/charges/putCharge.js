@@ -32,7 +32,6 @@ const updateCharge = async (req, res) => {
 
 		return res.json(updatedCharge[0]);
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
