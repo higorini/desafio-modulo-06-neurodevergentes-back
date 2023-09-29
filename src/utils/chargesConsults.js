@@ -47,9 +47,37 @@ const getOnlyCharge = async (idCharge) => {
     .where({id: idCharge})
 }
 
+const getSearchCharge = async (charge) => {
+    if (isNaN(charge)) {
+        return await knex("charges")
+            .select(
+                "charges.costumer_name",
+                "charges.id as charge_id",
+                "charges.value",
+                "charges.charge_date",
+                "charges.status",
+                "charges.description"
+            )
+            .where({ costumer_name: charge })
+    }
+
+    return knex("charges")
+        .select(
+            "charges.costumer_name",
+            "charges.id as charge_id",
+            "charges.value",
+            "charges.charge_date",
+            "charges.status",
+            "charges.description"
+        )
+        .where({ id: charge })
+        .first()
+}
+
 module.exports = {
     getDefaultingCharges,
     getPendingCharges,
     getAllCharges,
-    getOnlyCharge
+    getOnlyCharge,
+    getSearchCharge
 }

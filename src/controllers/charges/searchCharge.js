@@ -1,4 +1,4 @@
-const knex = require("../../database/connection/connection")
+const { getSearchCharge } = require("../../utils/chargesConsults")
 
 const searchCharge = async (req, res) => {
     try {
@@ -13,30 +13,3 @@ const searchCharge = async (req, res) => {
 }
 
 module.exports = searchCharge;
-
-const getSearchCharge = async (charge) => {
-    if (isNaN(charge)) {
-        return await knex("charges")
-            .select(
-                "charges.costumer_name",
-                "charges.id as charge_id",
-                "charges.value",
-                "charges.charge_date",
-                "charges.status",
-                "charges.description"
-            )
-            .where({ costumer_name: charge })
-    }
-
-    return knex("charges")
-        .select(
-            "charges.costumer_name",
-            "charges.id as charge_id",
-            "charges.value",
-            "charges.charge_date",
-            "charges.status",
-            "charges.description"
-        )
-        .where({ id: charge })
-        .first()
-}
