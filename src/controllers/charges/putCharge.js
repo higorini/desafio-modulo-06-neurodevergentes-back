@@ -1,20 +1,25 @@
 const trimFields = require("../../utils/trimSpaces");
 const knex = require("../../database/connection/connection");
+const {
+	isValidCustomerForCharge,
+	isValidCharge,
+} = require("../../utils/commonFunctionsCharges");
 
 const updateCharge = async (req, res) => {
 	try {
 		const { chargeId } = req.params;
 		const formattedFields = trimFields(req.body);
 
-		const charge = await knex("charges").where({ id: chargeId }).first();
+		const isValid = await isValidCharge(chargeId);
 
-		if (!charge) {
+		if (!isValid) {
 			return res.status(404).json({ message: "Cobrança não encontrada." });
 		}
 
-		const isValidCustomer = await knex("costumers")
-			.where({ id: charge.costumer_id, user_id: req.user.id })
-			.first();
+		const isValidCustomer = await isValidCustomerForCharge(
+			isValid,
+			req.user.id
+		);
 
 		if (!isValidCustomer) {
 			return res.status(400).json({ message: "Cliente inválido." });
@@ -27,6 +32,7 @@ const updateCharge = async (req, res) => {
 
 		return res.json(updatedCharge[0]);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };
