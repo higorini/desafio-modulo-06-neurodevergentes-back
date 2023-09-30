@@ -5,8 +5,8 @@ const validateRequest = require("../middlewares/validateRequest");
 const verifyToken = require("../middlewares/validateToken");
 const getCharges = require("../controllers/charges/getCharges");
 const postCharges = require("../controllers/charges/postCharges");
-const getCharge = require("../controllers/charges/getCharge.js");
-
+const getCharge = require("../controllers/charges/getCharge.js")
+const searchCharge = require("../controllers/charges/searchCharge");
 const {
 	schemaRegisterCharge,
 	schemaUpdateCharge,
@@ -22,6 +22,7 @@ routesCharges.post(
 	postCharges
 );
 routesCharges.get("/charges/:idCharge", verifyToken, getCharge);
+routesCharges.get("/searchCharge", verifyToken, searchCharge);
 routesCharges.put(
 	"/charge/:chargeId/edit",
 	verifyToken,
@@ -30,3 +31,4 @@ routesCharges.put(
 );
 routesCharges.delete("/charge/:chargeId", verifyToken, deleteCharge);
 module.exports = routesCharges;
+

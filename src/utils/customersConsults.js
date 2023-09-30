@@ -24,13 +24,30 @@ const getAllCustomers = async (id) => {
             "costumers.email",
             "costumers.phone",
             "costumers.status"
-            )
+        )
         .where("costumers.user_id", "=", id)
         .orderBy("status", "desc");
+}
+
+const getSearchCustomer = async (customer) => {
+    return knex("costumers")
+        .select(
+            "costumers.id",
+            "costumers.name",
+            "costumers.cpf",
+            "costumers.email",
+            "costumers.phone",
+            "costumers.status"
+        )
+        .where({ name: customer })
+        .orWhere({ email: customer })
+        .orWhere({ cpf: customer })
+        .first()
 }
 
 module.exports = {
     getCustomersDefaulting,
     getCustomersUpToDate,
-    getAllCustomers
+    getAllCustomers,
+    getSearchCustomer
 } 

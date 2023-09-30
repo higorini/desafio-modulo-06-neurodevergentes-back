@@ -8,11 +8,12 @@ const verifyToken = require("../middlewares/validateToken");
 const getCostumers = require("../controllers/costumers/getCostumers");
 const registerCostumer = require("../controllers/costumers/registerCostumer");
 const getCustomerAndCharges = require("../controllers/costumers/getCostumer");
+const updateCustomer = require("../controllers/costumers/updateCostumer");
+const searchCustumer = require("../controllers/costumers/searchCostumer")
 
 const schemaValidateCep = require("../schemas/schemaValidateCep");
 const schemaRegisterCostumer = require("../schemas/schemaRegisterCostumer");
 const schemaUpdateCustomer = require("../schemas/schemaUpdateCostumer");
-const updateCustomer = require("../controllers/costumers/updateCostumer");
 
 routesCotumers.get(
 	"/getCostumerCep/:cep",
@@ -21,21 +22,26 @@ routesCotumers.get(
 );
 
 routesCotumers.get("/costumers", verifyToken, getCostumers);
+
 routesCotumers.get(
 	"/costumers/:costumerId",
 	verifyToken,
 	getCustomerAndCharges
 );
+
 routesCotumers.post(
 	"/costumer/signup",
 	verifyToken,
 	validateRequest(schemaRegisterCostumer),
 	registerCostumer
 );
+
 routesCotumers.put(
 	"/costumer/:customerId/edit",
 	verifyToken,
 	validateRequest(schemaUpdateCustomer),
 	updateCustomer
 );
+
+routesCotumers.get("/searchCustomer", verifyToken, searchCustumer)
 module.exports = routesCotumers;
