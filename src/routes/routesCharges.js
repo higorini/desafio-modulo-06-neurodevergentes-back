@@ -7,12 +7,28 @@ const getCharges = require("../controllers/charges/getCharges");
 const postCharges = require("../controllers/charges/postCharges");
 const getCharge = require("../controllers/charges/getCharge.js")
 const searchCharge = require("../controllers/charges/searchCharge");
-
-const schemaRegisterCharge = require("../schemas/schemaRegisterCharge");
+const {
+	schemaRegisterCharge,
+	schemaUpdateCharge,
+} = require("../schemas/schemaRegisterCharge");
+const updateCharge = require("../controllers/charges/putCharge");
+const deleteCharge = require("../controllers/charges/deleteCharge");
 
 routesCharges.get("/charges", verifyToken, getCharges);
-routesCharges.post("/charges/:idCostumer", verifyToken, validateRequest(schemaRegisterCharge), postCharges);
+routesCharges.post(
+	"/charges/:idCostumer",
+	verifyToken,
+	validateRequest(schemaRegisterCharge),
+	postCharges
+);
 routesCharges.get("/charges/:idCharge", verifyToken, getCharge);
 routesCharges.get("/searchCharge", verifyToken, searchCharge);
-
+routesCharges.put(
+	"/charge/:chargeId/edit",
+	verifyToken,
+	validateRequest(schemaUpdateCharge),
+	updateCharge
+);
+routesCharges.delete("/charge/:chargeId", verifyToken, deleteCharge);
 module.exports = routesCharges;
+
