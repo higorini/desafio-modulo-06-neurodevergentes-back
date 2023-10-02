@@ -680,74 +680,297 @@ O endpoint permite visualizar uma listagem com todas os Clientes e Cobranças ca
   - Corpo da Resposta:
     ```json
     {
-        "Customers_Data": [
-          {
-            "id": 36,
-            "name": "Hobber",
-            "cpf": "15635586294   ",
-            "email": "hobber@gmail.com",
-            "phone": "88692656212",
-            "status": "Inadimplente"
-          },
-          {
-            "id": 50,
-            "name": "Kildare",
-            "cpf": "45678998778   ",
-            "email": "kildare@gmail.com",
-            "phone": "88892656882",
-            "status": "Em dia"
-          },
-          {
-            "id": 34,
-            "name": "Luciana",
-            "cpf": "45638586294   ",
-            "email": "luciana@gmail.com",
-            "phone": "88192657212",
-            "status": "Em dia"
-          }
-        ],
-        "Charges_Data": [
-          {
-            "id": 35,
-            "costumer_id": 36,
-            "costumer_name": "Hobber",
-            "value": 6000,
-            "charge_date": "2023-09-20T03:00:00.000Z",
-            "status": "vencida",
-            "description": "Skoll beats"
-          },
-          {
-            "id": 23,
-            "costumer_id": 34,
-            "costumer_name": "Luciana",
-            "value": 35000,
-            "charge_date": "2023-09-24T03:00:00.000Z",
-            "status": "pendente",
-            "description": "fraudas de bebe"
-          },
-          {
-            "id": 34,
-            "costumer_id": 36,
-            "costumer_name": "Hobber",
-            "value": 6000,
-            "charge_date": "2023-09-20T03:00:00.000Z",
-            "status": "paga",
-            "description": "Remedios"
-          },
-          {
-            "id": 40,
-            "costumer_id": 50,
-            "costumer_name": "Kildare",
-            "value": 6000,
-            "charge_date": "2023-09-24T03:00:00.000Z",
-            "status": "pendente",
-            "description": "Peça do carro"
-          },
-        ]
+      "Customers_Data": [
+        {
+          "id": 36,
+          "name": "Hobber",
+          "cpf": "15635586294   ",
+          "email": "hobber@gmail.com",
+          "phone": "88692656212",
+          "status": "Inadimplente"
+        },
+        {
+          "id": 50,
+          "name": "Kildare",
+          "cpf": "45678998778   ",
+          "email": "kildare@gmail.com",
+          "phone": "88892656882",
+          "status": "Em dia"
+        },
+        {
+          "id": 34,
+          "name": "Luciana",
+          "cpf": "45638586294   ",
+          "email": "luciana@gmail.com",
+          "phone": "88192657212",
+          "status": "Em dia"
+        }
+      ],
+      "Charges_Data": [
+        {
+          "id": 35,
+          "costumer_id": 36,
+          "costumer_name": "Hobber",
+          "value": 6000,
+          "charge_date": "2023-09-20T03:00:00.000Z",
+          "status": "vencida",
+          "description": "Skoll beats"
+        },
+        {
+          "id": 23,
+          "costumer_id": 34,
+          "costumer_name": "Luciana",
+          "value": 35000,
+          "charge_date": "2023-09-24T03:00:00.000Z",
+          "status": "pendente",
+          "description": "fraudas de bebe"
+        },
+        {
+          "id": 34,
+          "costumer_id": 36,
+          "costumer_name": "Hobber",
+          "value": 6000,
+          "charge_date": "2023-09-20T03:00:00.000Z",
+          "status": "paga",
+          "description": "Remedios"
+        },
+        {
+          "id": 40,
+          "costumer_id": 50,
+          "costumer_name": "Kildare",
+          "value": 6000,
+          "charge_date": "2023-09-24T03:00:00.000Z",
+          "status": "pendente",
+          "description": "Peça do carro"
+        }
+      ]
     }
     ```
 - **Erro (500 Internal Server Error)**
   - Corpo da Resposta:
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
+  </details>
+
+<details>
+<summary><b> Editar cobrança </b></summary>
+<br>
+
+O endpoint permite editar uma cobrança de um cliente **do usuario logado**.
+
+#### Requisição
+
+- **Método:** `PUT`
+- **Rota:** `/charge/:chargeId/edit`
+
+#### Header da Requisição
+
+- `token` (string, obrigatório): Token gerado após login.
+
+### Corpo da Requisição
+
+- `description` (string, obrigatório): Descrição da cobrança.
+- `value` (integer, obrigatório): Valor da cobrança.
+- `status` (string, obrigatório): Status da cobrança.
+- `charge_date` (date, obrigatório): Data de vencimento da cobrança.
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 Ok)**
+  - Corpo da Resposta:
+    ```json
+    {
+      "id": 49,
+      "costumer_id": 34,
+      "costumer_name": "Luciana",
+      "description": "celular novo",
+      "status": "paga",
+      "value": 400000,
+      "charge_date": "2023-03-10T03:00:00.000Z"
+    }
+    ```
+- **Erro (500 Internal Server Error)**
+
+  - Corpo da Resposta:
+
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
+
+  </details>
+
+<details>
+<summary><b> Deletar cobrança </b></summary>
+<br>
+
+O endpoint permite deletar uma cobrança de um cliente **do usuario logado**.
+
+#### Requisição
+
+- **Método:** `DELETE`
+- **Rota:** `/charge/:chargeId`
+
+#### Header da Requisição
+
+- `token` (string, obrigatório): Token gerado após login.
+
+#### Exemplos de Respostas
+
+- **Sucesso (204 NO CONTENT)**
+  - Corpo da Resposta:
+    ```json
+    {}
+    ```
+- **Erro (500 Internal Server Error)**
+
+  - Corpo da Resposta:
+
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
+
+  </details>
+
+<details>
+<summary><b> Detalhar cobrança </b></summary>
+<br>
+
+O endpoint permite detalhar uma cobrança de um cliente **do usuario logado**.
+
+#### Requisição
+
+- **Método:** `GET`
+- **Rota:** `/charges/:idCharge`
+
+#### Header da Requisição
+
+- `token` (string, obrigatório): Token gerado após login.
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta:
+    ```json
+    [
+        {
+          "charge_id": 32,
+          "costumer_name": "Joao",
+          "description": "cotrole de videogame",
+          "status": "pendente",
+          "value": 35000,
+          "charge_date": "2023-09-26T03:00:00.000Z"
+        }
+    ] 
+    ```
+- **Erro (500 Internal Server Error)**
+
+  - Corpo da Resposta:
+
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
+  </details>
+
+
+<details>
+<summary><b> Buscar Cobrança </b></summary>
+<br>
+
+O endpoint permite buscar uma cobrança específica pelo **Nome do cliente ou ID da cobrança** de um cliente **do usuario logado**.
+
+#### Requisição
+
+- **Método:** `GET`
+- **Rota:** `/searchCharge`
+
+#### Header da Requisição
+
+- `token` (string, obrigatório): Token gerado após login.
+
+### Corpo da Requisição
+- `searchCharge`: (ID da cobrança OU Nome do cliente, obrigatório): valor do input.
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta:
+    ```json
+    [
+        {
+          "costumer_name": "Hobber",
+          "charge_id": 34,
+          "value": 6000,
+          "charge_date": "2023-09-20T03:00:00.000Z",
+          "status": "paga",
+          "description": "Remedios"
+        },
+        {
+          "costumer_name": "Hobber",
+          "charge_id": 35,
+          "value": 6000,
+          "charge_date": "2023-09-20T03:00:00.000Z",
+          "status": "vencida",
+          "description": "Skoll beats"
+        }
+    ] 
+    ```
+- **Erro (500 Internal Server Error)**
+
+  - Corpo da Resposta:
+
+  ```json
+  {
+    "message": "Ocorreu um erro interno."
+  }
+  ```
+  </details>
+
+
+<details>
+<summary><b> Buscar Cliente </b></summary>
+<br>
+
+O endpoint permite buscar um Cliente específico pelo **Nome do cliente ou ID do cliente ou CPF do cliente** de um cliente **do usuario logado**.
+
+#### Requisição
+
+- **Método:** `GET`
+- **Rota:** `/searchCustomer`
+
+#### Header da Requisição
+
+- `token` (string, obrigatório): Token gerado após login.
+
+### Corpo da Requisição
+- `searchCharge`: (ID da cobrança OU Nome do cliente OU CPF do cliente, obrigatório): valor do input.
+
+#### Exemplos de Respostas
+
+- **Sucesso (200 OK)**
+  - Corpo da Resposta:
+    ```json
+      {
+          "id": 35,
+          "name": "Joazinho",
+          "cpf": "45645645645   ",
+          "email": "joao@gmail.com",
+          "phone": "78778787878",
+          "status": "Em dia"
+      } 
+    ```
+- **Erro (500 Internal Server Error)**
+
+  - Corpo da Resposta:
+
   ```json
   {
     "message": "Ocorreu um erro interno."
