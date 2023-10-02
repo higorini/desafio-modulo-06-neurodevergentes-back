@@ -24,11 +24,11 @@ routesCharges.post(
 routesCharges.get("/charges/:idCharge", verifyToken, getCharge);
 routesCharges.get("/searchCharge", verifyToken, searchCharge);
 routesCharges.put(
-	"/charges/:chargeId/edit",
+	"/charge/:chargeId/edit",
 	verifyToken,
 	validateRequest(schemaUpdateCharge),
 	updateCharge
 );
-routesCharges.delete("/charges/:chargeId", verifyToken, deleteCharge);
+routesCharges.delete("/charge/:chargeId", verifyToken, deleteCharge);
 module.exports = routesCharges;
 
