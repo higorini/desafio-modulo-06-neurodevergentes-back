@@ -658,6 +658,15 @@ O endpoint permite visualizar uma listagem com todas as cobranças cadastradas p
   }
   ```
   </details>
+  </details>
+  </details>
+
+
+  # Sprint 3
+
+<details>
+<summary> Endpoints </summary>
+</br>
 
 <details>
 <summary><b> Listar Todos os Dados do Usuario Logado </b></summary>
@@ -977,4 +986,4 @@ O endpoint permite buscar um Cliente específico pelo **Nome do cliente ou ID do
   }
   ```
   </details>
-  </details>
+</details>
