@@ -47,8 +47,8 @@ const getOnlyCharge = async (idCharge) => {
     .where({id: idCharge})
 }
 
-const getSearchCharge = async (charge) => {
-    if (isNaN(charge)) {
+const getSearchCharge = async (searchCharge) => {
+    if (isNaN(searchCharge)) {
         return await knex("charges")
             .select(
                 "charges.costumer_name",
@@ -58,7 +58,7 @@ const getSearchCharge = async (charge) => {
                 "charges.status",
                 "charges.description"
             )
-            .where({ costumer_name: charge })
+            .where("costumer_name", "like", `%${searchCharge}%`)
     }
 
     return knex("charges")
@@ -70,7 +70,7 @@ const getSearchCharge = async (charge) => {
             "charges.status",
             "charges.description"
         )
-        .where({ id: charge })
+        .where({ id: searchCharge })
         .first()
 }
 
