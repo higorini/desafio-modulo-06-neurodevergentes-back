@@ -894,11 +894,11 @@ O endpoint permite detalhar uma cobrança de um cliente **do usuario logado**.
 <summary><b> Buscar Cobrança </b></summary>
 <br>
 
-O endpoint permite buscar uma cobrança específica pelo **Nome do cliente ou ID da cobrança** de um cliente **do usuario logado**.
+O endpoint permite buscar cobranças a partir do **Nome do cliente ou ID da cobrança** de um cliente **do usuario logado**.
 
 #### Requisição
 
-- **Método:** `GET`
+- **Método:** `POST`
 - **Rota:** `/searchCharge`
 
 #### Header da Requisição
@@ -906,7 +906,7 @@ O endpoint permite buscar uma cobrança específica pelo **Nome do cliente ou ID
 - `token` (string, obrigatório): Token gerado após login.
 
 ### Corpo da Requisição
-- `searchCharge`: (ID da cobrança OU Nome do cliente, obrigatório): valor do input.
+- `searchCharge`: (Nome do cliente OU ID da cobrança, obrigatório): valor do input.
 
 #### Exemplos de Respostas
 
@@ -952,7 +952,7 @@ O endpoint permite buscar um Cliente específico pelo **Nome do cliente ou ID do
 
 #### Requisição
 
-- **Método:** `GET`
+- **Método:** `POST`
 - **Rota:** `/searchCustomer`
 
 #### Header da Requisição
@@ -960,21 +960,39 @@ O endpoint permite buscar um Cliente específico pelo **Nome do cliente ou ID do
 - `token` (string, obrigatório): Token gerado após login.
 
 ### Corpo da Requisição
-- `searchCharge`: (ID da cobrança OU Nome do cliente OU CPF do cliente, obrigatório): valor do input.
+- `searchCustumer`: (Nome do cliente OU CPF do cliente OU E-mail do Cliente, obrigatório): valor do input.
 
 #### Exemplos de Respostas
 
 - **Sucesso (200 OK)**
   - Corpo da Resposta:
     ```json
-      {
-          "id": 35,
-          "name": "Joazinho",
-          "cpf": "45645645645   ",
-          "email": "joao@gmail.com",
-          "phone": "78778787878",
-          "status": "Em dia"
-      } 
+    [
+    	{
+    		"id": 34,
+    		"name": "Luciana",
+    		"cpf": "45638586294   ",
+    		"email": "luciana@gmail.com",
+    		"phone": "88192657212",
+    		"status": "Inadimplente"
+    	},
+    	{
+    		"id": 53,
+    		"name": "Ana Julia",
+    		"cpf": "45612365845   ",
+    		"email": "anajulia@gmail.com",
+    		"phone": "88597989845",
+    		"status": "Em dia"
+    	},
+    	{
+    		"id": 54,
+    		"name": "Ana Beatriz",
+    		"cpf": "48612365845   ",
+    		"email": "anabeatriz@gmail.com",
+    		"phone": "88587989845",
+    		"status": "Em dia"
+    	}
+    ]
     ```
 - **Erro (500 Internal Server Error)**
 
