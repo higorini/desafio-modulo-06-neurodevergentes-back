@@ -1,53 +1,57 @@
 const knex = require("../database/connection/connection");
 
-const getCustomersDefaulting = async (id) => {
-    return await knex("costumers")
-        .select("costumers.id")
-        .join("charges", "costumers.id", "=", "charges.costumer_id")
-        .where("charges.status", "=", "vencida")
-        .andWhere("costumers.user_id", "=", id);
-}
+const getCostumersDefaulting = (id) =>
+  knex("costumers")
+    .select("costumers.id")
+    .join("charges", "costumers.id", "=", "charges.customer_id")
+    .where("charges.status", "=", "vencida")
+    .andWhere("costumers.user_id", "=", id);
 
-const getCustomersUpToDate = async (id, customersDefalting) => {
-    return await knex("costumers")
-        .select("costumers.id")
-        .whereNotIn("id", customersDefalting.map(customer => customer.id))
-        .where("costumers.user_id", "=", id)
-}
+const getCostumersUpToDate = (id, costumersDefaulting) =>
+  knex("costumers")
+    .select("costumers.id")
+    .whereNotIn(
+      "id",
+      costumersDefaulting.map((customer) => customer.id)
+    )
+    .where("costumers.user_id", "=", id);
 
-const getAllCustomers = async (id) => {
-    return await knex("costumers")
-        .select(
-            "costumers.id",
-            "costumers.name",
-            "costumers.cpf",
-            "costumers.email",
-            "costumers.phone",
-            "costumers.status"
-        )
-        .where("costumers.user_id", "=", id)
-        .orderBy("status", "desc");
-}
+const getAllCostumers = (id) =>
+  knex("costumers")
+    .select(
+      "costumers.id",
+      "costumers.name",
+      "costumers.cpf",
+      "costumers.email",
+      "costumers.phone",
+      "costumers.status"
+    )
+    .where("costumers.user_id", "=", id)
+    .orderBy("status", "desc");
 
-const getSearchCustomer = async (customer) => {
-    return knex("costumers")
-        .select(
-            "costumers.id",
-            "costumers.name",
-            "costumers.cpf",
-            "costumers.email",
-            "costumers.phone",
-            "costumers.status"
-        )
-        .where({ name: customer })
-        .orWhere({ email: customer })
-        .orWhere({ cpf: customer })
-        .first()
-}
+const searchBy = async (column, value) =>
+  knex("costumers")
+    .select(
+      "costumers.id",
+      "costumers.name",
+      "costumers.cpf",
+      "costumers.email",
+      "costumers.phone",
+      "costumers.status"
+    )
+    .where(column, "like", `%${value}%`);
+
+const searchByCPF = (cpf) => searchBy("cpf", cpf);
+
+const searchByEmail = (email) => searchBy("email", email);
+
+const searchByName = (name) => searchBy("name", name);
 
 module.exports = {
-    getCustomersDefaulting,
-    getCustomersUpToDate,
-    getAllCustomers,
-    getSearchCustomer
-} 
+  getCostumersDefaulting,
+  getCostumersUpToDate,
+  getAllCostumers,
+  searchByCPF,
+  searchByEmail,
+  searchByName,
+};

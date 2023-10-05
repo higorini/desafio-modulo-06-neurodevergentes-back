@@ -1,19 +1,35 @@
-const { getSearchCustomer } = require("../../utils/customersConsults");
+const {
+  searchByCPF,
+  searchByEmail,
+  searchByName,
+} = require("../../utils/customersConsults");
 
-const searchCustumer = async (req, res) => {
-    try {
-        const { searchCustumer } = req.body;
+const searchCustomer = async (req, res) => {
+  try {
+    const { input } = req.body;
+    const tipoDeBusca = identifyInput(input);
+    const result = await executeSearch(input, tipoDeBusca);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};
 
-        if (!searchCustumer) {
-            return res.status(400).json({ mensage: "Passse o Nome / CPF / Email do cliente na busca" })
-        }
+const identifyInput = (input) => {
+  if (/^\d{3,}$/.test(input)) return "cpf";
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input)) return "email";
+  return "nome";
+};
 
-        const customer = await getSearchCustomer(searchCustumer);
+const executeSearch = async (input, tipoDeBusca) => {
+  switch (tipoDeBusca) {
+    case "cpf":
+      return await searchByCPF(input);
+    case "email":
+      return await searchByEmail(input);
+    default:
+      return await searchByName(input);
+  }
+};
 
-        return res.status(200).json(customer)
-    } catch (error) {
-        return res.status(500).json({ mensage: "Erro interno do servidor" })
-    }
-}
-
-module.exports = searchCustumer;
+module.exports = searchCustomer;
