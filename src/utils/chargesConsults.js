@@ -72,7 +72,7 @@ const getSearchCharge = async (searchCharge, id) => {
             "charges.status",
             "charges.description"
         )
-        .where({ costumer_id: searchCharge })
+        .where({ id: searchCharge })
 }
 
 module.exports = {
