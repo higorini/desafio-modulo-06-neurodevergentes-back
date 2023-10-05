@@ -43,5 +43,5 @@ routesCotumers.put(
 	updateCustomer
 );
 
-routesCotumers.get("/searchCustomer", verifyToken, searchCustumer)
+routesCotumers.post("/searchCustomer", verifyToken, searchCustumer)
 module.exports = routesCotumers;

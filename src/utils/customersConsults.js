@@ -29,7 +29,7 @@ const getAllCustomers = async (id) => {
         .orderBy("status", "desc");
 }
 
-const getSearchCustomer = async (customer) => {
+const getSearchCustomer = async (searchCustumer) => {
     return knex("costumers")
         .select(
             "costumers.id",
@@ -39,10 +39,9 @@ const getSearchCustomer = async (customer) => {
             "costumers.phone",
             "costumers.status"
         )
-        .where({ name: customer })
-        .orWhere({ email: customer })
-        .orWhere({ cpf: customer })
-        .first()
+        .where("name", "like", `%${searchCustumer}%`)
+        .orWhere("email", "like", `%${searchCustumer}%`)
+        .orWhere("cpf", "like", `%${searchCustumer}%`)
 }
 
 module.exports = {
