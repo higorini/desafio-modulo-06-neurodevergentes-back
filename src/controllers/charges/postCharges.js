@@ -1,6 +1,8 @@
 const knex = require("../../database/connection/connection");
 const trimFields = require("../../utils/trimSpaces");
 const capitalizeFullName = require("../../utils/capitalizeName");
+const updateStatusCostumer  = require("../../utils/updateStatusCostumer");
+const updateStatusCharge = require("../../utils/updateStatusCharge");
 
 const postCharges = async (req, res) => {
 	const { idCostumer } = req.params;
@@ -28,9 +30,13 @@ const postCharges = async (req, res) => {
 				...formattedFiels,
 			})
 			.returning("*");
+		
+		await updateStatusCharge(userId);
+		await updateStatusCostumer(userId);
 
 		return res.status(200).json(newCharge[0]);
 	} catch (error) {
+		console.log(error.message);
 		res.status(500).json({ message: "Ocorreu um erro interno." });
 	}
 };

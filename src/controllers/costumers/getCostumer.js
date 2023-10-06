@@ -3,16 +3,17 @@ const knex = require("../../database/connection/connection");
 const getCostumersAndCharges = async (req, res) => {
 	try {
 		const { costumerId } = req.params;
-		const { id: userId } = req.user;
+		const { id: userId } = req.user; 
 
-		const customerData = await getCustomerData(costumerId, userId);
-		if (!customerData) {
+		const costumerData = await getCostumerData(costumerId, userId);
+
+		if (!costumerData) {
 			return res.status(404).json({ message: "Cliente não encontrado." });
 		}
 
-		const charges = await getChargesForCustomer(costumerId);
+		const charges = await getChargesForCostumer(costumerId);
 
-		const formattedData = formatData(customerData, charges);
+		const formattedData = formatData(costumerData, charges);
 
 		return res.json(formattedData);
 	} catch (error) {
@@ -20,38 +21,38 @@ const getCostumersAndCharges = async (req, res) => {
 	}
 };
 
-const getCustomerData = async (customerId, userId) => {
+const getCostumerData = async (costumerId, userId) => {
 	return await knex("costumers")
 		.select("*")
-		.where({ id: customerId, user_id: userId })
+		.where({ id: costumerId, user_id: userId })
 		.first();
 };
 
-const getChargesForCustomer = async (customerId) => {
-	return await knex("charges").select("*").where({ costumer_id: customerId });
+const getChargesForCostumer = async (costumerId) => {
+	return await knex("charges").select("*").where({ costumer_id: costumerId });
 };
 
-const formatData = (customerData, charges) => {
+const formatData = (costumerData, charges) => {
 	const formattedData = {
 		personalData: {
-			id: customerData.id,
-			name: customerData.name,
-			email: customerData.email,
-			cpf: customerData.cpf,
-			phone: customerData.phone,
-			status: customerData.status,
+			id: costumerData.id,
+			name: costumerData.name,
+			email: costumerData.email,
+			cpf: costumerData.cpf,
+			phone: costumerData.phone,
+			status: costumerData.status,
 			address: {
-				cep: customerData.cep,
-				public_place: customerData.public_place,
-				complement: customerData.complement,
-				neighborhood: customerData.neighborhood,
-				city: customerData.city,
-				state: customerData.state,
+				cep: costumerData.cep,
+				public_place: costumerData.public_place,
+				complement: costumerData.complement,
+				neighborhood: costumerData.neighborhood,
+				city: costumerData.city,
+				state: costumerData.state,
 			},
 		},
 		charges: charges.map((charge) => ({
 			id: charge.id,
-			customer_name: customerData.name,
+			costumer_name: costumerData.name,
 			description: charge.description,
 			value: charge.value,
 			status: charge.status,

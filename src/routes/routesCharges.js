@@ -22,13 +22,16 @@ routesCharges.post(
 	postCharges
 );
 routesCharges.get("/charges/:idCharge", verifyToken, getCharge);
-routesCharges.get("/searchCharge", verifyToken, searchCharge);
+
+routesCharges.post("/searchCharge", verifyToken, searchCharge);
+
 routesCharges.put(
 	"/charge/:chargeId/edit",
 	verifyToken,
 	validateRequest(schemaUpdateCharge),
 	updateCharge
 );
+
 routesCharges.delete("/charge/:chargeId", verifyToken, deleteCharge);
 module.exports = routesCharges;
 

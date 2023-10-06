@@ -1,4 +1,5 @@
 const knex = require("../database/connection/connection");
+const { and } = require("../schemas/schemaValidateToken");
 
 const getCustomersDefaulting = async (id) => {
     return await knex("costumers")
@@ -29,20 +30,22 @@ const getAllCustomers = async (id) => {
         .orderBy("status", "desc");
 }
 
-const getSearchCustomer = async (customer) => {
-    return knex("costumers")
-        .select(
-            "costumers.id",
-            "costumers.name",
-            "costumers.cpf",
-            "costumers.email",
-            "costumers.phone",
-            "costumers.status"
-        )
-        .where({ name: customer })
-        .orWhere({ email: customer })
-        .orWhere({ cpf: customer })
-        .first()
+const getSearchCustomer = async (searchCustumer, id) => {
+  return  knex("costumers")
+  .select(
+    "costumers.id",
+    "costumers.name",
+    "costumers.cpf",
+    "costumers.email",
+    "costumers.phone",
+    "costumers.status"
+  )
+  .where(function() {
+    this.where("name", "like", `%${searchCustumer}%`)
+      .orWhere("email", "like", `%${searchCustumer}%`)
+      .orWhere("cpf", "like", `%${searchCustumer}%`);
+  })
+  .andWhere("costumers.user_id", "=", id);
 }
 
 module.exports = {
