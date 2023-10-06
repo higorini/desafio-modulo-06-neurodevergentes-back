@@ -51,8 +51,8 @@ const getSearchCharge = async (searchCharge, id) => {
     if (isNaN(searchCharge)) {
         return await knex("charges")
             .select(
+                "charges.id",
                 "charges.costumer_name",
-                "charges.id as charge_id",
                 "charges.value",
                 "charges.charge_date",
                 "charges.status",
@@ -65,8 +65,8 @@ const getSearchCharge = async (searchCharge, id) => {
 
     return knex("charges")
         .select(
+            "charges.id",
             "charges.costumer_name",
-            "charges.id as charge_id",
             "charges.value",
             "charges.charge_date",
             "charges.status",
